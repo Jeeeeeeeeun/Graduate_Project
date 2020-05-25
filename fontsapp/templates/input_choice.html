@@ -4,11 +4,11 @@
 
 <h1>input_choice.html - 입력 방식 선택</h1>
 
-<a href="{% url 'fontsapp:scan_input' post.id %}"><button>종이에 직접</button></a> 
+<a href="{% url 'fontsapp:scan_input' font.id %}"><button>종이에 직접</button></a> 
 <p>스캔시 주의사항 </p>
 
 <br><br>
 
-<a href="{% url 'fontsapp:write_input' post.id %}"><button>웹상에서 적기</button></a>
+<a href="{% url 'fontsapp:write_input' font.id %}"><button>웹상에서 적기</button></a>
 
 {% endblock %}

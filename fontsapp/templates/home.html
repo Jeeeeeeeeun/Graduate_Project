@@ -1,1 +1,13 @@
-<h1>home test</h1>
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Home</h1>
+<a href="{% url 'fontsapp:input_phrase' %}">Start</a>
+<a href="">My Page</a>
+
+<p>서비스 소개</p>
+<p>사용 방법 소개</p>
+
+
+{% endblock %}

@@ -1,6 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+
 
 <h1>loading.html</h1>
 
 <p>로딩페이지 완성본은 자동으로 넘어갈것</p>
 
-<a href="{% url 'fontsapp:result' %}">결과물 보기</a>
+<a href="{% url 'fontsapp:result' post.id %}">결과물 보기</a>
+
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>scan_input.html - 직접입력페이지</h1>
+
+입력 템플릿 다운로드
+
+파일 업로드
+<form method="POST" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+    사진 등록 : {{ form.input_photo1 }} <br>
+    <input type="submit" value="사진편집하기">
+</form>
+
+{% endblock %}

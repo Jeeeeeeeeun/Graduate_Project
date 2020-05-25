@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<h1>signup.html</h1>
+{% if error %}
+<br>{{ error }}<br><br>
+{% endif %}
+
+
+
+<form method="POST" action="{% url 'accountsapp:signup' %}">
+    {% csrf_token %}
+    Username : <input name="username" type="text" value="">  <br>
+    Password : <input name="password1" type="password" value="">  <br>
+    Password Confirm: <input name="password2" type="password" value="">  <br>
+
+    <br>
+    성 : <input name="lastname" type="text" value="">
+    이름 : <input name= "firstname" type="text" value="">
+    이메일 : <input name="email" type="email" value="">
+    <br><br>
+    <input type="submit" value="Sign up!">
+</form>
+
+
+{% endblock %}

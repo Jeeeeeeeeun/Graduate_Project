@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>write_input.html - 직접입력페이지</h1>
+
+<p>안내문 / 주의사항</p>
+
+canvas창 띄우기
+
+<a href="{% url 'fontsapp:input_edit' post.id %}">사진편집하기</a>
+
+{% endblock %}

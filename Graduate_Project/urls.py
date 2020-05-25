@@ -24,4 +24,4 @@ urlpatterns = [
     path('', fontsapp.views.home, name='home'),
     path('accounts/', include('accountsapp.urls')),
     path('fonts/', include('fontsapp.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

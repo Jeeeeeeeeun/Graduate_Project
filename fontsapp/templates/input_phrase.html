@@ -6,9 +6,10 @@
 
 <form method="POST" enctype="multipart/form-data" novalidate>
     {% csrf_token %}
-    원하는 문구 : {{ form.phrase }} <br>
-
-    <input type="submit" value="사진업로드하기">
+    원하는 문구<br>
+    첫번째줄 :  {{ form.phrase1 }} <br>
+    두번째줄 :  {{ form.phrase2 }} <br>
+    <input type="submit" value="다음단계">
 </form>
 
 

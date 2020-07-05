@@ -2,6 +2,23 @@
 {% block content %}
 
 
+
+<script src="http://malsup.github.com/jquery.form.js"></script>
+<script>
+    $.ajax({
+        url: "<query_view_url>",
+        type: "GET",
+        dataType: 'json',
+        success: function (data){
+            $("#div_id").html(data.query_data);
+        },
+        error: function(e){
+            console.log(e);
+        }
+    }); 
+</script>
+
+
 <h1>loading.html</h1>
 
 <p>로딩페이지 - 완성본은 자동으로 넘어가게 하기</p>

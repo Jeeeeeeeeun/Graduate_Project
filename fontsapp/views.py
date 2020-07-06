@@ -97,7 +97,7 @@ def scan_input(request, input_id):
                 size = len(cnt)
                 #print(size)
 
-                epsilon = 0.00001 * cv2.arcLength(cnt, True)
+                epsilon = 0.00002 * cv2.arcLength(cnt, True)
                 approx = cv2.approxPolyDP(cnt, epsilon, True) # 직선 근사화
 
                 size = len(approx)
@@ -117,8 +117,8 @@ def scan_input(request, input_id):
             ## 자른 이미지 데이터베이스에 저장 ##
             # 이미지 순서 맞춰서 저장하기
             # 현재 숙&명 만 저장
-            sook = "./crop/"+ str(request.user) + "_" +'crop14.png' # 숙
-            myung = "./crop/"+ str(request.user) + "_" +'crop11.png' # 명
+            sook = "./crop/"+ str(request.user) + "_" +'crop10.png' # 숙
+            myung = "./crop/"+ str(request.user) + "_" +'crop9.png' # 명
             
             font.input_photo1 = sook 
             font.input_photo2 = myung

@@ -14,6 +14,7 @@ class Font(models.Model):
     input_photo2 = models.ImageField(null=True, blank=True) # 템플릿 자른것 (글자 하나)
     output_photo1 = models.ImageField(null=True, blank=True, upload_to='output/') # 생성된 이미지
 
+
     def __str__(self):
         a = str(self.user) + "_" + str(self.date)
         return a

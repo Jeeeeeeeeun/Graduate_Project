@@ -1,10 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.core.files import File
 from .forms import FontForm
 from .models import Font
 import cv2
-import urllib
 import os
 
 # Create your views here.
@@ -147,6 +145,7 @@ def input_edit(request, input_id):
 
     #크기. 중앙에 맞추기 등 설정 & 변경사항 저장하기
     font = get_object_or_404(Font, pk=input_id)
+    
 
     return render(request, 'input_edit.html', {'font':font})
 
@@ -158,7 +157,21 @@ def loading(request, input_id):
     # 결과 이미지 받아서 model.output_photo에 저장
     # AJAX사용하기 https://djangosnippets.org/snippets/679/
 
+    # 현재 객체
     font = get_object_or_404(Font, pk=input_id)
+
+    ## 딥러닝 서버 돌리기 ##
+    # 결과 이미지 webserver/Graduate/media/output 경로에 저장하기
+
+
+    # 결과 이미지 경로 지정
+    img_name = "test_image"
+    output_img = "./output/"+ img_name +".jpg" #이미지 이름 식별 가능하게 바꾸기!
+
+    # 이미지 db에 저장
+    font.output_photo1 = output_img
+    font.save(update_fields=['output_photo1']) # 데베에 저장
+
     return render(request, 'loading.html', {'font':font})
 
 #read

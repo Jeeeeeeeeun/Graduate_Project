@@ -16,7 +16,7 @@ def input_phrase(request):
     ## 입력 문구 작성 ##
     
     chars = ['가', '나', '다', '라']  # 체크포인트 있는 글자 리스트    
-    not_exists = []  # 없는 글자 --> 데베에 추가하기
+    not_exists = ""  # 없는 글자 --> 데베에 추가하기
 
     if request.method=='POST': # 제출 버튼 눌렀을 때
         form = FontForm(request.POST) # 폼 내용 받아오기
@@ -27,11 +27,11 @@ def input_phrase(request):
 
             for i in range(len(p1)) : # p1 검사
                 if p1[i] not in chars :
-                    not_exists.append(p1[i])
+                    not_exists += p1[i]
             
             for i in range(len(p2)): # p2 검사
                 if p2[i] not in chars :
-                    not_exists.append(p2[i])
+                    not_exists += p2[i]
 
             
             if len(not_exists) == 0 : #없는 글자 없으면
@@ -41,14 +41,20 @@ def input_phrase(request):
                 return redirect('fontsapp:input_choice', input_id=font.pk) #다음단계로. pk값 같이 넘겨주기
 
             else : # 없는 글자 있으면
-                
-                ## 이부분 로직 바꾸기 ##
-
-                return render(request, 'home.html') #홈으로 리턴 (임시)
+                font = form.save(commit=False)
+                font.user = request.user #현재 유저 저장
+                font.no_checkpoint = not_exists #없는 글자
+                font.save() #저장
+                return redirect('fontsapp:no_checkpoint', input_id=font.pk) #다음단계로. pk값 같이 넘겨주기
 
     else: # 그냥 페이지 띄울 때
         form = FontForm() # 폼 띄워주기
         return render(request, 'input_phrase.html', {'form':form})
+
+def no_checkpoint(request, input_id) :
+    font = get_object_or_404(Font, pk=input_id) # pk값 유지해서 넘겨주기 위함
+    return render(request, 'no_checkpoint.html', {'font':font})
+
 
 #read
 @login_required
@@ -160,13 +166,14 @@ def loading(request, input_id):
     # 현재 객체
     font = get_object_or_404(Font, pk=input_id)
 
+
     ## 딥러닝 서버 돌리기 ##
     # 결과 이미지 webserver/Graduate/media/output 경로에 저장하기
 
 
     # 결과 이미지 경로 지정
     img_name = "test_image"
-    output_img = "./output/"+ img_name +".jpg" #이미지 이름 식별 가능하게 바꾸기!
+    output_img = "./output/"+ img_name +".png" #이미지 이름 식별 가능하게 바꾸기!
 
     # 이미지 db에 저장
     font.output_photo1 = output_img

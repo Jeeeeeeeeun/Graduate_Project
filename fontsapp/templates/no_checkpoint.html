@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<h1>no_checkpoint.html</h1>
+
+없는 글자가 있습니다. <br>
+{{ font.no_checkpoint }} <br>
+
+
+<a href="{% url 'home'%}"><button>홈으로 돌아가기</button></a> 
+
+<a href="{% url 'fontsapp:input_choice' font.id %}"><button>빼고 진행하기</button></a> 
+
+
+{% endblock %} 

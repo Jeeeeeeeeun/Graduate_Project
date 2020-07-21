@@ -4,6 +4,9 @@ from .forms import FontForm
 from .models import Font
 import cv2
 import os
+from PIL import Image
+import re
+import base64
 
 # Create your views here.
 
@@ -127,8 +130,6 @@ def scan_input(request, input_id):
             font.input_photo1 = sook 
             font.input_photo2 = myung
             font.save(update_fields=['input_photo1', 'input_photo2']) # 데베에 저장
-
-            return redirect('fontsapp:input_edit', input_id=font.pk) # 이미지 편집단계로. pk값 유지
     
     else : # 그냥 페이지 띄울 때
         form = FontForm(instance=font) # 폼에 기존 내용 넣어서 띄워주기
@@ -141,8 +142,48 @@ def write_input(request, input_id):
     ## 직접 입력 ##
 
     # canvas의 이미지 가져와서 Font.input_photo1에 저장하기
+    
+    if request.method=='POST': # 제출 버튼 눌렀을 떄
+        font = get_object_or_404(Font, pk=input_id) #현재 객체
 
-    return render(request, 'write_input.html')
+
+        data1 = request.POST.__getitem__('canvas1')
+        data2 = request.POST.__getitem__('canvas2')
+
+        
+        data1=data1[22:]
+        data2=data2[22:]
+
+        #저장할 경로
+        path = './media/crop/'
+        filename1 = str(request.user) + "_" +'crop10.png'
+        filename2 = str(request.user) + "_" +'crop9.png'
+
+        #'wb'로 파일 open
+        image1 = open(path+filename1, "wb")
+        image2 = open(path+filename2, "wb")
+
+        #디코딩 + 파일에 쓰기
+        image1.write(base64.b64decode(data1))
+        image2.write(base64.b64decode(data2))
+        
+        
+        image1.close()
+        image2.close()
+
+        sook = "./crop/"+ str(request.user) + "_" +'crop10.png' # 숙
+        myung = "./crop/"+ str(request.user) + "_" +'crop9.png' # 명
+        
+        font.input_photo1 = sook 
+        font.input_photo2 = myung
+        font.save(update_fields=['input_photo1', 'input_photo2']) # 데베에 저장
+
+
+        return redirect('fontsapp:input_edit', input_id=font.pk) # 이미지 편집단계로. pk값 유지
+
+    else :
+        font = get_object_or_404(Font, pk=input_id)
+        return render(request, 'write_input.html', {'font':font})
 
 #update
 @login_required

@@ -117,17 +117,20 @@ def scan_input(request, input_id):
                         x,y,w,h = cv2.boundingRect(cnt)
                         cropped = img_color[y:y+h, x:x+w]
                         cropname = "crop"+str(index)
-                        cv2.imwrite("./media/crop/"+ str(request.user) + "_" + cropname+'.png', cropped)
+                        time = str(font.date)[:10]
+                        cv2.imwrite("./media/crop/"+str(request.user) + "_" + time + "_" + cropname+'.png', cropped)
                         
                     index+=1
 
             ## 자른 이미지 데이터베이스에 저장 ##
             # 이미지 순서 맞춰서 저장하기
             # 현재 숙&명 만 저장
-            sook = "./crop/"+ str(request.user) + "_" +'crop10.png' # 숙
-            myung = "./crop/"+ str(request.user) + "_" +'crop9.png' # 명
-            yeo = "./crop/"+ str(request.user) + "_" +'crop8.png' # 여
-            dae = "./crop/"+ str(request.user) + "_" +'crop7.png' # 대
+            time = str(font.date)[:10]
+
+            sook = "./crop/"+ str(request.user) + "_" + time + "_" +'crop10.png' # 숙
+            myung = "./crop/"+ str(request.user) + "_" + time + "_" +'crop9.png' # 명
+            yeo = "./crop/"+ str(request.user) + "_" + time + "_" +'crop8.png' # 여
+            dae = "./crop/"+ str(request.user) + "_" + time + "_" +'crop7.png' # 대
             
             font.input_photo1 = sook 
             font.input_photo2 = myung
@@ -162,8 +165,9 @@ def write_input(request, input_id):
 
         #저장할 경로
         path = './media/crop/'
-        filename1 = str(request.user) + "_" +'crop10.png'
-        filename2 = str(request.user) + "_" +'crop9.png'
+        time = str(font.date)[:10]
+        filename1 = str(request.user) + "_" + time + "_" +'crop10.png'
+        filename2 = str(request.user) + "_" + time + "_" +'crop9.png'
 
         #'wb'로 파일 open
         image1 = open(path+filename1, "wb")
@@ -177,8 +181,8 @@ def write_input(request, input_id):
         image1.close()
         image2.close()
 
-        sook = "./crop/"+ str(request.user) + "_" +'crop10.png' # 숙
-        myung = "./crop/"+ str(request.user) + "_" +'crop9.png' # 명
+        sook = "./crop/"+ str(request.user) + "_" + time + "_" +'crop10.png' # 숙
+        myung = "./crop/"+ str(request.user) + "_" + time + "_" +'crop9.png' # 명
         
         font.input_photo1 = sook 
         font.input_photo2 = myung

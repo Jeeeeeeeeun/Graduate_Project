@@ -1,11 +1,382 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  
+  <title>수정하기</title>
 
-<h1>input_edit.html</h1>
+  <style type='text/css'>
+     html,body{
+   font-family:'Dovemayo';
+   overflow-x: hidden;
+   margin:0;
+   padding:0;
+   height:100%;
+   }
+   /*메뉴 스타일*/
+   h1{
+   font-family:'배달의민족 한나는 열한살';
+   font-weight:bold;
+   font-size:50pt;
+   }
+   #bar{
+   font-size:20pt;
+   font-weight:lighter;
+   }
+   #current{
+   color:red;
+   font-size:40pt;
+   font-weight:bold;
+   }
+   ul{
+   list-style-type:none;
+   margin:0;
+   padding:0;
+   }
+   li{
+   float:left;
+   font-size:15pt;
+   background-color:#F8E0F1;
+   text-align:center;
+   font-weight:bold;
+   }
+   li a{
+   display:block;
+   color:black;
+   border:1px solid white;
+   text-decoration:none;
+   padding:20pt;
+   padding-left:50pt;
+   padding-right:50pt; 
+   }
+   #start{}
+   #login{}
 
-<p>사진편집</p>
 
-<a href="{% url 'fontsapp:loading' font.id %}">제출</a>
+   section{
+   margin-top:30pt;
+   text-align:center;
+   font-size:15pt;
+   }
+
+   /*left-box*/
+   #left-box{
+   float:left;
+   width:40%;
+   }
+   /*right-box*/
+   #right-box{
+   float:right;   
+   width:60%;
+   margin-left:solid 1px black;
+   }
+   #right-txt{
+   border:solid 1px black;
+   border-radius:30pt;
+   width:60%;
+   margin-left:165pt;
+   }
+
+   input{
+   position:absolute;
+   font-size:20pt;
+   border-radius:10px;
+   border:solid medium white;
+   background-color:#170B3B;
+   color:#fff;
+   font-family:'Dovemayo';
+   }
+    
+   input:hover{
+   background-color:#FACC2E;
+   color:black:
+   font-weight:bold;
+   }
+
+   #right-box-p{
+    position:relative;
+    top:100pt;
+    left:250pt;
+   margin-top:-50pt;
+    }
+    #right-box-c{
+    position:absolute;
+    }
+
+   #box{
+   display:flex;
+   margin-bottom:30pt;
+   }
+
+   /*footer*/
+   .contents-wrap {
+   min-height:100%;
+   position:relative;
+   padding-bottom:100px;/* footer height */
+   }
+
+   footer{
+   background-color:#EAEAEA;
+   width:100%;
+   height:100px;
+    position:absolute;
+    /* bottom:40; */
+   padding:40pt;
+   line-height:25pt;
+   
+   bottom: 0;
+   }
+   
+   </style>
+ </head>
+ <body>
+ <div class="container contents-wrap">
+  <header>
+   <h1>폰트폰트</h1>
+   <nav>
+      <ul id="login">
+      <li><a href="">START</a></li>
+      <li><a href="">MYPAGE</a></li>
+      </ul>
+   </nav>
+   </header>
+   <aside>
+      <ul id="start">
+      <li><a href="">로그인</a></li>
+      <li><a href="">회원가입</a></li>
+      </ul>
+   </aside>
+   <br><br><br><br><br>
+   <hr>
+   <div id='bar'>
+      <span>입력</span>-
+      <span>확인</span>-
+      <span id='current'>수정</span>-
+      <span>학습</span>-
+      <span>결과확인</span>
+   </div>
+   <hr>
+   <div id="box";>
+   <section id="left-box">
+   <h2>-예시 이미지-</h2>
+   <canvas id="canvas2" width="256px" height="256px" style="border:1px solid black;"></canvas>
+
+   <br>
+
+   <h2>-틀린 이미지-</h2>
+   <canvas id="canvas3" width="256px" height="256px" style="border:1px solid black;"></canvas>
+   <p>버튼을 이용하여<br>이미지를 가운데에 정렬해주세요!</p>
+
+   </section>
+
+
+   <section id="right-box">
+   <h2>-수정하기-</h2>
+   <br>
+   <p>이미지를 상/하/좌/우/확대/축소를 하실 수 있습니다.</p>
+   <p>버튼을 눌러 이미지를 수정 해주세요!</p>
+   <p>▲ : 상 / ▼ : 하 / ◀ : 좌 / ▶ : 우 / + : 확대 / - : 축소</p>
+      <div id="right-box-p">   
+      <div id='right-box-c'>
+      <canvas id="canvas" width="256px" height="256px" style="border:1px solid black;"></canvas>
+      <input type='button' value='◀'  id='left'>
+      <input type='button' value='▶' id='right'>
+      <input type='button' value='▲'  id='up'>
+      <input type='button' value='▼'  id='down'>
+      <input type='button' value='+' id='plus'>
+      <input type='button' value='-' id='minus'>
+      </div>
+      </div>
+
+      <a href="{% url 'fontsapp:loading' font.id %}">제출</a>
+
+   </section>
+   </div>
+   
+   <footer>
+   <div>숙명여대 IT 공학과 졸업프로젝트</div>
+   <div>팀원: 1716065 김예린, 1614125 장지은, 1716560 조세란</div>
+   </footer>
+
+   
+   
+   
+</body>
+ <script type="text/javascript">
+   var step=20;
+   var right=0;
+   var left=0;
+   var up=0;
+   var down=0;
+   var plus=0;
+   var minus=0;
+
+    window.onload = function(){
+      //왼쪽
+      var canvas2=document.getElementById('canvas2');
+      var ctx2=canvas2.getContext('2d');
+
+      var canvas3=document.getElementById('canvas3');
+      var ctx3=canvas3.getContext('2d');
+
+      //오른쪽
+      var canvas=document.getElementById('canvas');
+      var ctx=canvas.getContext('2d');
+
+      var btn1=document.getElementById('right');
+      var btn2=document.getElementById('left');
+      var btn3=document.getElementById('up');
+      var btn4=document.getElementById('down');
+      var btn5=document.getElementById('plus');
+      var btn6=document.getElementById('minus');
+
+      var img = new Image();
+        img.src = "./숙.png";
+      img.onload = function(){
+         //ctx
+            ctx.drawImage(img, 0,0, 256,256);
+         ctx.beginPath();
+         ctx.setLineDash([20, 5]);
+         ctx.moveTo(0,128);
+         ctx.lineTo(256,128);
+         ctx.moveTo(128,0);
+         ctx.lineTo(128,256);
+         ctx.stroke();
+
+         //ctx2
+         ctx2.drawImage(img,0,0,256,256);
+         ctx2.beginPath();
+         ctx2.setLineDash([20, 5]);
+         ctx2.moveTo(0,128);
+         ctx2.lineTo(256,128);
+         ctx2.moveTo(128,0);
+         ctx2.lineTo(128,256);
+         ctx2.stroke();
+
+         //ctx3
+         ctx3.drawImage(img,50,30,256,256);
+         ctx3.beginPath();
+         ctx3.setLineDash([20, 5]);
+         ctx3.moveTo(0,128);
+         ctx3.lineTo(256,128);
+         ctx3.moveTo(128,0);
+         ctx3.lineTo(128,256);
+         ctx3.stroke();
+
+         
+        }
+      var c_t=canvas.offsetTop;
+      var c_l=canvas.offsetLeft;
+      var c_w=canvas.width;
+      var c_h=canvas.height;
+      //document.write(c_t,c_l); 90,40
+
+      btn1.style.left=c_l+c_w+30+"px";
+      btn1.style.top=c_t+(c_h/2)+"px";
+      
+      btn2.style.left=c_l-60+"px";
+      btn2.style.top=c_t+(c_h/2)+"px";
+
+      btn3.style.left=c_l+(c_w/2)-15+"px";
+      btn3.style.top=c_t-45+"px";
+
+      btn4.style.left=c_l+(c_w/2)-15+"px";
+      btn4.style.top=c_t+c_h+30+"px";
+
+      btn5.style.left=c_l+c_w-30+"px";
+      btn5.style.top=c_t+c_h+30+"px";
+
+      btn6.style.left=c_l+"px";
+      btn6.style.top=c_t+c_h+30+"px";
+
+      btn1.onclick=function(){
+         right+=1;
+         ctx.clearRect(0,0,canvas.width,canvas.height);   
+         ctx.drawImage(img, 0+step*right-step*left, 0-step*up+step*down, img.width-(step*minus)+(step*plus), img.height-(step*minus)+(step*plus));
+         ctx.beginPath();
+         ctx.setLineDash([20, 5]);
+         ctx.moveTo(0,128);
+         ctx.lineTo(256,128);
+         ctx.moveTo(128,0);
+         ctx.lineTo(128,256);
+         ctx.fillStyle='white';
+         ctx.stroke();
+      }
+
+      btn2.onclick=function(){
+         left+=1;
+         ctx.clearRect(0,0,canvas.width,canvas.height);   
+         ctx.drawImage(img, 0+step*right-step*left, 0-step*up+step*down, img.width-(step*minus)+(step*plus), img.height-(step*minus)+(step*plus));
+         ctx.beginPath();
+         ctx.setLineDash([20, 5]);
+         ctx.moveTo(0,128);
+         ctx.lineTo(256,128);
+         ctx.moveTo(128,0);
+         ctx.lineTo(128,256);
+         ctx.fillStyle='white';
+         ctx.stroke();
+      }
+
+      btn3.onclick=function(){
+         up+=1;
+         ctx.clearRect(0,0,canvas.width,canvas.height);   
+         ctx.drawImage(img, 0+step*right-step*left, 0-step*up+step*down, img.width-(step*minus)+(step*plus), img.height-(step*minus)+(step*plus));
+         ctx.beginPath();
+         ctx.setLineDash([20, 5]);
+         ctx.moveTo(0,128);
+         ctx.lineTo(256,128);
+         ctx.moveTo(128,0);
+         ctx.lineTo(128,256);
+         ctx.fillStyle='white';
+         ctx.stroke();
+      }
+
+      btn4.onclick=function(){
+         down+=1;
+         ctx.clearRect(0,0,canvas.width,canvas.height);   
+         ctx.drawImage(img, 0+step*right-step*left, 0-step*up+step*down, img.width-(step*minus)+(step*plus), img.height-(step*minus)+(step*plus));
+         ctx.beginPath();
+         ctx.setLineDash([20, 5]);
+         ctx.moveTo(0,128);
+         ctx.lineTo(256,128);
+         ctx.moveTo(128,0);
+         ctx.lineTo(128,256);
+         ctx.fillStyle='white';
+         ctx.stroke();
+      }
+
+      btn5.onclick=function(){
+         plus+=1;
+         ctx.clearRect(0,0,canvas.width,canvas.height);         
+         ctx.drawImage(img, 0+step*right-step*left, 0-step*up+step*down, img.width-(step*minus)+(step*plus), img.height-(step*minus)+(step*plus));
+         ctx.beginPath();
+         ctx.setLineDash([20, 5]);
+         ctx.moveTo(0,128);
+         ctx.lineTo(256,128);
+         ctx.moveTo(128,0);
+         ctx.lineTo(128,256);
+         ctx.fillStyle='white';
+         ctx.stroke();
+      }
+      btn6.onclick=function(){
+         minus+=1;
+         ctx.clearRect(0,0,canvas.width,canvas.height);         
+         ctx.drawImage(img, 0+step*right-step*left, 0-step*up+step*down, img.width-(step*minus)+(step*plus), img.height-(step*minus)+(step*plus));
+         ctx.beginPath();
+         ctx.setLineDash([20, 5]);
+         ctx.moveTo(0,128);
+         ctx.lineTo(256,128);
+         ctx.moveTo(128,0);
+         ctx.lineTo(128,256);
+         ctx.fillStyle='white';
+         ctx.stroke();
+      }
+    }
+    
+</script>
+</html>
 
 {% endblock %}

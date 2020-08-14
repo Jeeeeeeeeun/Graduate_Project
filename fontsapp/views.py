@@ -126,10 +126,16 @@ def scan_input(request, input_id):
             # 현재 숙&명 만 저장
             sook = "./crop/"+ str(request.user) + "_" +'crop10.png' # 숙
             myung = "./crop/"+ str(request.user) + "_" +'crop9.png' # 명
+            yeo = "./crop/"+ str(request.user) + "_" +'crop8.png' # 여
+            dae = "./crop/"+ str(request.user) + "_" +'crop7.png' # 대
             
             font.input_photo1 = sook 
             font.input_photo2 = myung
-            font.save(update_fields=['input_photo1', 'input_photo2']) # 데베에 저장
+            font.input_photo3 = yeo
+            font.input_photo4 = dae
+            font.save(update_fields=['input_photo1', 'input_photo2', 'input_photo3', 'input_photo4']) # 데베에 저장
+
+            return redirect('fontsapp:input_edit', input_id=font.pk) # 이미지 편집단계로. pk값 유지
     
     else : # 그냥 페이지 띄울 때
         form = FontForm(instance=font) # 폼에 기존 내용 넣어서 띄워주기

@@ -117,20 +117,25 @@ def scan_input(request, input_id):
                         x,y,w,h = cv2.boundingRect(cnt)
                         cropped = img_color[y:y+h, x:x+w]
                         cropname = "crop"+str(index)
-                        time = str(font.date)[:10]
-                        cv2.imwrite("./media/crop/"+str(request.user) + "_" + time + "_" + cropname+'.png', cropped)
+                        
+                        day = str(font.date)[:10]
+                        time = str(font.date)[11:13] + "-" + str(font.date)[14:16]
+                        day_time = day + "_" + time
+                        cv2.imwrite("./media/crop/"+str(request.user) + "_" + day_time + "_" + cropname+'.png', cropped)
                         
                     index+=1
 
             ## 자른 이미지 데이터베이스에 저장 ##
             # 이미지 순서 맞춰서 저장하기
             # 현재 숙&명 만 저장
-            time = str(font.date)[:10]
+            day = str(font.date)[:10]
+            time = str(font.date)[11:13] + "-" + str(font.date)[14:16]
+            day_time = day + "_" + time
 
-            sook = "./crop/"+ str(request.user) + "_" + time + "_" +'crop10.png' # 숙
-            myung = "./crop/"+ str(request.user) + "_" + time + "_" +'crop9.png' # 명
-            yeo = "./crop/"+ str(request.user) + "_" + time + "_" +'crop8.png' # 여
-            dae = "./crop/"+ str(request.user) + "_" + time + "_" +'crop7.png' # 대
+            sook = "./crop/"+ str(request.user) + "_" + day_time + "_" +'crop10.png' # 숙
+            myung = "./crop/"+ str(request.user) + "_" + day_time + "_" +'crop9.png' # 명
+            yeo = "./crop/"+ str(request.user) + "_" + day_time + "_" +'crop8.png' # 여
+            dae = "./crop/"+ str(request.user) + "_" + day_time + "_" +'crop7.png' # 대
             
             font.input_photo1 = sook 
             font.input_photo2 = myung
@@ -165,9 +170,12 @@ def write_input(request, input_id):
 
         #저장할 경로
         path = './media/crop/'
-        time = str(font.date)[:10]
-        filename1 = str(request.user) + "_" + time + "_" +'crop10.png'
-        filename2 = str(request.user) + "_" + time + "_" +'crop9.png'
+        day = str(font.date)[:10]
+        time = str(font.date)[11:13] + "-" + str(font.date)[14:16]
+        day_time = day + "_" + time
+
+        filename1 = str(request.user) + "_" + day_time + "_" +'crop10.png'
+        filename2 = str(request.user) + "_" + day_time + "_" +'crop9.png'
 
         #'wb'로 파일 open
         image1 = open(path+filename1, "wb")
@@ -181,8 +189,8 @@ def write_input(request, input_id):
         image1.close()
         image2.close()
 
-        sook = "./crop/"+ str(request.user) + "_" + time + "_" +'crop10.png' # 숙
-        myung = "./crop/"+ str(request.user) + "_" + time + "_" +'crop9.png' # 명
+        sook = "./crop/"+ str(request.user) + "_" + day_time + "_" +'crop10.png' # 숙
+        myung = "./crop/"+ str(request.user) + "_" + day_time + "_" +'crop9.png' # 명
         
         font.input_photo1 = sook 
         font.input_photo2 = myung
@@ -217,12 +225,11 @@ def loading(request, input_id):
     # 현재 객체
     font = get_object_or_404(Font, pk=input_id)
 
-
     ## 딥러닝 서버 돌리기 ##
-    # 결과 이미지 webserver/Graduate/media/output 경로에 저장하기
-
+    os.system("echo 'hello world!'")  #명령어
 
     # 결과 이미지 경로 지정
+    # 결과 이미지 webserver/Graduate/media/output 경로에 저장하기
     img_name = "test_image"
     output_img = "./output/"+ img_name +".png" #이미지 이름 식별 가능하게 바꾸기!
 
@@ -231,6 +238,7 @@ def loading(request, input_id):
     font.save(update_fields=['output_photo1']) # 데베에 저장
 
     return render(request, 'loading.html', {'font':font})
+
 
 #read
 @login_required

@@ -18,7 +18,7 @@ def home(request) :
 def input_phrase(request): 
     ## 입력 문구 작성 ##
     
-    chars = ['가', '나', '다', '라']  # 체크포인트 있는 글자 리스트    
+    chars = ['눈', '송', '이', '는', '졸', '업', '을', '꿈', '꾸', '지']  # 체크포인트 있는 글자 리스트    
     not_exists = ""  # 없는 글자 --> 데베에 추가하기
 
     if request.method=='POST': # 제출 버튼 눌렀을 때
@@ -26,17 +26,11 @@ def input_phrase(request):
 
         if form.is_valid(): # 폼 형식이 유효하면 
             p1 = form.data['phrase1']
-            p2 = form.data['phrase2']
 
             for i in range(len(p1)) : # p1 검사
                 if p1[i] not in chars :
                     not_exists += p1[i]
-            
-            for i in range(len(p2)): # p2 검사
-                if p2[i] not in chars :
-                    not_exists += p2[i]
 
-            
             if len(not_exists) == 0 : #없는 글자 없으면
                 font = form.save(commit=False)
                 font.user = request.user # 현재 유저 저장
@@ -47,7 +41,19 @@ def input_phrase(request):
                 font = form.save(commit=False)
                 font.user = request.user #현재 유저 저장
                 font.no_checkpoint = not_exists #없는 글자
+                
+                # 없는 글자 빼고 문장 완성해주기 
+                final = ""
+                for char1 in p1 : 
+                    if char1 in not_exists:
+                        final += "*"
+                        #pass
+                    else : 
+                        final += char1
+                    
+                font.final_phrase = final 
                 font.save() #저장
+
                 return redirect('fontsapp:no_checkpoint', input_id=font.pk) #다음단계로. pk값 같이 넘겨주기
 
     else: # 그냥 페이지 띄울 때
@@ -225,8 +231,44 @@ def loading(request, input_id):
     # 현재 객체
     font = get_object_or_404(Font, pk=input_id)
 
+
+
     ## 딥러닝 서버 돌리기 ##
-    os.system("echo 'hello world!'")  #명령어
+
+    # 이미지 복사 #
+    phrase = ['dummy','dummy','문','입','초','기','웹','대','여','명','숙'] #dummy는 index맞추기 위함! 나중에 고치기
+    dictionary = {'이':'여', '지':'기', '송':'초', '졸':'초', '업':'입', '눈':'문', '는':'문', '을':'문', '꿈':'문', '꾸':'문'}
+
+    # 파일명
+    day = str(font.date)[:10]
+    time = str(font.date)[11:13] + "-" + str(font.date)[14:16]
+    day_time = day + "_" + time
+
+
+    # 디렉토리에 파일 복사
+    for i in range(10,6,-1) : #지금은 숙.명.여.대. 까지만! 나중에 고치기
+        
+        #글자별로 유저 폴더 생성
+        char = phrase[i] #숙.명.여.대. 돌아가면서
+        mkdir_command = " mkdir ~/ganjyfont/test2/" + str(char) + "/" + str(request.user) + "_" + day_time
+        os.system(mkdir_command)
+        
+        picname =  str(request.user) + "_" + day_time + "_" +"crop"+ str(i) + ".png" # 숙
+        cp_command = "cp ~/WebServer/Graduate/media/crop/" + picname +  " ~/ganjyfont/test2/" + str(char) + "/" + str(request.user) + "_" + day_time + "/"
+        os.system(cp_command) #파일 복사
+
+    
+    # 명령어 완성
+    input_str = str(font.final_phrase) #checkpoint 있는 문자들 + * 로만 되어있는 문구
+    
+    for char in input_str : #char=만들 글자 (을)
+        if char=="*" :
+            pass
+        else : 
+            letter = dictionary[char] #letter=체크포인트 글자 (문)
+            dl_command = "python3 ~/ganjyfont/test.py --dataroot ~/ganjyfont/test2/" + letter + "/" + str(request.user) + "_" + day_time + " --name " + letter + "_" + char + "_pix2pix --model test --which_model_netG unet_256 --which_direction AtoB --dataset_mode single --norm batch --gpu_ids=0 --how_many=100"
+            os.system(dl_command)
+    
 
     # 결과 이미지 경로 지정
     # 결과 이미지 webserver/Graduate/media/output 경로에 저장하기

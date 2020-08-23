@@ -80,6 +80,8 @@ def scan_input(request, input_id):
     # 잘라서 input-photo1, input_photo2에 넣는 로직
     # 이미지 크기 조정 필요하면 하기
 
+    letters = ['dummy2' ,'moon', 'ip', 'cho', 'gi', 'web', 'dummy1', 'dae', 'yeo', 'myung', 'sook' ]
+
     font = get_object_or_404(Font, pk=input_id) # 현재 객체 가져오기
 
     if request.method=='POST': # 제출 버튼 눌렀을 떄
@@ -122,7 +124,7 @@ def scan_input(request, input_id):
                         #save image
                         x,y,w,h = cv2.boundingRect(cnt)
                         cropped = img_color[y:y+h, x:x+w]
-                        cropname = "crop"+str(index)
+                        cropname = letters[index]
                         
                         day = str(font.date)[:10]
                         time = str(font.date)[11:13] + "-" + str(font.date)[14:16]
@@ -138,10 +140,10 @@ def scan_input(request, input_id):
             time = str(font.date)[11:13] + "-" + str(font.date)[14:16]
             day_time = day + "_" + time
 
-            sook = "./crop/"+ str(request.user) + "_" + day_time + "_" +'crop10.png' # 숙
-            myung = "./crop/"+ str(request.user) + "_" + day_time + "_" +'crop9.png' # 명
-            yeo = "./crop/"+ str(request.user) + "_" + day_time + "_" +'crop8.png' # 여
-            dae = "./crop/"+ str(request.user) + "_" + day_time + "_" +'crop7.png' # 대
+            sook = "./crop/"+ str(request.user) + "_" + day_time + "_" +'sook.png' # 숙
+            myung = "./crop/"+ str(request.user) + "_" + day_time + "_" +'myung.png' # 명
+            yeo = "./crop/"+ str(request.user) + "_" + day_time + "_" +'yeo.png' # 여
+            dae = "./crop/"+ str(request.user) + "_" + day_time + "_" +'dae.png' # 대
             
             font.input_photo1 = sook 
             font.input_photo2 = myung
@@ -180,8 +182,8 @@ def write_input(request, input_id):
         time = str(font.date)[11:13] + "-" + str(font.date)[14:16]
         day_time = day + "_" + time
 
-        filename1 = str(request.user) + "_" + day_time + "_" +'crop10.png'
-        filename2 = str(request.user) + "_" + day_time + "_" +'crop9.png'
+        filename1 = str(request.user) + "_" + day_time + "_" +'sook.png'
+        filename2 = str(request.user) + "_" + day_time + "_" +'myung.png'
 
         #'wb'로 파일 open
         image1 = open(path+filename1, "wb")
@@ -195,8 +197,8 @@ def write_input(request, input_id):
         image1.close()
         image2.close()
 
-        sook = "./crop/"+ str(request.user) + "_" + day_time + "_" +'crop10.png' # 숙
-        myung = "./crop/"+ str(request.user) + "_" + day_time + "_" +'crop9.png' # 명
+        sook = "./crop/"+ str(request.user) + "_" + day_time + "_" +'sook.png' # 숙
+        myung = "./crop/"+ str(request.user) + "_" + day_time + "_" +'myung.png' # 명
         
         font.input_photo1 = sook 
         font.input_photo2 = myung
@@ -236,8 +238,11 @@ def loading(request, input_id):
     ## 딥러닝 서버 돌리기 ##
 
     # 이미지 복사 #
-    phrase = ['dummy','dummy','문','입','초','기','웹','대','여','명','숙'] #dummy는 index맞추기 위함! 나중에 고치기
+    phrase_kor = ['dummy2','dummy1','문','입','초','기','웹','대','여','명','숙']
+    phrase_eng = ['dummy2','dummy1','moon','ip','cho','gi','web','dae','yeo','myung','sook'] #dummy는 index맞추기 위함! 나중에 고치기
+
     dictionary = {'이':'여', '지':'기', '송':'초', '졸':'초', '업':'입', '눈':'문', '는':'문', '을':'문', '꿈':'문', '꾸':'문'}
+
 
     # 파일명
     day = str(font.date)[:10]
@@ -246,14 +251,18 @@ def loading(request, input_id):
 
 
     # 디렉토리에 파일 복사
+    mkdir_command = " mkdir ~/ganjyfont/result4merge/" + str(request.user) + "_" + day_time # 이미지 병합 위한 디렉토리 만들기
+    os.system(mkdir_command)
+
     for i in range(10,6,-1) : #지금은 숙.명.여.대. 까지만! 나중에 고치기
         
         #글자별로 유저 폴더 생성
-        char = phrase[i] #숙.명.여.대. 돌아가면서
-        mkdir_command = " mkdir ~/ganjyfont/test2/" + str(char) + "/" + str(request.user) + "_" + day_time
+        char = phrase_kor[i] #숙.명.여.대. 돌아가면서
+        mkdir_command = " mkdir ~/ganjyfont/test2/" + str(char) + "/" + str(request.user) + "_" + day_time #학습 돌릴 이미지 모아두는 디렉토리
         os.system(mkdir_command)
         
-        picname =  str(request.user) + "_" + day_time + "_" +"crop"+ str(i) + ".png" # 숙
+        
+        picname =  str(request.user) + "_" + day_time + "_" + phrase_eng[i] + ".png" # 숙
         cp_command = "cp ~/WebServer/Graduate/media/crop/" + picname +  " ~/ganjyfont/test2/" + str(char) + "/" + str(request.user) + "_" + day_time + "/"
         os.system(cp_command) #파일 복사
 
@@ -261,14 +270,28 @@ def loading(request, input_id):
     # 명령어 완성
     input_str = str(font.final_phrase) #checkpoint 있는 문자들 + * 로만 되어있는 문구
     
-    for char in input_str : #char=만들 글자 (을)
+    # ex) 문->을
+    filename = {'숙':'sook', '명':'myung', '여':'yeo', '대':'dae', '웹':'web', '기':'gi', '초':'cho', '입':'ip', '문':'moon' }
+
+    for char in input_str : #char=만들 글자 (을 이)
         if char=="*" :
             pass
         else : 
-            letter = dictionary[char] #letter=체크포인트 글자 (문)
-            dl_command = "python3 ~/ganjyfont/test.py --dataroot ~/ganjyfont/test2/" + letter + "/" + str(request.user) + "_" + day_time + " --name " + letter + "_" + char + "_pix2pix --model test --which_model_netG unet_256 --which_direction AtoB --dataset_mode single --norm batch --gpu_ids=0 --how_many=100"
+            #이미지 생성
+            letter = dictionary[char] #letter=체크포인트 글자 (문 여)
+            dl_command = "cd ~/ganjyfont && python3 test.py --dataroot ~/ganjyfont/test2/" + letter + "/" + str(request.user) + "_" + day_time + " --name " + letter + "_" + char + "_pix2pix --model test --which_model_netG unet_256 --which_direction AtoB --dataset_mode single --norm batch --gpu_ids=0 --how_many=100"
             os.system(dl_command)
+
+            #이미지 복사 --> 이미지 병합하기 위함!
+            beforecopy = "~/ganjyfont/results_ver2_font/" + letter + "_" + char +"_pix2pix/test_latest/images/" + str(request.user) + "_" + day_time + "_" + filename[letter] + "_fake_B.png"
+            aftercopy = "~/ganjyfont/result4merge/" + str(request.user) + "_" + day_time + "/" + char + ".png"
+            cp_command = "cp " + beforecopy + " " + aftercopy
+            os.system(cp_command)
     
+
+    #이미지 이어붙이기
+    
+
 
     # 결과 이미지 경로 지정
     # 결과 이미지 webserver/Graduate/media/output 경로에 저장하기

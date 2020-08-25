@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import FontForm
@@ -7,6 +8,8 @@ import os
 from PIL import Image
 import re
 import base64
+from matplotlib import pyplot as plt
+
 
 # Create your views here.
 
@@ -34,6 +37,7 @@ def input_phrase(request):
             if len(not_exists) == 0 : #없는 글자 없으면
                 font = form.save(commit=False)
                 font.user = request.user # 현재 유저 저장
+                font.final_phrase = p1
                 font.save() # 저장
                 return redirect('fontsapp:input_choice', input_id=font.pk) #다음단계로. pk값 같이 넘겨주기
 
@@ -46,8 +50,7 @@ def input_phrase(request):
                 final = ""
                 for char1 in p1 : 
                     if char1 in not_exists:
-                        final += "*"
-                        #pass
+                        pass
                     else : 
                         final += char1
                     
@@ -80,7 +83,7 @@ def scan_input(request, input_id):
     # 잘라서 input-photo1, input_photo2에 넣는 로직
     # 이미지 크기 조정 필요하면 하기
 
-    letters = ['dummy2' ,'moon', 'ip', 'cho', 'gi', 'web', 'dummy1', 'dae', 'yeo', 'myung', 'sook' ]
+    letters = ['dummy2' ,'moon', 'ip', 'cho', 'gi', 'web', 'dummy1', 'dae', 'yeo', 'myung', 'sook' ] #현재 결과에 맞춰놓음!! 나중에 바꾸기!!
 
     font = get_object_or_404(Font, pk=input_id) # 현재 객체 가져오기
 
@@ -240,9 +243,7 @@ def loading(request, input_id):
     # 이미지 복사 #
     phrase_kor = ['dummy2','dummy1','문','입','초','기','웹','대','여','명','숙']
     phrase_eng = ['dummy2','dummy1','moon','ip','cho','gi','web','dae','yeo','myung','sook'] #dummy는 index맞추기 위함! 나중에 고치기
-
     dictionary = {'이':'여', '지':'기', '송':'초', '졸':'초', '업':'입', '눈':'문', '는':'문', '을':'문', '꿈':'문', '꾸':'문'}
-
 
     # 파일명
     day = str(font.date)[:10]
@@ -251,10 +252,10 @@ def loading(request, input_id):
 
 
     # 디렉토리에 파일 복사
-    mkdir_command = " mkdir ~/ganjyfont/result4merge/" + str(request.user) + "_" + day_time # 이미지 병합 위한 디렉토리 만들기
+    mkdir_command = " mkdir ./media/result/" + str(request.user) + "_" + day_time # 이미지 병합 위한 디렉토리 만들기
     os.system(mkdir_command)
 
-    for i in range(10,6,-1) : #지금은 숙.명.여.대. 까지만! 나중에 고치기
+    for i in range(10,1,-1) : #지금은 숙.명.여.대. 까지만! 나중에 고치기
         
         #글자별로 유저 폴더 생성
         char = phrase_kor[i] #숙.명.여.대. 돌아가면서
@@ -273,33 +274,49 @@ def loading(request, input_id):
     # ex) 문->을
     filename = {'숙':'sook', '명':'myung', '여':'yeo', '대':'dae', '웹':'web', '기':'gi', '초':'cho', '입':'ip', '문':'moon' }
 
-    for char in input_str : #char=만들 글자 (을 이)
+    for char, i in zip(input_str, range(len(input_str))) : #char=만들 글자 (을 이)
         if char=="*" :
             pass
         else : 
             #이미지 생성
             letter = dictionary[char] #letter=체크포인트 글자 (문 여)
             dl_command = "cd ~/ganjyfont && python3 test.py --dataroot ~/ganjyfont/test2/" + letter + "/" + str(request.user) + "_" + day_time + " --name " + letter + "_" + char + "_pix2pix --model test --which_model_netG unet_256 --which_direction AtoB --dataset_mode single --norm batch --gpu_ids=0 --how_many=100"
+            print("=================deep learning=================")
             os.system(dl_command)
 
+            
             #이미지 복사 --> 이미지 병합하기 위함!
             beforecopy = "~/ganjyfont/results_ver2_font/" + letter + "_" + char +"_pix2pix/test_latest/images/" + str(request.user) + "_" + day_time + "_" + filename[letter] + "_fake_B.png"
-            aftercopy = "~/ganjyfont/result4merge/" + str(request.user) + "_" + day_time + "/" + char + ".png"
+            aftercopy = "./media/result/" + str(request.user) + "_" + day_time + "/" + str(i) + ".png"
             cp_command = "cp " + beforecopy + " " + aftercopy
             os.system(cp_command)
     
 
-    #이미지 이어붙이기
     
+    #이미지 이어붙이기
+    print("=============image merge===============")
+    string = input_str
 
+    directory = './media/result/'+ str(request.user) + "_" + day_time 
+    for i in range(len(string)) :
+        if i is 0:
+            result = directory + "/" +  str(i) +'.png'
+            print(result)
+            result = cv2.imread(result, 1)
+        else:    
+            temp = directory + "/" + str(i) +'.png'
+            print(temp)
+            temp = cv2.imread(temp, 1)
+            result = cv2.hconcat([result, temp])
 
     # 결과 이미지 경로 지정
     # 결과 이미지 webserver/Graduate/media/output 경로에 저장하기
-    img_name = "test_image"
-    output_img = "./output/"+ img_name +".png" #이미지 이름 식별 가능하게 바꾸기!
-
+    imgName = "./media/output/" + str(request.user) + "_" + day_time  + "_result.png"
+    cv2.imwrite(imgName, result)
+    
     # 이미지 db에 저장
-    font.output_photo1 = output_img
+    output_photo = "./output/" + str(request.user) + "_" + day_time  + "_result.png"
+    font.output_photo1 = output_photo
     font.save(update_fields=['output_photo1']) # 데베에 저장
 
     return render(request, 'loading.html', {'font':font})
@@ -312,3 +329,5 @@ def result(request, input_id):
 
     font = get_object_or_404(Font, pk=input_id)
     return render(request, 'result.html', {'font':font})
+
+

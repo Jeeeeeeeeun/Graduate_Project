@@ -9,7 +9,7 @@ from PIL import Image
 import re
 import base64
 from matplotlib import pyplot as plt
-
+import numpy as np
 
 # Create your views here.
 
@@ -83,7 +83,7 @@ def scan_input(request, input_id):
     # 잘라서 input-photo1, input_photo2에 넣는 로직
     # 이미지 크기 조정 필요하면 하기
 
-    letters = ['dummy2' ,'moon', 'ip', 'cho', 'gi', 'web', 'dummy1', 'dae', 'yeo', 'myung', 'sook' ] #현재 결과에 맞춰놓음!! 나중에 바꾸기!!
+    letters = ['moon', 'ip', 'cho', 'gi', 'web', 'dae', 'yeo', 'myung', 'sook' ] #현재 결과에 맞춰놓음!! 나중에 바꾸기!!
 
     font = get_object_or_404(Font, pk=input_id) # 현재 객체 가져오기
 
@@ -94,47 +94,42 @@ def scan_input(request, input_id):
             font.save(update_fields=['template_img']) # 현재 객체의 template_img란만 update
 
             ## 사진 글자 하나씩 자르기 ##
-            img = "." + font.template_img.url   # 현재 사진
-            
-            img_color = cv2.imread(img, cv2.IMREAD_COLOR)
-            cv2.imshow('result', img_color)
-            #cv2.waitKey(0)
+            dark_white = (145,60,255)
+            light_white = (0,0,200)
 
-            img_gray = cv2.cvtColor(img_color, cv2.COLOR_BGR2GRAY)
-            cv2.imshow('result', img_gray)
-            #cv2.waitKey(0)
+            template = "." + font.template_img.url
+            img = cv2.imread(template)
 
-            ret, img_binary = cv2.threshold(img_gray, 127, 255, cv2.THRESH_BINARY_INV|cv2.THRESH_OTSU)
-            cv2.imshow('result', img_binary)
-            #cv2.waitKey(0)
+            img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            img_hsv = cv2.cvtColor(img_rgb, cv2.COLOR_BGR2HSV)
+            img_mask = cv2.inRange(img_hsv, light_white, dark_white)
+            img_result = cv2.bitwise_and(img, img, mask=img_mask) # Object 추출 이미지 생성
+            """
+            cv2.imshow('img_result', img_result)
+            cv2.waitKey(0)
+            """
+            #mopology
+            kernelOpen = np.ones((5, 5))
+            kernelClose = np.ones((20, 20))
 
-            contours, hierachy = cv2.findContours(img_binary, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+            maskOpen = cv2.morphologyEx(img_mask, cv2.MORPH_OPEN, kernelOpen)
+            maskClose = cv2.morphologyEx(maskOpen, cv2.MORPH_CLOSE, kernelClose)
+            maskFinal = maskClose
+            conts, h = cv2.findContours(maskFinal.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
 
+            char_list = ['문','입','초','기','웹','대','여','명','숙']
             index = 0
-            for cnt in contours:
-                size = len(cnt)
-                #print(size)
+            for i in range(len(conts)):
+                x, y, w, h = cv2.boundingRect(conts[i])
+                cropped = img[y:y+h-5, x:x+w-5]
+                cropname = letters[index]
 
-                epsilon = 0.00002 * cv2.arcLength(cnt, True)
-                approx = cv2.approxPolyDP(cnt, epsilon, True) # 직선 근사화
+                day = str(font.date)[:10]
+                time = str(font.date)[11:13] + "-" + str(font.date)[14:16]
+                day_time = day + "_" + time
+                cv2.imwrite("./media/crop/"+str(request.user) + "_" + day_time + "_" + cropname+'.png', cropped)
+                index+=1
 
-                size = len(approx)
-                #print(size)
-
-                # if it is a rectangle
-                if size is 4:
-                    if index is not 6:
-                        #save image
-                        x,y,w,h = cv2.boundingRect(cnt)
-                        cropped = img_color[y:y+h, x:x+w]
-                        cropname = letters[index]
-                        
-                        day = str(font.date)[:10]
-                        time = str(font.date)[11:13] + "-" + str(font.date)[14:16]
-                        day_time = day + "_" + time
-                        cv2.imwrite("./media/crop/"+str(request.user) + "_" + day_time + "_" + cropname+'.png', cropped)
-                        
-                    index+=1
 
             ## 자른 이미지 데이터베이스에 저장 ##
             # 이미지 순서 맞춰서 저장하기
@@ -147,15 +142,27 @@ def scan_input(request, input_id):
             myung = "./crop/"+ str(request.user) + "_" + day_time + "_" +'myung.png' # 명
             yeo = "./crop/"+ str(request.user) + "_" + day_time + "_" +'yeo.png' # 여
             dae = "./crop/"+ str(request.user) + "_" + day_time + "_" +'dae.png' # 대
+            web = "./crop/"+ str(request.user) + "_" + day_time + "_" +'web.png' # 웹
+            gi = "./crop/"+ str(request.user) + "_" + day_time + "_" +'gi.png' # 기
+            cho = "./crop/"+ str(request.user) + "_" + day_time + "_" +'cho.png' # 초
+            ip = "./crop/"+ str(request.user) + "_" + day_time + "_" +'ip.png' # 입
+            moon = "./crop/"+ str(request.user) + "_" + day_time + "_" +'moon.png' # 문
             
             font.input_photo1 = sook 
             font.input_photo2 = myung
             font.input_photo3 = yeo
             font.input_photo4 = dae
-            font.save(update_fields=['input_photo1', 'input_photo2', 'input_photo3', 'input_photo4']) # 데베에 저장
+            font.input_photo5 = web
+            font.input_photo6 = gi
+            font.input_photo7 = cho
+            font.input_photo8 = ip
+            font.input_photo9 = moon
+
+            font.save(update_fields=['input_photo1', 'input_photo2', 'input_photo3', 'input_photo4', 'input_photo5', 'input_photo6', 'input_photo7', 'input_photo8', 'input_photo9']) # 데베에 저장
 
             return redirect('fontsapp:input_edit', input_id=font.pk) # 이미지 편집단계로. pk값 유지
     
+
     else : # 그냥 페이지 띄울 때
         form = FontForm(instance=font) # 폼에 기존 내용 넣어서 띄워주기
         return render(request, 'scan_input.html', {'form':form})
@@ -171,13 +178,12 @@ def write_input(request, input_id):
     if request.method=='POST': # 제출 버튼 눌렀을 떄
         font = get_object_or_404(Font, pk=input_id) #현재 객체
 
-
         data1 = request.POST.__getitem__('canvas1')
         data2 = request.POST.__getitem__('canvas2')
-
         
         data1=data1[22:]
         data2=data2[22:]
+
 
         #저장할 경로
         path = './media/crop/'
@@ -241,8 +247,8 @@ def loading(request, input_id):
     ## 딥러닝 서버 돌리기 ##
 
     # 이미지 복사 #
-    phrase_kor = ['dummy2','dummy1','문','입','초','기','웹','대','여','명','숙']
-    phrase_eng = ['dummy2','dummy1','moon','ip','cho','gi','web','dae','yeo','myung','sook'] #dummy는 index맞추기 위함! 나중에 고치기
+    phrase_kor = ['문','입','초','기','웹','대','여','명','숙']
+    phrase_eng = ['moon','ip','cho','gi','web','dae','yeo','myung','sook'] #dummy는 index맞추기 위함! 나중에 고치기
     dictionary = {'이':'여', '지':'기', '송':'초', '졸':'초', '업':'입', '눈':'문', '는':'문', '을':'문', '꿈':'문', '꾸':'문'}
 
     # 파일명
@@ -255,7 +261,7 @@ def loading(request, input_id):
     mkdir_command = " mkdir ./media/result/" + str(request.user) + "_" + day_time # 이미지 병합 위한 디렉토리 만들기
     os.system(mkdir_command)
 
-    for i in range(10,1,-1) : #지금은 숙.명.여.대. 까지만! 나중에 고치기
+    for i in range(8,-1,-1) : 
         
         #글자별로 유저 폴더 생성
         char = phrase_kor[i] #숙.명.여.대. 돌아가면서

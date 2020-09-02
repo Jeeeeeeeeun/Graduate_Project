@@ -150,6 +150,10 @@ def scan_input(request, input_id):
                     cropped = unsharp_mask(cropped)
                     cropname = str(char_list[index])
                     # 경로 및 이름 설정
+
+                    day = str(font.date)[:10]
+                    time = str(font.date)[11:13] + "-" + str(font.date)[14:16]
+                    day_time = day + "_" + time
                     cv2.imwrite("./media/crop/"+str(request.user) + "_" + day_time + "_" + cropname+'.png', cropped)
                     index+=1 
 

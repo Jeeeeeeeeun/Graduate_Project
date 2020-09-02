@@ -8,9 +8,10 @@
 {{ font.no_checkpoint }} <br>
 
 
-<a href="{% url 'home'%}"><button>홈으로 돌아가기</button></a> 
-
-<a href="{% url 'fontsapp:input_choice' font.id %}"><button>빼고 진행하기</button></a> 
+<a href="{% url 'fontsapp:create_later' font.id %}"><button>나중에 한꺼번에 만들기</button></a> 
 
 
-{% endblock %} 
+<a href="{% url 'fontsapp:input_choice' font.id %}"><button>없는 글자 빼고 진행하기</button></a> 
+
+
+{% endblock %} vs

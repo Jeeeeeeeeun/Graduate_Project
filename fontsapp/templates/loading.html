@@ -1,30 +1,29 @@
 {% extends 'base.html' %}
 {% block content %}
 
-
-
-<script src="http://malsup.github.com/jquery.form.js"></script>
-<!--
 <script>
-    $.ajax({
-        url: "<query_view_url>",
-        type: "GET",
-        dataType: 'json',
-        success: function (data){
-            $("#div_id").html(data.query_data);
-        },
-        error: function(e){
-            console.log(e);
-        }
-    }); 
+    function start(){
+        document.getElementById('startbutton').style.visibility = "hidden";
+        document.getElementById('loading_img').style.visibility = "visible";
+    }
+
+
 </script>
--->
+
 
 <h1>loading.html</h1>
 
-<p>로딩페이지 - 완성본은 자동으로 넘어가게 하기</p>
 
-<a href="{% url 'fontsapp:result' font.id %}">결과물 보기</a>
+<form method="post" action="{% url 'fontsapp:loading' font.id %}">
+    {% csrf_token %}
+    <input type="submit" onclick="start()" value="시작하기" id="startbutton">
+</form>
+
+<br>
+<div  id="loading_img" style="visibility:hidden;">
+    <img src="../../media/template_download/template_download.png">
+    <p>처리중입니다.</p>
+</div>
 
 
 {% endblock %}

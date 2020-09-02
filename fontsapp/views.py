@@ -21,7 +21,7 @@ def home(request) :
 def input_phrase(request): 
     ## 입력 문구 작성 ##
     
-    chars = ['눈', '송', '이', '는', '졸', '업', '을', '꿈', '꾸', '지']  # 체크포인트 있는 글자 리스트    
+    chars = ['눈', '송', '이', '는', '졸', '업', '을', '꿈', '꾸', '지', ' ']  # 체크포인트 있는 글자 리스트    
     not_exists = ""  # 없는 글자 --> 데베에 추가하기
 
     if request.method=='POST': # 제출 버튼 눌렀을 때
@@ -63,9 +63,18 @@ def input_phrase(request):
         form = FontForm() # 폼 띄워주기
         return render(request, 'input_phrase.html', {'form':form})
 
+
 def no_checkpoint(request, input_id) :
     font = get_object_or_404(Font, pk=input_id) # pk값 유지해서 넘겨주기 위함
     return render(request, 'no_checkpoint.html', {'font':font})
+
+
+def create_later(request, input_id) : 
+    font = get_object_or_404(Font, pk=input_id)
+    font.createlater = True
+    font.save()
+    return redirect('home')
+
 
 
 #read
@@ -74,6 +83,21 @@ def input_choice(request, input_id):
     ## 입력 방식 정하기 ## 
     font = get_object_or_404(Font, pk=input_id) # pk값 유지해서 넘겨주기 위함
     return render(request, 'input_choice.html', {'font':font})
+
+
+# https://homepages.inf.ed.ac.uk/rbf/HIPR2/unsharp.htm
+def unsharp_mask(image, kernel_size=(5, 5), sigma=1.0, amount=1.0, threshold=0):
+    """Return a sharpened version of the image, using an unsharp mask."""
+    blurred = cv2.GaussianBlur(image, kernel_size, sigma)
+    sharpened = float(amount + 1) * image - float(amount) * blurred
+    sharpened = np.maximum(sharpened, np.zeros(sharpened.shape))
+    sharpened = np.minimum(sharpened, 255 * np.ones(sharpened.shape))
+    sharpened = sharpened.round().astype(np.uint8)
+    if threshold > 0:
+        low_contrast_mask = np.absolute(image - blurred) < threshold
+        np.copyto(sharpened, image, where=low_contrast_mask)
+    return sharpened
+
 
 #update
 @login_required
@@ -93,6 +117,46 @@ def scan_input(request, input_id):
             font = form.save(commit=False)
             font.save(update_fields=['template_img']) # 현재 객체의 template_img란만 update
 
+
+            ## 사진 글자 하나씩 자르기 ##
+
+            template = "." + font.template_img.url
+            img = cv2.imread(template)
+
+            imgray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+            ret,thresh = cv2.threshold(imgray,127,255,0)
+            contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+
+            # 가장 밖의 사각형 안쪽만 저장
+            cnt = contours[2]
+            X,Y,W,H = cv2.boundingRect(cnt)
+            detected = img[Y:Y+H, X:X+W]
+
+            imgray = cv2.cvtColor(detected,cv2.COLOR_BGR2GRAY)
+            ret,thresh = cv2.threshold(imgray,127,255,0)
+            contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+
+            char_list = ['문','입','초','기','웹','대','여','명','숙']
+            index = 0
+
+            # 크기로 검출
+            for i in range(0,len(contours),2):
+                x,y,w,h = cv2.boundingRect(contours[i])
+                w_percent = w/W*100
+                h_percent = h/H*100
+                if 10<w_percent and w_percent<15 and 20<h_percent and h_percent<25:
+                    cropped = detected[y+5:y+h-5, x+5:x+w-5]
+                    cropped = cv2.resize(cropped, (256,256), interpolation=cv2.INTER_CUBIC)
+                    cropped = unsharp_mask(cropped)
+                    cropname = str(char_list[index])
+                    # 경로 및 이름 설정
+                    cv2.imwrite("./media/crop/"+str(request.user) + "_" + day_time + "_" + cropname+'.png', cropped)
+                    index+=1 
+
+            print('done!')
+
+
+            """
             ## 사진 글자 하나씩 자르기 ##
             dark_white = (145,60,255)
             light_white = (0,0,200)
@@ -104,10 +168,7 @@ def scan_input(request, input_id):
             img_hsv = cv2.cvtColor(img_rgb, cv2.COLOR_BGR2HSV)
             img_mask = cv2.inRange(img_hsv, light_white, dark_white)
             img_result = cv2.bitwise_and(img, img, mask=img_mask) # Object 추출 이미지 생성
-            """
-            cv2.imshow('img_result', img_result)
-            cv2.waitKey(0)
-            """
+            
             #mopology
             kernelOpen = np.ones((5, 5))
             kernelClose = np.ones((20, 20))
@@ -129,7 +190,7 @@ def scan_input(request, input_id):
                 day_time = day + "_" + time
                 cv2.imwrite("./media/crop/"+str(request.user) + "_" + day_time + "_" + cropname+'.png', cropped)
                 index+=1
-
+            """
 
             ## 자른 이미지 데이터베이스에 저장 ##
             # 이미지 순서 맞춰서 저장하기
@@ -214,7 +275,7 @@ def write_input(request, input_id):
         font.save(update_fields=['input_photo1', 'input_photo2']) # 데베에 저장
 
 
-        return redirect('fontsapp:input_edit', input_id=font.pk) # 이미지 편집단계로. pk값 유지
+        return redirect('input_edit', input_id=font.pk) # 이미지 편집단계로. pk값 유지
 
     else :
         font = get_object_or_404(Font, pk=input_id)
@@ -234,99 +295,103 @@ def input_edit(request, input_id):
 
 @login_required
 def loading(request, input_id):
-    ## 로딩 페이지 ##
-
-    # 결과 이미지 받아서 model.output_photo에 저장
-    # AJAX사용하기 https://djangosnippets.org/snippets/679/
-
-    # 현재 객체
-    font = get_object_or_404(Font, pk=input_id)
+    if request.method=='POST': # 시작 버튼 눌렀을 떄
+        font = get_object_or_404(Font, pk=input_id) # 현재 객체
 
 
+        ## 딥러닝 서버 돌리기 ##
 
-    ## 딥러닝 서버 돌리기 ##
+        ##### 1. 이미지 복사 #####
+        phrase_kor = ['문','입','초','기','웹','대','여','명','숙']
+        phrase_eng = ['moon','ip','cho','gi','web','dae','yeo','myung','sook'] #dummy는 index맞추기 위함! 나중에 고치기
+        dictionary = {'이':'여', '지':'기', '송':'초', '졸':'초', '업':'입', '눈':'문', '는':'문', '을':'문', '꿈':'문', '꾸':'문', ' ':'blank'}
 
-    # 이미지 복사 #
-    phrase_kor = ['문','입','초','기','웹','대','여','명','숙']
-    phrase_eng = ['moon','ip','cho','gi','web','dae','yeo','myung','sook'] #dummy는 index맞추기 위함! 나중에 고치기
-    dictionary = {'이':'여', '지':'기', '송':'초', '졸':'초', '업':'입', '눈':'문', '는':'문', '을':'문', '꿈':'문', '꾸':'문'}
-
-    # 파일명
-    day = str(font.date)[:10]
-    time = str(font.date)[11:13] + "-" + str(font.date)[14:16]
-    day_time = day + "_" + time
+        # 파일명
+        day = str(font.date)[:10]
+        time = str(font.date)[11:13] + "-" + str(font.date)[14:16]
+        day_time = day + "_" + time
 
 
-    # 디렉토리에 파일 복사
-    mkdir_command = " mkdir ./media/result/" + str(request.user) + "_" + day_time # 이미지 병합 위한 디렉토리 만들기
-    os.system(mkdir_command)
-
-    for i in range(8,-1,-1) : 
-        
-        #글자별로 유저 폴더 생성
-        char = phrase_kor[i] #숙.명.여.대. 돌아가면서
-        mkdir_command = " mkdir ~/ganjyfont/test2/" + str(char) + "/" + str(request.user) + "_" + day_time #학습 돌릴 이미지 모아두는 디렉토리
+        # 디렉토리에 파일 복사
+        mkdir_command = " mkdir ./media/result/" + str(request.user) + "_" + day_time # 이미지 병합 위한 디렉토리 만들기
         os.system(mkdir_command)
-        
-        
-        picname =  str(request.user) + "_" + day_time + "_" + phrase_eng[i] + ".png" # 숙
-        cp_command = "cp ~/WebServer/Graduate/media/crop/" + picname +  " ~/ganjyfont/test2/" + str(char) + "/" + str(request.user) + "_" + day_time + "/"
-        os.system(cp_command) #파일 복사
 
-    
-    # 명령어 완성
-    input_str = str(font.final_phrase) #checkpoint 있는 문자들 + * 로만 되어있는 문구
-    
-    # ex) 문->을
-    filename = {'숙':'sook', '명':'myung', '여':'yeo', '대':'dae', '웹':'web', '기':'gi', '초':'cho', '입':'ip', '문':'moon' }
-
-    for char, i in zip(input_str, range(len(input_str))) : #char=만들 글자 (을 이)
-        if char=="*" :
-            pass
-        else : 
-            #이미지 생성
-            letter = dictionary[char] #letter=체크포인트 글자 (문 여)
-            dl_command = "cd ~/ganjyfont && python3 test.py --dataroot ~/ganjyfont/test2/" + letter + "/" + str(request.user) + "_" + day_time + " --name " + letter + "_" + char + "_pix2pix --model test --which_model_netG unet_256 --which_direction AtoB --dataset_mode single --norm batch --gpu_ids=0 --how_many=100"
-            print("=================deep learning=================")
-            os.system(dl_command)
-
+        for i in range(8,-1,-1) : 
+            #글자별로 유저 폴더 생성
+            char = phrase_kor[i] #숙.명.여.대. 돌아가면서
+            mkdir_command = " mkdir ~/ganjyfont/test2/" + str(char) + "/" + str(request.user) + "_" + day_time #학습 돌릴 이미지 모아두는 디렉토리
+            os.system(mkdir_command)       
             
-            #이미지 복사 --> 이미지 병합하기 위함!
-            beforecopy = "~/ganjyfont/results_ver2_font/" + letter + "_" + char +"_pix2pix/test_latest/images/" + str(request.user) + "_" + day_time + "_" + filename[letter] + "_fake_B.png"
-            aftercopy = "./media/result/" + str(request.user) + "_" + day_time + "/" + str(i) + ".png"
-            cp_command = "cp " + beforecopy + " " + aftercopy
-            os.system(cp_command)
-    
+            picname =  str(request.user) + "_" + day_time + "_" + phrase_eng[i] + ".png" # 숙
+            cp_command = "cp ~/WebServer/Graduate/media/crop/" + picname +  " ~/ganjyfont/test2/" + str(char) + "/" + str(request.user) + "_" + day_time + "/"
+            os.system(cp_command) #파일 복사
+        
 
-    
-    #이미지 이어붙이기
-    print("=============image merge===============")
-    string = input_str
+        ##### 2.딥러닝 돌리기 #####
+        
+        # 명령어 완성
+        input_str = str(font.final_phrase) #checkpoint 있는 문자들 + * 로만 되어있는 문구
+        
+        filename = {'숙':'sook', '명':'myung', '여':'yeo', '대':'dae', '웹':'web', '기':'gi', '초':'cho', '입':'ip', '문':'moon' }
 
-    directory = './media/result/'+ str(request.user) + "_" + day_time 
-    for i in range(len(string)) :
-        if i is 0:
-            result = directory + "/" +  str(i) +'.png'
-            print(result)
-            result = cv2.imread(result, 1)
-        else:    
-            temp = directory + "/" + str(i) +'.png'
-            print(temp)
-            temp = cv2.imread(temp, 1)
-            result = cv2.hconcat([result, temp])
+        for char, i in zip(input_str, range(len(input_str))) : #char=만들 글자 (을)
+            if char=="*" :
+                pass
+            else : 
+                #이미지 생성
+                letter = dictionary[char] #letter=체크포인트 글자 (문)
+                dl_command = "cd ~/ganjyfont && python3 test.py --dataroot ~/ganjyfont/test2/" + letter + "/" + str(request.user) + "_" + day_time + " --name " + letter + "_" + char + "_pix2pix --model test --which_model_netG unet_256 --which_direction AtoB --dataset_mode single --norm batch --gpu_ids=0 --how_many=100"
+                print("=================deep learning=================")
+                os.system(dl_command)
+                
+                #이미지 복사 --> 이미지 병합하기 위함!
+                beforecopy = "~/ganjyfont/results_ver2_font/" + letter + "_" + char +"_pix2pix/test_latest/images/" + str(request.user) + "_" + day_time + "_" + filename[letter] + "_fake_B.png"
+                aftercopy = "./media/result/" + str(request.user) + "_" + day_time + "/" + str(i) + ".png"
+                cp_command = "cp " + beforecopy + " " + aftercopy
+                os.system(cp_command)
+        
 
-    # 결과 이미지 경로 지정
-    # 결과 이미지 webserver/Graduate/media/output 경로에 저장하기
-    imgName = "./media/output/" + str(request.user) + "_" + day_time  + "_result.png"
-    cv2.imwrite(imgName, result)
-    
-    # 이미지 db에 저장
-    output_photo = "./output/" + str(request.user) + "_" + day_time  + "_result.png"
-    font.output_photo1 = output_photo
-    font.save(update_fields=['output_photo1']) # 데베에 저장
+        
+        ###### 3.이미지 이어붙이기 #####
+        print("=============image merge===============")
+        string = input_str
 
-    return render(request, 'loading.html', {'font':font})
+        directory = './media/result/'+ str(request.user) + "_" + day_time 
+        for i in range(len(string)) :
+            if i is 0:
+                result = directory + "/" +  str(i) +'.png'
+                print(result)
+                result = cv2.imread(result, 1)
+            
+            
+            else:    
+                temp = directory + "/" + str(i) +'.png'
+                print(temp)
+                temp = cv2.imread(temp, 1)
+                result = cv2.hconcat([result, temp])
 
+        # 결과 이미지 경로 지정
+        # 결과 이미지 webserver/Graduate/media/output 경로에 저장하기
+        imgName = "./media/output/" + str(request.user) + "_" + day_time  + "_result.png"
+        """ #주석 빼기
+        cv2.imwrite(imgName, result)
+        """
+        
+
+        
+        ##### 4. 이미지 db에 저장 #####
+        output_photo = "./output/" + str(request.user) + "_" + day_time  + "_result.png"
+        font.output_photo1 = output_photo
+        font.save(update_fields=['output_photo1']) # 데베에 저장
+
+        return redirect('fontsapp:result', input_id=font.pk) 
+
+
+    else :  #페이지 처음 들어갈 때 (GET)
+        font = get_object_or_404(Font, pk=input_id)
+        input_str = str(font.final_phrase) #checkpoint 있는 문자들 + * 로만 되어있는 문구
+
+        return render(request, 'loading.html', {'font':font})
 
 #read
 @login_required
@@ -335,5 +400,3 @@ def result(request, input_id):
 
     font = get_object_or_404(Font, pk=input_id)
     return render(request, 'result.html', {'font':font})
-
-

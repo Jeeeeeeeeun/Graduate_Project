@@ -7,6 +7,7 @@ app_name='fontsapp'
 urlpatterns=[
     path('input_phrase/', views.input_phrase, name='input_phrase'),
     path('no_checkpoint/<int:input_id>', views.no_checkpoint, name='no_checkpoint'),
+    path('create_later/<int:input_id>', views.create_later, name='create_later'),
     path('input_choice/<int:input_id>', views.input_choice, name='input_choice'),
     path('scan_input/<int:input_id>', views.scan_input, name='scan_input'),
     path('write_input/<int:input_id>', views.write_input, name='write_input'),

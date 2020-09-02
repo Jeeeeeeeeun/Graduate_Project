@@ -148,7 +148,7 @@ def scan_input(request, input_id):
                     cropped = detected[y+5:y+h-5, x+5:x+w-5]
                     cropped = cv2.resize(cropped, (256,256), interpolation=cv2.INTER_CUBIC)
                     cropped = unsharp_mask(cropped)
-                    cropname = str(char_list[index])
+                    cropname = str(letters[index])
                     # 경로 및 이름 설정
 
                     day = str(font.date)[:10]
@@ -339,7 +339,7 @@ def loading(request, input_id):
         filename = {'숙':'sook', '명':'myung', '여':'yeo', '대':'dae', '웹':'web', '기':'gi', '초':'cho', '입':'ip', '문':'moon' }
 
         for char, i in zip(input_str, range(len(input_str))) : #char=만들 글자 (을)
-            if char=="*" :
+            if char==" " :
                 pass
             else : 
                 #이미지 생성
@@ -361,12 +361,16 @@ def loading(request, input_id):
         string = input_str
 
         directory = './media/result/'+ str(request.user) + "_" + day_time 
-        for i in range(len(string)) :
+        for s, i in zip(string, range(len(string))) :
             if i is 0:
                 result = directory + "/" +  str(i) +'.png'
                 print(result)
                 result = cv2.imread(result, 1)
             
+            if s is " " :
+                blank = "./media/blank/blank.png"
+                blank = cv2.imread(blank, 1)
+                result = cv2.hconcat([result, blank])
             
             else:    
                 temp = directory + "/" + str(i) +'.png'

@@ -361,13 +361,14 @@ def loading(request, input_id):
         string = input_str
 
         directory = './media/result/'+ str(request.user) + "_" + day_time 
+        blank = "./media/blank/blank.png"
         for s, i in zip(string, range(len(string))) :
             if i is 0:
                 result = directory + "/" +  str(i) +'.png'
                 print(result)
                 result = cv2.imread(result, 1)
             
-            if s is " " :
+            elif s is " " :
                 blank = "./media/blank/blank.png"
                 blank = cv2.imread(blank, 1)
                 result = cv2.hconcat([result, blank])

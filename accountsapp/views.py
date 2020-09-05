@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
+from fontsapp.models import Font
 
 # Create your views here.
 
@@ -51,3 +52,7 @@ def logout(request) :
         return redirect('home')
 
     return render(request, 'signup.html')
+
+def mypage(request) :
+    fonts = Font.objects.filter(user = request.user)
+    return render(request, 'mypage.html', {'fonts':fonts})

@@ -160,42 +160,6 @@ def scan_input(request, input_id):
             print('done!')
 
 
-            """
-            ## 사진 글자 하나씩 자르기 ##
-            dark_white = (145,60,255)
-            light_white = (0,0,200)
-
-            template = "." + font.template_img.url
-            img = cv2.imread(template)
-
-            img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            img_hsv = cv2.cvtColor(img_rgb, cv2.COLOR_BGR2HSV)
-            img_mask = cv2.inRange(img_hsv, light_white, dark_white)
-            img_result = cv2.bitwise_and(img, img, mask=img_mask) # Object 추출 이미지 생성
-            
-            #mopology
-            kernelOpen = np.ones((5, 5))
-            kernelClose = np.ones((20, 20))
-
-            maskOpen = cv2.morphologyEx(img_mask, cv2.MORPH_OPEN, kernelOpen)
-            maskClose = cv2.morphologyEx(maskOpen, cv2.MORPH_CLOSE, kernelClose)
-            maskFinal = maskClose
-            conts, h = cv2.findContours(maskFinal.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-
-            char_list = ['문','입','초','기','웹','대','여','명','숙']
-            index = 0
-            for i in range(len(conts)):
-                x, y, w, h = cv2.boundingRect(conts[i])
-                cropped = img[y:y+h-5, x:x+w-5]
-                cropname = letters[index]
-
-                day = str(font.date)[:10]
-                time = str(font.date)[11:13] + "-" + str(font.date)[14:16]
-                day_time = day + "_" + time
-                cv2.imwrite("./media/crop/"+str(request.user) + "_" + day_time + "_" + cropname+'.png', cropped)
-                index+=1
-            """
-
             ## 자른 이미지 데이터베이스에 저장 ##
             # 이미지 순서 맞춰서 저장하기
             # 현재 숙&명 만 저장
@@ -375,26 +339,29 @@ def loading(request, input_id):
         string = input_str
 
         directory = './media/result/'+ str(request.user) + "_" + day_time 
+        blank = "./media/blank/blank.png"
         for s, i in zip(string, range(len(string))) :
             if i is 0:
                 result = directory + "/" +  str(i) +'.png'
-                print(result)
-                result = cv2.imread(result, 1)
+                result = cv2.imread(result, cv2.IMREAD_GRAYSCALE)
                 result = cleanside(result)
                 result = morph(result)
+                print('눈')
             
             elif s is " " :
                 blank = "./media/blank/blank.png"
-                blank = cv2.imread(blank, 1)
+                blank = cv2.imread(blank, cv2.IMREAD_GRAYSCALE)
                 result = cv2.hconcat([result, blank])
+                print('-')
             
             else:    
                 temp = directory + "/" + str(i) +'.png'
                 print(temp)
-                temp = cv2.imread(temp, 1)
+                temp = cv2.imread(temp, cv2.IMREAD_GRAYSCALE)
                 temp = cleanside(temp)
                 temp = morph(temp)
                 result = cv2.hconcat([result, temp])
+                print(str(i))
 
         # 결과 이미지 경로 지정
         # 결과 이미지 webserver/Graduate/media/output 경로에 저장하기

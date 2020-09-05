@@ -297,6 +297,20 @@ def input_edit(request, input_id):
     return render(request, 'input_edit.html', {'font':font})
 
 
+def morph(img):
+    # 노이즈 제거
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (8,8))
+    closing = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)
+    return closing
+
+def cleanside(img):
+    # 양 옆 25픽셀 정도만 클린
+    img[:256, :26] = 255
+    img[:256, 230:256] = 255
+    # 위 10픽셀
+    img[:10,0:256] = 255
+    return img
+
 @login_required
 def loading(request, input_id):
     if request.method=='POST': # 시작 버튼 눌렀을 떄
@@ -366,8 +380,10 @@ def loading(request, input_id):
                 result = directory + "/" +  str(i) +'.png'
                 print(result)
                 result = cv2.imread(result, 1)
+                result = cleanside(result)
+                result = morph(result)
             
-            if s is " " :
+            elif s is " " :
                 blank = "./media/blank/blank.png"
                 blank = cv2.imread(blank, 1)
                 result = cv2.hconcat([result, blank])
@@ -376,14 +392,15 @@ def loading(request, input_id):
                 temp = directory + "/" + str(i) +'.png'
                 print(temp)
                 temp = cv2.imread(temp, 1)
+                temp = cleanside(temp)
+                temp = morph(temp)
                 result = cv2.hconcat([result, temp])
 
         # 결과 이미지 경로 지정
         # 결과 이미지 webserver/Graduate/media/output 경로에 저장하기
         imgName = "./media/output/" + str(request.user) + "_" + day_time  + "_result.png"
-        """ #주석 빼기
         cv2.imwrite(imgName, result)
-        """
+        
         
 
         

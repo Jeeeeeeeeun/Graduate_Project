@@ -10,6 +10,7 @@ import re
 import base64
 from matplotlib import pyplot as plt
 import numpy as np
+import threading
 
 # Create your views here.
 
@@ -73,7 +74,28 @@ def create_later(request, input_id) :
     font = get_object_or_404(Font, pk=input_id)
     font.createlater = True
     font.save()
+
+    create_list = {'순':'숙', '숨':'숙', '망':'명', '멍':'명', }
+
+    chars = font.no_checkpoint
+    command = ""
+
+    for char in chars :
+        try : 
+            command += "sh train.sh " + create_list[char] + " " + char + " 1000; "
+        
+        except (KeyError):
+            command += "sh train.sh 문 " + char +  " 1000; "
+
+
+    t = threading.Thread(target=doTrain, args=[command], daemon=True)
+    t.start()
+
     return redirect('home')
+
+def doTrain(command) :
+    print(command) ##프린트 바꾸기!
+    print("Train Finish")
 
 
 

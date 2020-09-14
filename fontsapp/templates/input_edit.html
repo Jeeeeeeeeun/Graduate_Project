@@ -9,51 +9,94 @@
   <title>수정하기</title>
 
   <style type='text/css'>
-     html,body{
-   font-family:'Dovemayo';
-   overflow-x: hidden;
-   margin:0;
-   padding:0;
-   height:100%;
-   }
+   html,body{
+	background-color:#170B3B;
+	font-family:'나눔스퀘어';
+	margin:0;
+	padding:0;
+	height:100%;
+	}
    /*메뉴 스타일*/
    h1{
    font-family:'배달의민족 한나는 열한살';
    font-weight:bold;
-   font-size:50pt;
+   font-size:40pt;
+   position:absolute;
+   left:130px;
+   margin-top:-80px;
+   color:white;
+   display:inline;
    }
-   #bar{
+
+   #bar2{
+   font-family:'DX영화자막';
    font-size:20pt;
    font-weight:lighter;
+   color:white;
+   margin-left:30pt;
+   }
+   #bar2 span{
+  
    }
    #current{
    color:red;
    font-size:40pt;
    font-weight:bold;
    }
-   ul{
-   list-style-type:none;
-   margin:0;
-   padding:0;
-   }
-   li{
-   float:left;
-   font-size:15pt;
-   background-color:#F8E0F1;
-   text-align:center;
-   font-weight:bold;
-   }
-   li a{
-   display:block;
-   color:black;
-   border:1px solid white;
-   text-decoration:none;
-   padding:20pt;
-   padding-left:50pt;
-   padding-right:50pt; 
-   }
-   #start{}
-   #login{}
+
+   #bar{
+	color:white;
+	font-family:'배달의민족 한나는 열한살';
+	font-size:17pt;
+	word-spacing:30pt;
+	position:absolute;
+	margin-top:-50pt;
+	margin-left:85%;
+	}
+
+	#bar p{
+	display:inline;
+	}
+
+	a{
+	text-decoration:none;
+	color: white;
+	}
+   
+/*슬라이드형 메뉴*/
+    input[id="menuicon"] {display:none;}
+	input[id="menuicon"] + label {display:block;margin:30px;width:60px;height:50px;position:relative;cursor:pointer;}
+	input[id="menuicon"] + label span {display:block;position:absolute;width:100%;height:5px;border-radius:30px;background:#fff;transition:all .35s;}
+	input[id="menuicon"] + label span:nth-child(1) {top:0;}
+	input[id="menuicon"] + label span:nth-child(2) {top:50%;transform:translateY(-50%);} /* 비슷하게 사용할 수 있는 style top:calc(50% - 2.5px); margin-top:-2.5px;*/
+	input[id="menuicon"] + label span:nth-child(3) {bottom:0;}
+	input[id="menuicon"]:checked + label {z-index:2;}
+	input[id="menuicon"]:checked + label span {background:#fff;}
+	input[id="menuicon"]:checked + label span:nth-child(1) {top:50%;transform:translateY(-50%) rotate(45deg);}
+	input[id="menuicon"]:checked + label span:nth-child(2) {opacity:0;}
+	input[id="menuicon"]:checked + label span:nth-child(3) {bottom:50%;transform:translateY(50%) rotate(-45deg);}
+	div[class="sidebar"] {width:300px;height:100%;background:#222;position:fixed;top:0;left:-300px;z-index:1;transition:all .35s;}
+	input[id="menuicon"]:checked + label + div {left:0;}
+
+	li{
+	color:white;
+	}
+	li a{
+	display:block;
+	text-decoration:none;
+	padding:20pt;
+	padding-left:20pt;
+	line-height:30pt;
+	color: white;
+	
+	font-size:17pt;
+	
+	}
+
+	li a:hover{
+	color:#FACC2E;
+	text-decoration:underline;
+	}
 
 
    section{
@@ -92,7 +135,7 @@
     
    input:hover{
    background-color:#FACC2E;
-   color:black:
+   color:black;
    font-weight:bold;
    }
 
@@ -109,56 +152,53 @@
    #box{
    display:flex;
    margin-bottom:30pt;
+   background-color:white;
+   font-family:'나눔스퀘어';
    }
 
-   /*footer*/
-   .contents-wrap {
-   min-height:100%;
+
+
+  footer{
+	background-color:#4a4949;
+	color:white;
+	position:relative;
+	padding:20px;
+   }
+  
+
+   #finish{
    position:relative;
-   padding-bottom:100px;/* footer height */
+   left:250pt;
+   bottom:-190pt;
+   border:solid medium white;
+   background-color:#170B3B;
+   color:#fff;
+   font-family:"나눔스퀘어";
+   padding:10pt;
+   font-size:15pt;
+   border-radius:10pt;
    }
 
-   footer{
-   background-color:#EAEAEA;
-   width:100%;
-   height:100px;
-    position:absolute;
-    /* bottom:40; */
-   padding:40pt;
-   line-height:25pt;
-   
-   bottom: 0;
-   }
+   #finish:hover{
+   opacity:0.5;}
+
    
    </style>
  </head>
  <body>
  <div class="container contents-wrap">
   <header>
-   <h1>폰트폰트</h1>
-   <nav>
-      <ul id="login">
-      <li><a href="">START</a></li>
-      <li><a href="">MYPAGE</a></li>
-      </ul>
-   </nav>
-   </header>
-   <aside>
-      <ul id="start">
-      <li><a href="">로그인</a></li>
-      <li><a href="">회원가입</a></li>
-      </ul>
-   </aside>
-   <br><br><br><br><br>
+
+  
    <hr>
-   <div id='bar'>
+   <div id='bar2'>
       <span>입력</span>-
       <span>확인</span>-
       <span id='current'>수정</span>-
       <span>학습</span>-
       <span>결과확인</span>
    </div>
-   <hr>
+   <br>
    <div id="box";>
    <section id="left-box">
    <h2>-예시 이미지-</h2>
@@ -190,9 +230,7 @@
       <input type='button' value='-' id='minus'>
       </div>
       </div>
-
-      <a href="{% url 'fontsapp:loading' font.id %}">제출</a>
-
+	  <a href="{% url 'fontsapp:loading' font.id %}"><button id="finish">수정완료</button></a>
    </section>
    </div>
    
@@ -234,7 +272,7 @@
       var btn6=document.getElementById('minus');
 
       var img = new Image();
-        img.src = "./숙.png";
+        img.src = "../../media/html_imgs/숙.png";
       img.onload = function(){
          //ctx
             ctx.drawImage(img, 0,0, 256,256);

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-
+<!--
 <h1>signup.html</h1>
 {% if error %}
 <br>{{ error }}<br><br>
@@ -22,6 +22,187 @@
     <br><br>
     <input type="submit" value="Sign up!">
 </form>
+-->
+
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <style>
+  body{
+  background-color:#170B3B;
+  font-family:'나눔스퀘어';
+  }
+  form{
+  background-color:white;
+  width:50%;
+  margin-top:70px;
+  margin-left:20%;
+  padding:40px;
+  text-align:center;
+  }
+  h1{
+   font-family:'배달의민족 한나는 열한살';
+   font-weight:bold;
+   font-size:40pt;
+   position: absolute;
+   left:130px;
+   top:-10px;
+   color:white;
+   }
+  h2{
+  font-family:'배달의민족 한나는 열한살';
+  font-size:40pt;
+  }
+  /*슬라이드형 메뉴*/
+    input[id="menuicon"] {display:none; }
+	input[id="menuicon"] + label {display:block;margin:30px;width:60px;height:50px;position:relative;cursor:pointer;}
+	input[id="menuicon"] + label span {display:block;position:absolute;width:100%;height:5px;border-radius:30px;background:#fff;transition:all .35s;}
+	input[id="menuicon"] + label span:nth-child(1) {top:0;}
+	input[id="menuicon"] + label span:nth-child(2) {top:50%;transform:translateY(-50%);}
+	input[id="menuicon"] + label span:nth-child(3) {bottom:0;}
+	input[id="menuicon"]:checked + label {z-index:2;}
+	input[id="menuicon"]:checked + label span {background:#fff;}
+	input[id="menuicon"]:checked + label span:nth-child(1) {top:50%;transform:translateY(-50%) rotate(45deg);}
+	input[id="menuicon"]:checked + label span:nth-child(2) {opacity:0;}
+	input[id="menuicon"]:checked + label span:nth-child(3) {bottom:50%;transform:translateY(50%) rotate(-45deg);}
+	div[class="sidebar"] {width:300px;height:100%;background:#222;position:fixed;top:0;left:-300px;z-index:1;transition:all .35s;}
+	input[id="menuicon"]:checked + label + div {left:0;}
+
+	li{
+	color:white;
+	}
+	li a{
+	display:block;
+	text-decoration:none;
+	padding:20pt;
+	padding-left:20pt;
+	line-height:30pt;
+	color: white;
+	
+	font-size:17pt;
+	
+	}
+
+	li a:hover{
+	color:#FACC2E;
+	text-decoration:underline;
+	}
+
+  p{
+  display:inline;
+  font-weight:bold;
+  }
+  img{
+  margin-top:-20pt;
+  margin-bottom:-15pt;
+  }
+  
+  
+  input {
+    font-family:'DX영화자막';
+    font-size: 16px;
+    border: 0;
+    border-radius: 5px;
+    outline: 0;
+    padding: 10px 30px;
+    margin-top: 15px;
+	border:1px solid gray;
+  }
+
+  #signup_button{
+  font-family:'DX영화자막';
+  padding:10pt;
+  width:100pt;
+  font-weight:bold;
+  background-color:#170B3B;
+  color:white;
+  border:0;
+  border-radius: 5px;
+  margin-top:20pt;
+  cursor:pointer;
+  }
+  #signup_button:hover{
+  opacity:0.5;
+  }
+  footer{
+  
+  margin:0pt;
+  padding:20pt;
+	background-color:#4a4949;
+	color:white;
+	position:relative;
+
+	margin-top:30pt;
+  }
+
+	#bar{
+	color:white;
+	font-family:'배달의민족 한나는 열한살';
+	font-size:17pt;
+	word-spacing:30pt;
+	margin-top:-50pt;
+	margin-left:85%;
+  
+	}
+
+	#bar p{
+	display:inline;
+  text-decoration: none;
+	}
+  a:visited{
+  color:white;
+	font-family:'배달의민족 한나는 열한살';
+	font-size:17pt;
+	word-spacing:30pt;
+	margin-top:-50pt;
+	margin-left:85%;
+  }
+
+
+  </style>
+ </head>
+ <body>
+
+<form method="POST" action="{% url 'accountsapp:signup' %}">
+    {% csrf_token %}
+  <h2>폰트폰트 <span style="color:#FACC2E;">M</span>embership</h2>
+  <img src="../../media/html_imgs/person.svg" width="150" height="160"><br><br>
+  <p>Username</p><br>
+  <input name="username" type="text" value="" placeholder="이름"><br><br>
+  <p>Password</p><br>
+  <input name="password1" type="password" value="" placeholder="Password"><br><br>
+  <p>Password 확인</p><br>
+  <input name="password2" type="password" value="" placeholder="Password"><br><br>
+
+  <p>성</p><br>
+  <input name="lastname" type="text" value="" placeholder="성"><br><br>
+  <p>이름</p><br>
+  <input name= "firstname" type="text" value="" placeholder="이름"><br><br>
+  <p>이메일</p><br>
+  <input name="email" type="email" value="" placeholder="email@domain.com"><br><br>
+
+  {% if error %}
+    <br>{{ error }}<br><br>
+  {% endif %}
+
+
+
+  
+  <input type="submit" id="signup_button" value="회원가입하기">
+
+ </form>
+ 
+ <br><br>
+ </body>
+</html>
+
+
 
 
 {% endblock %}

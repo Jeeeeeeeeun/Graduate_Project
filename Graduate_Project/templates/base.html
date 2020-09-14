@@ -1,18 +1,65 @@
-<a href="{% url 'home' %}">홈</a>
 
-{% if user.is_authenticated %}
-{{ user.username }}님
+  <header>
+    <div style="display:inline;">
+      <input type="checkbox" id="menuicon">
+      <label for="menuicon">
+          <span></span>
+          <span></span>
+          <span></span>
+      </label>
+      <div class="sidebar">
+      <br><br><br><br><br>
+      <ul id="login">
+          <li><a a href="{% url 'fontsapp:input_phrase' %}">생성시작</a></li>
+          <li><a href="{% url 'accountsapp:mypage' %}">MYPAGE</a></li>
+          {% if user.is_authenticated %}
+          <li><a href="javascript:{document.getElementById('logout').submit()}">로그아웃</a></li>
+          <form id="logout" method="POST" action="{% url 'accountsapp:logout' %}">
+              {% csrf_token %}
+              <input type="hidden">
+          </form>
+          {% else %}
+          <li><a href="{% url 'accountsapp:signup'%}">로그인</a></li>
+          <li><a href="{% url 'accountsapp:login' %}">회원가입</a></li>
+          {% endif %}
+          
+          <li><a href="{% url 'home' %}">메인페이지</a></li>
+      </ul>
+      </div>
+      </div>
+    </header>
+    <a href="{% url 'home' %}"><h1>폰트폰트</h1></a>
 
-<a href="javascript:{document.getElementById('logout').submit()}">로그아웃</a>
-<form id="logout" method="POST" action="{% url 'accountsapp:logout' %}">
-    {% csrf_token %}
-    <input type="hidden">
-</form>
-
-{% else %}
-<a href="{% url 'accountsapp:signup'%}">회원가입</a>
-<a href="{% url 'accountsapp:login' %}">로그인</a>
-{% endif %}
-
+  
+    <div id="bar">
+      {% if user.is_authenticated %}
+      <div style="display: flex; justify-content: flex-end;">
+      <span style="padding-right: 1rem;">{{ user.username }}님</span>
+      <a href="javascript:{document.getElementById('logout').submit()}"><p>로그아웃</p></a>
+      <form id="logout" method="POST" action="{% url 'accountsapp:logout' %}">
+          {% csrf_token %}
+          <input type="hidden">
+      </form>
+      </div>
+      
+      {% else %}
+      <div style="display:flex; justify-content: flex-end; ">
+       <a href="{% url 'accountsapp:login'%}" style="padding-right: 1rem;"><p>로그인</p></a>
+      <a href="{% url 'accountsapp:signup'%}"><p>회원가입</p></a>
+    </div>
+      {% endif %}
+  
+    </div>
+      
+    
+    <aside></aside>
+  
 {% block content %}
 {% endblock %}
+
+<footer>
+    <p>팀원 : 김예린 장지은 조세란</p>
+   <p>숙명여자대학교 졸업프로젝트</p>
+   <p>이메일: ~</p>
+</footer>
+ 

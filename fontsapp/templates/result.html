@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-
+<!--
 <h1>result.html</h1>
 
 유저 : {{ font.user }} <br>
@@ -14,11 +14,218 @@
             <img src="{{ font.input_photo5.url }}"> 
             <img src="{{ font.input_photo6.url }}"> 
             <img src="{{ font.input_photo7.url }}"> 
-            <img src="{{ font.input_photo8.url }}"> 
-            <img src="{{ font.input_photo9.url }}"> 
+
 
 <br><br>
 output : <img src="{{ font.output_photo1.url }}">
+-->
+
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>결과확인</title>
+  <style type='text/css'>
+  	html,body{
+	background-color:#170B3B;
+	font-family:'DX영화자막';
+	margin:0;
+	padding:0;
+	height:100%;
+	}
+
+	/*메뉴 스타일*/
+   h1{
+   font-family:'배달의민족 한나는 열한살';
+   font-weight:bold;
+   font-size:40pt;
+   position:absolute;
+   left:130px;
+   margin-top:-80px;
+   color:white;
+   display:inline;
+   }
+
+   #bar2{
+	font-size:20pt;
+	font-weight:lighter;
+	color:white;
+	margin-left:30pt;
+	}
+	#current{
+	color:red;
+	font-size:40pt;
+	font-weight:bold;
+	}
+
+	/*슬라이드형 메뉴*/
+    input[id="menuicon"] {display:none;}
+	input[id="menuicon"] + label {display:block;margin:30px;width:60px;height:50px;position:relative;cursor:pointer;}
+	input[id="menuicon"] + label span {display:block;position:absolute;width:100%;height:5px;border-radius:30px;background:#fff;transition:all .35s;}
+	input[id="menuicon"] + label span:nth-child(1) {top:0;}
+	input[id="menuicon"] + label span:nth-child(2) {top:50%;transform:translateY(-50%);} 
+	input[id="menuicon"] + label span:nth-child(3) {bottom:0;}
+	input[id="menuicon"]:checked + label {z-index:2;}
+	input[id="menuicon"]:checked + label span {background:#fff;}
+	input[id="menuicon"]:checked + label span:nth-child(1) {top:50%;transform:translateY(-50%) rotate(45deg);}
+	input[id="menuicon"]:checked + label span:nth-child(2) {opacity:0;}
+	input[id="menuicon"]:checked + label span:nth-child(3) {bottom:50%;transform:translateY(50%) rotate(-45deg);}
+	div[class="sidebar"] {width:300px;height:100%;background:#222;position:fixed;top:0;left:-300px;z-index:1;transition:all .35s;}
+	input[id="menuicon"]:checked + label + div {left:0;}
+
+
+	li{
+	color:white;
+	}
+	li a{
+	display:block;
+	text-decoration:none;
+	padding:20pt;
+	padding-left:20pt;
+	line-height:30pt;
+	color: white;
+	
+	font-size:17pt;
+	
+	}
+
+	a{
+	text-decoration:none;
+	color: white;
+	}
+
+	li a:hover{
+	color:#FACC2E;
+	text-decoration:underline;
+	}
+
+
+	#bar{
+	color:white;
+	font-family:'배달의민족 한나는 열한살';
+	font-size:17pt;
+	word-spacing:30pt;
+	position:absolute;
+	margin-top:-50pt;
+	margin-left:85%;
+	}
+
+	#bar p{
+	display:inline;
+	}
+
+	a{
+	text-decoration:none;
+	color: white;
+	}
+
+	footer{
+	background-color:#4a4949;
+	color:white;
+	position:relative;
+	padding:20px;
+	}
+
+	#article1{
+	background-color:#f7f7f7;
+	text-align:center;
+	font-size:60px;
+	font-family:'나눔스퀘어';
+	}
+
+	h3{
+	font-size:30pt;
+	font-weight:bolder;
+	margin-top:10pt;
+	
+	}
+
+	button{
+    font-size: 16px;
+    border: 0;
+    border-radius: 5px;
+    outline: 0;
+    padding: 10px 30px;
+    margin-top: 15px;
+	border:1px solid gray;
+	color:#fff;
+	font-family:'Dovemayo';
+	background-color:#170B3B;
+	cursor:pointer;
+	}
+
+
+	button:hover{
+	background-color:#FACC2E;
+	font-weight:bold;
+	}
+
+	.arrow-right{
+	position: absolute;
+	display: inline-block;
+	width:0; height:0;
+	border-top:8px solid transparent;
+	border-bottom:8px solid transparent;
+	border-right:8px solid transparent;
+	border-left:8px solid white;
+	margin-left:15px;
+	margin-top:2px;
+	animation: horizontal 0.7s ease-in-out infinite;
+	}
+	@keyframes horizontal {
+	  0% {
+		margin-left: 9px;
+	  }
+	  50% {
+		margin-left: 11px;
+	  }
+	  100% {
+		margin-left: 9px;
+	  }
+	}
+
+	p{
+	font-size:15pt;
+	}
+
+   </style>
+ </head>
+ <body>
+ <header>
+  <div style="display:inline;">
+  <nav>
+  <hr>
+	 <div id='ba2r'>
+		<span>입력</span>-
+		<span>확인</span>-
+		<span>수정</span>-
+		<span>학습</span>-
+		<span id='current'>결과확인</span>
+	 </div>
+	 <br>
+  </nav>
+   <section>
+		<article id='article1'>
+			<img src="../../media/html_imgs/result.png" width=100 height=100 style="margin-top:50pt;">
+			<h3>결과이미지가 완성되었습니다.</h3>
+			<img src="{{ font.output_photo1.url }}" width=600 height=100><br>
+			<div style="position:">
+			<div style="position:relative;text-align:center;">
+			<p>결과이미지가 완성되었습니다.<br>
+			완성된 이미지를 다운로드 받으실 수 있습니다.<br>
+			마이페이지를 통해서도 결과이미지를 확인하실 수 있습니다.
+			</p>
+			</div>
+			</div>
+			<button style='margin-bottom:70pt;'>다운로드<span class="arrow-right"></span>
+			</button>
+			<a href="{% url 'accountsapp:mypage' %}"><button style='background-color:#848484;'>마이페이지로가기<span class="arrow-right"></span></button></a>
+		</article>
+	</section>
+  
+ </body>
+</html>
+
 
 {% endblock %}
 

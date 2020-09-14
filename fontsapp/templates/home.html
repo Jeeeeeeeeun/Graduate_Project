@@ -2,12 +2,537 @@
 
 {% block content %}
 
+<!--
 <h1>Home</h1>
 <a href="{% url 'fontsapp:input_phrase' %}">Start</a>
 <a href="">My Page</a>
 
 <p>서비스 소개</p>
 <p>사용 방법 소개</p>
+-->
+
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  
+  <title>Document</title>
+
+  <style type='text/css'>
+
+	html,body{
+	background-color:#170B3B;
+	/* font-family:'DX영화자막'; */
+	font-family:'나눔스퀘어';
+	margin:0;
+	padding:0;
+	height:100%;
+	}
+
+	/*메뉴 스타일*/
+   h1{
+   font-family:'배달의민족 한나는 열한살';
+   font-weight:bold;
+   font-size:40pt;
+   position:absolute;
+   left:130px;
+   margin-top:-80px;
+   color:white;
+   display:inline;
+   }
+
+	#title{
+	font-size:60pt;
+	font-weight:bold;
+	}
+	#subtitle{
+	font-size:30pt;
+	margin-top:40pt;
+	letter-spacing:3pt;
+	}
+	.abs2{
+	  position:relative; 
+	  top:60%;
+	  left:50%;
+	  transform:translate(-50%,-50%)
+	  }
+	  button{
+	  margin-top:130px;
+	  padding:20px;
+	  font-size:20pt;
+	  border-radius:10px 0 10px 0; 
+	  border:solid medium white;
+	  background-color:#170B3B;
+	  color:#fff;
+	  font-family:'Dovemayo';
+	  }
+	  button:hover{
+	  background-color:#FACC2E;
+	  color:black:
+	  font-weight:bold;
+	  }
+	  #how{
+	  font-weight:bold;
+	  font-size:60pt;
+	  margin-bottom:60pt;
+	  
+	  }
+	  #article1{
+	  background-color:#170B3B;
+	  padding:30pt;
+	  color:white;
+	  text-align:center;
+	  margin-top:-20pt;
+	  }
+	  #article2{
+	  background-color:#f7f7f7;
+	  padding:30pt;
+	  text-align:center;
+	  }
+	  #howto{
+	  line-height:60pt;
+	  font-size:20pt;
+	  /* margin-left:100pt; */
+	  color:black;
+	  font-weight:bold;
+	  text-align:center;
+	  background-color:#e6e4e3;
+	 /*  margin:-30px 200px 0px 200px; */
+	  border-radius:50pt;
+	  padding:50pt;
+	  }
+	  #circle1 {
+		background-color:#86efef;
+		width:150px;
+		height:150px;
+		border-radius:75px;
+		text-align:center;
+		margin:0 auto;
+		font-size:20px;
+		vertical-align:middle;
+		line-height:150px;
+		font-weight:bold;
+		}
+		i {
+		border: solid #86efef;
+		border-width: 0 10px 10px 0;
+		display: inline-block;
+		padding: 10px;
+		}
+		.down {
+		transform: rotate(45deg);
+		-webkit-transform: rotate(45deg);
+		}
+		footer{
+		background-color:#4a4949;
+		color:white;
+		position:relative;
+		margin-top:-50px;
+		padding:20px;
+		}
+		#typing-text{
+		display:none;
+
+		}
+		input{
+		border:solid gray;
+		border-radius:5px;
+		padding:10px;
+		text-align:center;
+		font-family:'나눔고딕';
+		font-size:10px;
+
+		display:inline-block;
+		animation-duration:0.3s;
+		animation-iteration-count:infinite;
+	    }
+
+		/*슬라이드형 메뉴*/
+    input[id="menuicon"] {display:none;}
+	input[id="menuicon"] + label {display:block;margin:30px;width:60px;height:50px;position:relative;cursor:pointer;}
+	input[id="menuicon"] + label span {display:block;position:absolute;width:100%;height:5px;border-radius:30px;background:#fff;transition:all .35s;}
+	input[id="menuicon"] + label span:nth-child(1) {top:0;}
+	input[id="menuicon"] + label span:nth-child(2) {top:50%;transform:translateY(-50%);} 
+	input[id="menuicon"] + label span:nth-child(3) {bottom:0;}
+	input[id="menuicon"]:checked + label {z-index:2;}
+	input[id="menuicon"]:checked + label span {background:#fff;}
+	input[id="menuicon"]:checked + label span:nth-child(1) {top:50%;transform:translateY(-50%) rotate(45deg);}
+	input[id="menuicon"]:checked + label span:nth-child(2) {opacity:0;}
+	input[id="menuicon"]:checked + label span:nth-child(3) {bottom:50%;transform:translateY(50%) rotate(-45deg);}
+	div[class="sidebar"] {width:300px;height:100%;background:#222;position:fixed;top:0;left:-300px;z-index:1;transition:all .35s;}
+	input[id="menuicon"]:checked + label + div {left:0;}
+
+	li{
+	color:white;
+	}
+	li a{
+	display:block;
+	text-decoration:none;
+	padding:20pt;
+	padding-left:20pt;
+	line-height:30pt;
+	color: white;
+	
+	font-size:17pt;
+	
+	}
+
+	a{
+	text-decoration:none;
+	color: white;
+	}
+
+	li a:hover{
+	color:#FACC2E;
+	text-decoration:underline;
+	}
+
+	h2{
+	padding-bottom:20pt;
+	font-size:23pt;
+	font-weight:bold;
+	color:#170B3B;
+	float:left;
+	left:50pt;
+	padding-left:50pt;
+	padding-top:30pt;
+
+	}
+	
+	#select p{
+	font-size:17pt;
+	line-height:30pt;
+	}
+
+	#bar{
+	color:white;
+	font-family:'배달의민족 한나는 열한살';
+	font-size:17pt;
+	word-spacing:30pt;
+	margin-top:-50pt;
+	margin-left:85%;
+  
+	}
+
+	#bar p{
+	display:inline;
+  text-decoration: none;
+	}
+    a:visited{
+    color:white;
+        font-family:'배달의민족 한나는 열한살';
+        font-size:17pt;
+        word-spacing:30pt;
+        margin-top:-50pt;
+        margin-left:85%;
+    }
+
+	.menubar_contents{
+	margin-top:-120pt;
+	}
+
+	.menubar_contents .menubar{
+	margin-bottom:70pt;
+	}
+
+	.menubar_contents .menubar button{
+	background:none;
+	border:0;
+	outline:0;
+	cursor:pointer;
+	color:black;
+	font-family:"나눔스퀘어";
+	margin-left:60pt;
+	margin-right:60pt
+	}
+
+	.contents{
+	display:flex;
+	text-align:center;
+	}
+
+	.button_group{
+	width:80px;
+	height:40px;
+	transition:0.3s all;
+	}
+	.menubar_contents .menubar .button_group.on{
+	color:#FACC2E;
+	}
+	.menubar_contents .menubar .button_group:hover{
+	color:#FACC2E;
+	font-weight:bold;
+	}
+
+	.tab{
+	display:none;
+	padding:20px;
+    
+	}
+	.tab.on{
+	display:block;
+	}
+
+	#howto{
+	position:relative;
+	left:20%;
+	}
+
+	#step1_contents,#step2_contents,#step3_contents,#step4_contents{
+	width:70%;
+	}
+	
+	
+	input[type="radio"]{
+	/* visibility:hidden;*/
+	display:none;
+	}
+
+	input[type="radio"]:checked~*{
+	
+	}
+
+	.pos label{
+	  margin-top:-130px;
+	  padding:20px;
+	  font-size:13pt;
+	  border-radius:10px 0 10px 0; 
+	  border:solid medium white;
+	  background-color:#170B3B;
+	  color:#fff;
+	  font-family:'나눔스퀘어';
+	  transition:0.5s; cursor:pointer;
+	}
+
+	.pos label:hover{
+	opacity:0.5;
+	}
+
+	ul,li{
+	list-style:none;
+	color:black;
+	}
+
+
+	#slide li:nth-child(1){background:#fff;}
+	#slide li:nth-child(2){background:#fff;}
+	img { display: block; margin: 0px auto; margin-top:-10px; }
+
+	footer{
+	background-color:#4a4949;
+	color:white;
+	position:relative;
+	padding:20px;
+	}
+
+	
+  </style>
+ </head>
+ <body leftmargin="0" rightmargin="0">
+ 
+
+  <section>
+		<article id='article1'>
+		<br>
+		<p><div id='title'>나만의 <span style='color:#FACC2E;'>폰트 제작?</span></div></p>
+		<img src="../../media/html_imgs/연필.svg" width="200" height="200">
+		<p>
+		<div id='subtitle'>사용자에게 자신의 글씨체를<br/>한글 폰트로 생성해 주는 서비스 입니다.</div>
+		</p>
+		<div class='abs2'>
+			<a href="{% url 'fontsapp:input_phrase' %}"><button>시작하기</button></a>
+            
+		</div>
+		</article>
+		<article id='article2'>
+		<p><div id='how'>How to use<br>
+		<span style='font-size:20pt; font-weight:normal; 
+		font-family:"Nanum SaRangHaeADeur"; font-weight:bolder;'>폰트를 생성하는 방법을 자세히 알려드릴께요.</span></div></p>
+	
+		<div class="menubar_contents">
+		<div class="menubar">
+			<button class="button_group on" type="button" id="step1" onclick="step1_click();">step1</button>
+			<button class="button_group" type="button" id="step2" onclick="step2_click();">step2</button>
+			<button class="button_group" type="button" id="step3" onclick="step3_click();">step3</button>
+			<button class="button_group" type="button" id="step4" onclick="step4_click();">step4</button>
+		</div>
+		<div class="contents">
+			<div class="tab on" id="step1_contents">
+				<div id='howto'>
+					<div id="circle1">STEP #1</div>
+					원하시는 결과 문구를 입력해주세요.<br>
+					<div class='abs1'>
+						<p id='typing-text'>눈송이는 졸업을 꿈꿨지</p>
+						<input type='text' size=100 id='input'>
+					</div>
+				</div>
+			</div>
+			<div class="tab" id="step2_contents">
+				<div id='howto'>
+					<div id="circle1">STEP #2</div>
+					입력 방식을 선택해주세요.<br>
+
+
+					<div id="slide">
+
+						<p class="pos">
+						<label for="pos1"><a href="#target2">1. 스캔으로 입력하는 경우</a></label>
+						<label for="pos2"><a href="#target">2. 태블릿으로 입력하는 경우</a></label>
+						</p>
+
+						<ul id='select'>
+						<li id="target2">
+						<h2>1. 스캔으로 입력하는 경우</h2>
+						<br><br><br>
+						<p>[1]<br>
+						<img src="../../media/html_imgs/숙명여대웹기초입문.png" width=500 height=300>
+						탬플릿을 다운로드 받아서 프린트해주세요.</p><br>
+						<p>[2]<br>
+						<img src="../../media/html_imgs/종이.png" width=500 height=300>
+						탬플릿에 샘플 글자(지정문구)들을 적어주세요.<br>
+						<span style="color:red; font-size:15pt">지정문구:"숙명여대 웹기초입문"</span></p><br>
+						<p>[3]<br> 작성이 완료되었다면,<br> 스캔을 떠서 파일을 업로드 해주세요.
+						</p>
+						</li>
+						<li id="target">
+						<h2>2. 태블릿에 직접 쓰는 경우</h2>
+						<br><br><br>
+						<p style="line-height:30pt;">[1]<br>
+
+						<img src="../../media/html_imgs/종이.png" width=500 height=300>테블릿에 샘플글자(지정문구)들을 적어주세요.<br>
+						<span style="color:red; font-size:15pt">지정문구:"숙명여대 웹기초입문"</span></p><br>
+						<p style="line-height:30pt;">[2]<br>작성이 완료되었다면,<br> 제출해주세요.</p><br>
+						</li>
+						</ul>
+
+						<input type="radio" name="pos" id="pos1" onclick="radio_click();" checked>
+						<input type="radio" name="pos" id="pos2">
+					</div>
+
+				</div>
+			</div>
+			<div class="tab" id="step3_contents">
+				<div id='howto'>
+					<div id="circle1">STEP #3</div>
+					글자를 확인하고 수정해주세요.<br>
+					글자별로 수정이 가능합니다.<br>
+					</div>
+			</div>
+			<div class="tab" id="step4_contents">
+				<div id='howto'>
+					<div id="circle1">STEP #4</div>
+					완성된 결과가 30초이내로 출력됩니다.<br>
+					</div>
+				</div>
+			</div>
+		</div><br><br>
+		</article>
+  </section>
+
+  
+ 
+ </body>
+</html>
+
+<script>
+	window.onload = function (){
+		var typing=false;
+		var ele=document.getElementById('typing-text').innerText;
+		var index=0;
+		var length=ele.length;
+
+		function show(){
+			var ele2=document.getElementById('input');
+			if(typing==false){
+				ele2.value=ele2.value.concat(ele[index]);
+				index++;
+				if(index==ele.length){
+					typing=true;
+					index=0;
+				}
+				
+				setTimeout(show,600);
+			}
+			ele2.focus();
+			return;
+		}
+		show();
+		window.scrollTo(0,0);
+	}
+
+	
+
+	  
+	
+</script>
+
+<script>
+	var element1=document.getElementById('step1');
+	var element2=document.getElementById('step2');
+	var element3=document.getElementById('step3');
+	var element4=document.getElementById('step4');
+	function step1_click(){
+		element2.classList.remove('on');
+		element3.classList.remove('on');
+		element4.classList.remove('on');
+		element1.classList.add('on');
+		
+		step2_contents.classList.remove('on');
+		step3_contents.classList.remove('on');
+		step4_contents.classList.remove('on');
+		step1_contents.classList.add('on');
+	}
+
+	function step2_click(){
+		element1.classList.remove('on');
+		element3.classList.remove('on');
+		element4.classList.remove('on');
+		element2.classList.add('on');	
+		
+		step1_contents.classList.remove('on');
+		step3_contents.classList.remove('on');
+		step4_contents.classList.remove('on');
+		step2_contents.classList.add('on');
+	}
+	function step3_click(){
+		element1.classList.remove('on');
+		element2.classList.remove('on');
+		element4.classList.remove('on');
+		element3.classList.add('on');
+		
+		step1_contents.classList.remove('on');
+		step2_contents.classList.remove('on');
+		step4_contents.classList.remove('on');
+		step3_contents.classList.add('on');
+	}
+	function step4_click(){
+		element1.classList.remove('on');
+		element2.classList.remove('on');
+		element3.classList.remove('on');
+		element4.classList.add('on');	
+		
+		step1_contents.classList.remove('on');
+		step2_contents.classList.remove('on');
+		step3_contents.classList.remove('on');
+		step4_contents.classList.add('on');
+	}
+
+</script>
+
+<!-- <script>
+
+//var radio1=document.getElementById('pos1');
+//var rada
+function radio_click(){
+	var check_count=document.getElementsByName("pos").length;
+
+	for(var i=0;i<check_count;i++){
+		if(document.getElementsByName("pos")[i].checked==true){
+			
+		}
+	}
+}
+</script> -->
 
 
 {% endblock %}

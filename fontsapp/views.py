@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from .forms import FontForm
 from .models import Font
 import cv2
@@ -10,6 +11,7 @@ import re
 import base64
 from matplotlib import pyplot as plt
 import numpy as np
+import threading
 
 # Create your views here.
 
@@ -73,7 +75,27 @@ def create_later(request, input_id) :
     font = get_object_or_404(Font, pk=input_id)
     font.createlater = True
     font.save()
+
+    create_list = {'순':'숙', '숨':'숙', '망':'명', '멍':'명', }
+
+    chars = font.no_checkpoint
+    command = ""
+
+    for char in chars :
+        try : 
+            command += "sh train.sh " + create_list[char] + " " + char + " 1000; "
+        
+        except (KeyError):
+            command += "sh train.sh 문 " + char +  " 1000; "
+
+    t = threading.Thread(target=doTrain, args=[command], daemon=True)
+    t.start()
+
     return redirect('home')
+
+def doTrain(command) :
+    print(command) ##프린트 바꾸기!
+    print("Train Finish")
 
 
 
@@ -119,7 +141,6 @@ def scan_input(request, input_id):
 
 
             ## 사진 글자 하나씩 자르기 ##
-
             template = "." + font.template_img.url
             img = cv2.imread(template)
 
@@ -144,6 +165,7 @@ def scan_input(request, input_id):
                 x,y,w,h = cv2.boundingRect(contours[i])
                 w_percent = w/W*100
                 h_percent = h/H*100
+
                 if 10<w_percent and w_percent<15 and 20<h_percent and h_percent<25:
                     cropped = detected[y+5:y+h-5, x+5:x+w-5]
                     cropped = cv2.resize(cropped, (256,256), interpolation=cv2.INTER_CUBIC)
@@ -207,11 +229,25 @@ def write_input(request, input_id):
     if request.method=='POST': # 제출 버튼 눌렀을 떄
         font = get_object_or_404(Font, pk=input_id) #현재 객체
 
-        data1 = request.POST.__getitem__('canvas1')
+        data1 = request.POST.__getitem__('canvas')
         data2 = request.POST.__getitem__('canvas2')
+        data3 = request.POST.__getitem__('canvas3')
+        data4 = request.POST.__getitem__('canvas4')
+        data5 = request.POST.__getitem__('canvas5')
+        data6 = request.POST.__getitem__('canvas6')
+        data7 = request.POST.__getitem__('canvas7')
+        # data8 = request.POST.__getitem__('canvas8')
+        # data9 = request.POST.__getitem__('canvas9')
         
         data1=data1[22:]
         data2=data2[22:]
+        data3=data3[22:]
+        data4=data4[22:]
+        data5=data5[22:]
+        data6=data6[22:]
+        data7=data7[22:]
+        # data8=data8[22:]
+        # data9=data9[22:]
 
 
         #저장할 경로
@@ -222,28 +258,77 @@ def write_input(request, input_id):
 
         filename1 = str(request.user) + "_" + day_time + "_" +'sook.png'
         filename2 = str(request.user) + "_" + day_time + "_" +'myung.png'
+        filename3 = str(request.user) + "_" + day_time + "_" +'yeo.png'
+        filename4 = str(request.user) + "_" + day_time + "_" +'dae.png'
+        filename5 = str(request.user) + "_" + day_time + "_" +'web.png'
+        filename6 = str(request.user) + "_" + day_time + "_" +'gi.png'
+        filename7 = str(request.user) + "_" + day_time + "_" +'cho.png'
+        # filename8 = str(request.user) + "_" + day_time + "_" +'ip.png'
+        # filename9 = str(request.user) + "_" + day_time + "_" +'moon.png'
 
         #'wb'로 파일 open
         image1 = open(path+filename1, "wb")
         image2 = open(path+filename2, "wb")
+        image3 = open(path+filename3, "wb")
+        image4 = open(path+filename4, "wb")
+        image5 = open(path+filename5, "wb")
+        image6 = open(path+filename6, "wb")
+        image7 = open(path+filename7, "wb")
+        # image8 = open(path+filename8, "wb")
+        # image9 = open(path+filename9, "wb")
+        
 
         #디코딩 + 파일에 쓰기
         image1.write(base64.b64decode(data1))
         image2.write(base64.b64decode(data2))
-        
+        image3.write(base64.b64decode(data3))
+        image4.write(base64.b64decode(data4))
+        image5.write(base64.b64decode(data5))
+        image6.write(base64.b64decode(data6))
+        image7.write(base64.b64decode(data7))
+        # image8.write(base64.b64decode(data8))
+        # image9.write(base64.b64decode(data9))
+
+
         
         image1.close()
         image2.close()
+        image3.close()
+        image4.close()
+        image5.close()
+        image6.close()
+        image7.close()
+        # image8.close()
+        # image9.close()
+
+
 
         sook = "./crop/"+ str(request.user) + "_" + day_time + "_" +'sook.png' # 숙
         myung = "./crop/"+ str(request.user) + "_" + day_time + "_" +'myung.png' # 명
-        
+        yeo = "./crop/"+ str(request.user) + "_" + day_time + "_" +'yeo.png' # 명
+        dae = "./crop/"+ str(request.user) + "_" + day_time + "_" +'dae.png'
+        web = "./crop/"+ str(request.user) + "_" + day_time + "_" +'web.png'
+        gi = "./crop/"+ str(request.user) + "_" + day_time + "_" +'gi.png'
+        cho = "./crop/"+ str(request.user) + "_" + day_time + "_" +'cho.png'
+        # ip = "./crop/"+ str(request.user) + "_" + day_time + "_" +'ip.png'
+        # moon= "./crop/"+ str(request.user) + "_" + day_time + "_" +'moon.png'
+
+
         font.input_photo1 = sook 
         font.input_photo2 = myung
-        font.save(update_fields=['input_photo1', 'input_photo2']) # 데베에 저장
+        font.input_photo3 = yeo
+        font.input_photo4 = dae
+        font.input_photo5 = web
+        font.input_photo6 = gi
+        font.input_photo7 = cho
+        # font.input_photo8 = ip
+        # font.input_photo9 = moon
+
+        
+        font.save(update_fields=['input_photo1', 'input_photo2', 'input_photo3', 'input_photo4', 'input_photo5', 'input_photo6', 'input_photo7']) # 데베에 저장
 
 
-        return redirect('input_edit', input_id=font.pk) # 이미지 편집단계로. pk값 유지
+        return HttpResponse() # 이미지 편집단계로. pk값 유지
 
     else :
         font = get_object_or_404(Font, pk=input_id)
@@ -252,13 +337,18 @@ def write_input(request, input_id):
 #update
 @login_required
 def input_edit(request, input_id):
-    ## 사진 편집 ##
+    if request.method=='POST':
+        font = get_object_or_404(Font, pk=input_id)
 
-    #크기. 중앙에 맞추기 등 설정 & 변경사항 저장하기
-    font = get_object_or_404(Font, pk=input_id)
-    
+        return render(request, 'input_edit.html', {'font':font})
 
-    return render(request, 'input_edit.html', {'font':font})
+
+    else:
+        ## 사진 편집 ##
+
+        #크기. 중앙에 맞추기 등 설정 & 변경사항 저장하기
+        font = get_object_or_404(Font, pk=input_id)
+        return render(request, 'input_edit.html', {'font':font})
 
 
 def morph(img):
@@ -340,6 +430,8 @@ def loading(request, input_id):
 
         directory = './media/result/'+ str(request.user) + "_" + day_time 
         blank = "./media/blank/blank.png"
+
+        """
         for s, i in zip(string, range(len(string))) :
             if i is 0:
                 result = directory + "/" +  str(i) +'.png'
@@ -362,11 +454,12 @@ def loading(request, input_id):
                 temp = morph(temp)
                 result = cv2.hconcat([result, temp])
                 print(str(i))
+        """
 
         # 결과 이미지 경로 지정
         # 결과 이미지 webserver/Graduate/media/output 경로에 저장하기
         imgName = "./media/output/" + str(request.user) + "_" + day_time  + "_result.png"
-        cv2.imwrite(imgName, result)
+        #cv2.imwrite(imgName, result)
         
         
 

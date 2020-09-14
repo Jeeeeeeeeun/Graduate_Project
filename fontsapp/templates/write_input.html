@@ -1,86 +1,573 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<head>
-    <script src= "https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"> </script> 
-    <script src= "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"> </script> 
-    <script src= "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"> </script> 
-    <meta charset="UTF-8">
-</head>
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
 
-<h1>write_input.html - 직접입력페이지</h1>
+   
+  <script src= "https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"> </script> 
+  <script src= "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"> </script> 
+  <script src= "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"> </script> 
 
-<p>안내문 / 주의사항</p>
+  
+  <title>태블릿으로 입력하기</title>
+   <style type='text/css'>
+  	html,body{
+	background-color:#170B3B;
+	font-family:'DX영화자막';
+	margin:0;
+	padding:0;
+	height:100%;
+	}
 
-canvas창 띄우기 <br>
+	/*메뉴 스타일*/
+   h1{
+   font-family:'배달의민족 한나는 열한살';
+   font-weight:bold;
+   font-size:40pt;
+   position:absolute;
+   left:130px;
+   margin-top:-80px;
+   color:white;
+   display:inline;
+   }
+	#bar2{
+	font-size:20pt;
+	font-weight:lighter;
+	color:white;
+	margin-left:30pt;
+	}
+	#current{
+	color:red;
+	font-size:40pt;
+	font-weight:bold;
+	}
 
-<canvas id="canvas1" width="200" height="200" style='border:1px solid black;'></canvas>
-<canvas id="canvas2" width="200" height="200" style='border:1px solid black;'></canvas>
-<br>
-<button onclick='pen(1)'>펜굵기-1</button>
-<button onclick='pen(5)'>펜굵기-5</button>
-<canvas width='1000' height='200' id='pen_select'></canvas>
+	section{
+	padding:30pt;
+	margin-top:20pt;
+	text-align:center;
+	font-size:15pt;
+	background-color:white;
+	width:70%;
+	margin-left:160pt;
+	}
+
+	h2{
+	font-weight:bold;
+	color:#170B3B;
+	}
+
+	/*button*/
+	input{
+	padding:40pt;
+	margin:20pt;
+	}
+
+	/*step1*/
+	#xs{
+	background:url("../../media/html_imgs/원.png") no-repeat;
+	background-position:center;
+	background-size:10px;
+	}
+	#s{
+	background:url("../../media/html_imgs/원.png") no-repeat;
+	background-position:center;
+	background-size:20px;
+	}
+	#m{
+	background:url("../../media/html_imgs/원.png") no-repeat;
+	background-position:center;
+	background-size:30px;
+	}
+	#l{
+	background:url("../../media/html_imgs/원.png") no-repeat;
+	background-position:center;
+	background-size:40px;
+	}
+	
+	/*step2*/
+	.inlineBlock{
+	display:inline-block;
+	}
+	.text{
+	font-family:'배달의민족 한나는 열한살';
+	font-weight:bold;
+	font-size:25pt;
+	}
+	#btn_group{
+	position:relative;
+	margin-top: 20px;
+	margin-left: 10px;
+	}
+	#btn_group button{
+	border: 1px solid gray;
+	background-color: rgba(0,0,0,0);
+	padding: 5px;
+	font-family:'Dovemayo';
+	font-size:14pt;
+	}
+	#btn_group button:hover{
+	background-color: #F8E0F1;
+	}
+	/* #btn1,#btn3{
+	border-top-left-radius: 5px; 
+	border-bottom-left-radius: 5px; 
+	}
+	#btn2,#btn4{
+	border-top-right-radius: 5px; 
+	border-bottom-right-radius: 5px; 	 
+	} */
+
+	/*step3*/
+	#submitcanvas{
+	margin-top:30px;
+	padding:20px;
+	font-size:20pt;
+	border-radius:10px 0 10px 0; 
+	border:solid medium white;
+	background-color:#170B3B;
+	color:#fff;
+	font-family:'Dovemayo';
+	}
+	#submitcanvas:hover{
+	background-color:#FACC2E;
+	color:black:
+	font-weight:bold;
+	}
+
+	footer{
+	background-color:#4a4949;
+	color:white;
+	position:relative;
+	padding:20px;
+	}
+
+		/*슬라이드형 메뉴*/
+    input[id="menuicon"] {display:none;}
+	input[id="menuicon"] + label {display:block;margin:30px;width:60px;height:50px;position:relative;cursor:pointer;}
+	input[id="menuicon"] + label span {display:block;position:absolute;width:100%;height:5px;border-radius:30px;background:#fff;transition:all .35s;}
+	input[id="menuicon"] + label span:nth-child(1) {top:0;}
+	input[id="menuicon"] + label span:nth-child(2) {top:50%;transform:translateY(-50%);} 
+	input[id="menuicon"] + label span:nth-child(3) {bottom:0;}
+	input[id="menuicon"]:checked + label {z-index:2;}
+	input[id="menuicon"]:checked + label span {background:#fff;}
+	input[id="menuicon"]:checked + label span:nth-child(1) {top:50%;transform:translateY(-50%) rotate(45deg);}
+	input[id="menuicon"]:checked + label span:nth-child(2) {opacity:0;}
+	input[id="menuicon"]:checked + label span:nth-child(3) {bottom:50%;transform:translateY(50%) rotate(-45deg);}
+	div[class="sidebar"] {width:300px;height:100%;background:#222;position:fixed;top:0;left:-300px;z-index:1;transition:all .35s;}
+	input[id="menuicon"]:checked + label + div {left:0;}
 
 
-<br>
-<button id="submitcanvas" onclick="sub()">현재까지 작업 저장하기</button>
+	li{
+	color:white;
+	}
+	li a{
+	display:block;
+	text-decoration:none;
+	padding:20pt;
+	padding-left:20pt;
+	line-height:30pt;
+	color: white;
+	
+	font-size:17pt;
+	
+	}
+
+	a{
+	text-decoration:none;
+	color: white;
+	}
+
+	li a:hover{
+	color:#FACC2E;
+	text-decoration:underline;
+	}
+
+
+	#bar{
+	color:white;
+	font-family:'배달의민족 한나는 열한살';
+	font-size:17pt;
+	word-spacing:30pt;
+	position:absolute;
+	margin-top:-50pt;
+	margin-left:85%;
+	}
+
+	#bar p{
+	display:inline;
+	}
+
+	a{
+	text-decoration:none;
+	color: white;
+	}
+
+	
+	
+	</style>
+ </head>
+ <body onload="init()">
+
+ <div class="container contents-wrap">
+	<hr>
+	<div id='bar2'>
+		<span id='current'>입력</span>-
+		<span>확인</span>-
+		<span>수정</span>-
+		<span>학습</span>-
+		<span>결과확인</span>
+	</div>
+
+	<section id="part1">
+	<h2>-STEP1-<br><span id='current'>펜 굵기</span>를 선택해주세요.</h2>
+	<input type="button" id='xs' onclick='pen(1);'></input>
+	<input type="button" id='s' onclick='pen(5);'></input>
+	<input type="button" id='m' onclick='pen(10);'></input>
+	<input type="button" id='l' onclick='pen(15);'></input>
+	</section>
+
+
+	
+	<section id="part2">
+	<h2>-STEP2-<br><span id='current'>&lt;숙명여대아이티&gt;</span><br>글자를 <span id='current'>입력해주세요</span>.</h2>
+	<p style="color:red;">반드시 숙명여대아이티 글씨만 입력해주세요.</p>
+	<p>글자를 입력하신 후에 글자를 지울 수도 수정할 수도 있습니다.</p>
+	<h2 style='margin-top:70pt;margin-bottom:5pt;'>-예시-</h2>
+	<img src='../../media/html_imgs/종이.png' width=700 height=350><br><br>
+	<button id="submitcanvas" onclick="sub()" style="margin-top:-30px;" >임시저장하기</button><br>
+	<!-- canvas1 -->
+	<div class='inlineBlock'>
+		<p class='text'>숙</p>
+		<canvas id="canvas" style="border:solid 1px black;" width="256" height="256"></canvas>
+		<div id='btn_group'>
+			<button id='btn1'>지우기</button><!-- <button id='btn2' onclick="window.open('수정하기.html')">수정하기</button>
+			<button>임시저장하기</button> -->
+		</div>
+	</div>
+	<!-- canvas2 -->
+	<div class='inlineBlock'>
+		<p class='text'>명</p>
+		<canvas id="canvas2" style="border:solid 1px black;" width="256" height="256"></canvas>
+		<div id='btn_group'>
+			<button id='btn3'>지우기</button><!-- <button id='btn4' onclick="window.open('수정하기.html')">수정하기</button>
+			<button>임시저장하기</button> -->
+		</div>
+	</div>
+	<!-- canvas3 -->
+	<div class='inlineBlock'>
+		<p class='text'>여</p>
+		<canvas id="canvas3" style="border:solid 1px black;" width="256" height="256"></canvas>
+		<div id='btn_group'>
+			<button id='btn5'>지우기</button><!-- <button id='btn6' onclick="window.open('수정하기.html')">수정하기</button>
+			<button>임시저장하기</button> -->
+		</div>
+	</div>
+	<!-- canvas4 -->
+	<div class='inlineBlock'>
+		<p class='text'>대</p>
+		<canvas id="canvas4" style="border:solid 1px black;" width="256" height="256"></canvas>
+		<div id='btn_group'>
+			<button id='btn7'>지우기</button><!-- <button id='btn8' onclick="window.open('수정하기.html')">수정하기</button>
+			<button>임시저장하기</button> -->
+		</div>
+	</div>
+
+	<br><br><br><br>
+	<!-- canvas5 -->
+	<div class='inlineBlock'>
+		<p class='text'>아</p>
+		<canvas id="canvas5" style="border:solid 1px black;" width="256" height="256"></canvas>
+		<div id='btn_group'>
+			<button id='btn9'>지우기</button><!-- <button id='btn10' onclick="window.open('수정하기.html')">수정하기</button>
+			<button>임시저장하기</button> -->
+		</div>
+	</div>
+	<!-- canvas6 -->
+	<div class='inlineBlock'>
+		<p class='text'>이</p>
+		<canvas id="canvas6" style="border:solid 1px black;" width="256" height="256"></canvas>
+		<div id='btn_group'>
+			<button id='btn11'>지우기</button><!-- <button id='btn12' onclick="window.open('수정하기.html')">수정하기</button>
+			<button>임시저장하기</button> -->
+		</div>
+	</div>
+	<!-- canvas4 -->
+	<div class='inlineBlock'>
+		<p class='text'>티</p>
+		<canvas id="canvas7" style="border:solid 1px black;" width="256" height="256"></canvas>
+		<div id='btn_group'>
+			<button id='btn13'>지우기</button><!-- <button id='btn14' onclick="window.open('수정하기.html')">수정하기</button>
+			<button>임시저장하기</button> -->
+		</div>
+	</div>
+	</section>
+	<br>
+
+	<section id="part3">
+	<h2>-STEP3-<br>글자 작성을 끝내셨다면<br><span id='current'>글자 제출하기 버튼</span>을 클릭해주세요.</h2>	
+	<a href="{% url 'fontsapp:input_edit' font.id %}"><button id='submitcanvas'>글자 제출하기</button></a>
+	</section>
+	<br>
+</div>
+
 
 <script>
-    window.onload=function(){
-        var canvas1=document.getElementById('canvas1');
-        var canvas2=document.getElementById('canvas2');
+	var canvas, context;
+	var canvas2, context2;
+	var canvas3, context3;
+	var canvas4, context4;
+	var canvas5, context5;
+	var canvas6, context6;
+	var canvas7, context7;
+	var p_Thick=3;
 
-        var ctx=canvas1.getContext('2d');
-        var ctx2=canvas2.getContext('2d');
-        var x=0;
-        var y=0;
 
-        p_Thick=3;
+    function init() {
+        canvas = document.getElementById("canvas");
+        context = canvas.getContext("2d");
+        context.lineWidth = p_Thick; 
 
-        ctx.beginPath();
-        canvas1.onmousedown=function(){
-            ctx.strokeStyle='black';
-            ctx.lineWidth=p_Thick; 
-            ctx.moveTo(event.x -canvas1.offsetLeft, event.y-canvas1.offsetTop);  
-            //그릴 선의 초기값.
-            //마우스가 클릭됬을때 초기값 을 잡아준다.
-        
-            canvas1.onmousemove=function(){
-                ctx.lineTo(event.x -canvas1.offsetLeft, event.y-canvas1.offsetTop);
-                ctx.stroke();
-            }
-            canvas1.onmouseup=function(){
-                canvas1.onmousemove=null;
-            }
-        }
+		canvas2 = document.getElementById("canvas2");
+		context2 = canvas2.getContext("2d");
+		context2.lineWidth = p_Thick; 
 
-        ctx2.beginPath();
-        canvas2.onmousedown=function(){
-            ctx2.strokeStyle='black';
-            ctx2.lineWidth=p_Thick; 
-            ctx2.moveTo(event.x -canvas2.offsetLeft, event.y-canvas2.offsetTop);  
-            //그릴 선의 초기값.
-            //마우스가 클릭됬을때 초기값 을 잡아준다.
-        
-            canvas2.onmousemove=function(){
-                ctx2.lineTo(event.x -canvas2.offsetLeft, event.y-canvas2.offsetTop);
-                ctx2.stroke();
-            }
-            canvas2.onmouseup=function(){
-                canvas2.onmousemove=null;
-            }
-        }    
+		canvas3 = document.getElementById("canvas3");
+		context3 = canvas3.getContext("2d");
+		context3.lineWidth = p_Thick; 
+
+		canvas4 = document.getElementById("canvas4");
+		context4 = canvas4.getContext("2d");
+		context4.lineWidth = p_Thick; 
+
+		canvas5 = document.getElementById("canvas5");
+		context5 = canvas5.getContext("2d");
+		context5.lineWidth = p_Thick; 
+
+		canvas6 = document.getElementById("canvas6");
+		context6 = canvas6.getContext("2d");
+		context6.lineWidth = p_Thick; 
+
+		canvas7 = document.getElementById("canvas7");
+		context7 = canvas7.getContext("2d");
+		context7.lineWidth = p_Thick; 
+			
+
+        // 마우스 리스너 등록. e는 MouseEvent 객체
+        canvas.addEventListener("mousemove", function (e) { move1(e) }, false);
+        canvas.addEventListener("mousedown", function (e) { down(e) }, false);
+        canvas.addEventListener("mouseup", function (e) { up(e) }, false);
+        canvas.addEventListener("mouseout", function (e) { out(e) }, false);
+
+		canvas2.addEventListener("mousemove", function (e) { move2(e) }, false);
+		canvas2.addEventListener("mousedown", function (e) { down(e) }, false);
+		canvas2.addEventListener("mouseup", function (e) { up(e) }, false);
+		canvas2.addEventListener("mouseout", function (e) { out(e) }, false);
+
+		canvas3.addEventListener("mousemove", function (e) { move3(e) }, false);
+		canvas3.addEventListener("mousedown", function (e) { down(e) }, false);
+		canvas3.addEventListener("mouseup", function (e) { up(e) }, false);
+		canvas3.addEventListener("mouseout", function (e) { out(e) }, false);
+
+		canvas4.addEventListener("mousemove", function (e) { move4(e) }, false);
+		canvas4.addEventListener("mousedown", function (e) { down(e) }, false);
+		canvas4.addEventListener("mouseup", function (e) { up(e) }, false);
+		canvas4.addEventListener("mouseout", function (e) { out(e) }, false);
+
+		canvas5.addEventListener("mousemove", function (e) { move5(e) }, false);
+		canvas5.addEventListener("mousedown", function (e) { down(e) }, false);
+		canvas5.addEventListener("mouseup", function (e) { up(e) }, false);
+		canvas5.addEventListener("mouseout", function (e) { out(e) }, false);
+
+		canvas6.addEventListener("mousemove", function (e) { move6(e) }, false);
+		canvas6.addEventListener("mousedown", function (e) { down(e) }, false);
+		canvas6.addEventListener("mouseup", function (e) { up(e) }, false);
+		canvas6.addEventListener("mouseout", function (e) { out(e) }, false);
+
+		canvas7.addEventListener("mousemove", function (e) { move7(e) }, false);
+		canvas7.addEventListener("mousedown", function (e) { down(e) }, false);
+		canvas7.addEventListener("mouseup", function (e) { up(e) }, false);
+		canvas7.addEventListener("mouseout", function (e) { out(e) }, false);
+
+		btn1.onclick=function(){
+			context.clearRect(0,0,canvas.width,canvas.height);
+			context.fillStyle='white';
+			context.beginPath();
+		}
+
+		btn3.onclick=function(){
+			context2.clearRect(0,0,canvas2.width,canvas2.height);
+			context2.fillStyle='white';
+			context2.beginPath();
+		}
+
+		btn5.onclick=function(){
+			context3.clearRect(0,0,canvas3.width,canvas3.height);
+			context3.fillStyle='white';
+			context3.beginPath();
+		}
+
+		btn7.onclick=function(){
+			context4.clearRect(0,0,canvas4.width,canvas4.height);
+			context4.fillStyle='white';
+			context4.beginPath();
+		}
+
+		btn9.onclick=function(){
+			context5.clearRect(0,0,canvas5.width,canvas5.height);
+			context5.fillStyle='white';
+			context5.beginPath();
+		}
+
+		btn11.onclick=function(){
+			context6.clearRect(0,0,canvas6.width,canvas6.height);
+			context6.fillStyle='white';
+			context6.beginPath();
+		}
+
+		btn13.onclick=function(){
+			context7.clearRect(0,0,canvas7.width,canvas7.height);
+			context7.fillStyle='white';
+			context7.beginPath();
+		}
+		
     }
 
+	var startX=0, startY=0; // 드래깅동안, 처음 마우스가 눌러진 좌표
+    var drawing=false;
 
+	
+	function draw1(curX, curY) {
+        context.beginPath();
+		context.fillStyle='white';
+		context.lineWidth = p_Thick; 
+        context.moveTo(startX, startY);
+        context.lineTo(curX, curY);
+        context.stroke();
+    }
+	
 
-    function pen(pen_size){
-        p_Thick=pen_size;
-        alert('펜굵기 선택: '+pen_size);
-
+    function down(e) {
+        startX = e.offsetX; startY = e.offsetY;
+        drawing = true;
     }
 
-    
+    function up(e) { drawing = false; }
+
+    function move1(e) {
+        if(!drawing) return; // 마우스가 눌러지지 않았으면 리턴
+        var curX = e.offsetX, curY = e.offsetY;
+        draw1(curX, curY);
+        startX = curX; startY = curY;
+    }
+
+    function out(e) { drawing = false; }
+
+	//canvas2
+	function move2(e) {
+        if(!drawing) return; // 마우스가 눌러지지 않았으면 리턴
+        var curX = e.offsetX, curY = e.offsetY;
+        draw2(curX, curY);
+        startX = curX; startY = curY;
+    }
+	function draw2(curX, curY) {
+        context2.beginPath();
+		context2.fillStyle='white';
+		context2.lineWidth = p_Thick; 
+        context2.moveTo(startX, startY);
+        context2.lineTo(curX, curY);
+        context2.stroke();
+    }
+
+	//canvas3
+	function move3(e) {
+        if(!drawing) return; // 마우스가 눌러지지 않았으면 리턴
+        var curX = e.offsetX, curY = e.offsetY;
+        draw3(curX, curY);
+        startX = curX; startY = curY;
+    }
+	function draw3(curX, curY) {
+        context3.beginPath();
+		context3.fillStyle='white';
+		context3.lineWidth = p_Thick; 
+        context3.moveTo(startX, startY);
+        context3.lineTo(curX, curY);
+        context3.stroke();
+    }
+
+	//canvas4
+	function move4(e) {
+        if(!drawing) return; // 마우스가 눌러지지 않았으면 리턴
+        var curX = e.offsetX, curY = e.offsetY;
+        draw4(curX, curY);
+        startX = curX; startY = curY;
+    }
+	function draw4(curX, curY) {
+        context4.beginPath();
+		context4.fillStyle='white';
+		context4.lineWidth = p_Thick; 
+        context4.moveTo(startX, startY);
+        context4.lineTo(curX, curY);
+        context4.stroke();
+    }
+
+	//canvas5
+	function move5(e) {
+        if(!drawing) return; // 마우스가 눌러지지 않았으면 리턴
+        var curX = e.offsetX, curY = e.offsetY;
+        draw5(curX, curY);
+        startX = curX; startY = curY;
+    }
+	function draw5(curX, curY) {
+        context5.beginPath();
+		context5.fillStyle='white';
+		context5.lineWidth = p_Thick; 
+        context5.moveTo(startX, startY);
+        context5.lineTo(curX, curY);
+        context5.stroke();
+    }
+
+	//canvas6
+	function move6(e) {
+        if(!drawing) return; // 마우스가 눌러지지 않았으면 리턴
+        var curX = e.offsetX, curY = e.offsetY;
+        draw6(curX, curY);
+        startX = curX; startY = curY;
+    }
+	function draw6(curX, curY) {
+        context6.beginPath();
+		context6.fillStyle='white';
+		context6.lineWidth = p_Thick; 
+        context6.moveTo(startX, startY);
+        context6.lineTo(curX, curY);
+        context6.stroke();
+    }
+
+	//canvas7
+	function move7(e) {
+        if(!drawing) return; // 마우스가 눌러지지 않았으면 리턴
+        var curX = e.offsetX, curY = e.offsetY;
+        draw7(curX, curY);
+        startX = curX; startY = curY;
+    }
+	function draw7(curX, curY) {
+        context7.beginPath();
+		context7.fillStyle='white';
+		context7.lineWidth = p_Thick; 
+        context7.moveTo(startX, startY);
+        context7.lineTo(curX, curY);
+        context7.stroke();
+    }
+
+	//펜사이즈
+	function pen(pen_size){
+		p_Thick=pen_size;
+	}
+
+	
     function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -105,9 +592,17 @@ canvas창 띄우기 <br>
     }
 
     function sub(){
-        var canvas1 = document.getElementById("canvas1").toDataURL();
+        var canvas = document.getElementById("canvas").toDataURL();
         var canvas2 = document.getElementById("canvas2").toDataURL();
-
+        var canvas3 = document.getElementById("canvas3").toDataURL();
+        var canvas4 = document.getElementById("canvas4").toDataURL();
+        var canvas5 = document.getElementById("canvas5").toDataURL();
+        var canvas6 = document.getElementById("canvas6").toDataURL();
+        var canvas7 = document.getElementById("canvas7").toDataURL();
+        //var canvas8 = document.getElementById("canvas8").toDataURL();
+        //var canvas9 = document.getElementById("canvas9").toDataURL();
+        
+        console.log("hihihi");
         $.ajaxSetup({
             beforeSend: function(xhr, settings) {
                 if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
@@ -120,18 +615,27 @@ canvas창 띄우기 <br>
             type:"POST",
             url:"{% url 'fontsapp:write_input' font.id %}",
             data:{
-                canvas1:canvas1,
-                canvas2:canvas2
+                canvas:canvas,
+                canvas2:canvas2,
+                canvas3:canvas3,
+                canvas4:canvas4,
+                canvas5:canvas5,
+                canvas6:canvas6,
+                canvas7:canvas7,
+                //canvas8:canvas8,
+                //canvas9:canvas9,
             }
         }).done(function(o){
             console.log('saved');
         });
     };
 
+	
 </script>
+</body>
+</html>
 
 
-<br><br>
-<a href="{% url 'fontsapp:input_edit' font.id %}">사진편집하기</a>
+
 
 {% endblock %}

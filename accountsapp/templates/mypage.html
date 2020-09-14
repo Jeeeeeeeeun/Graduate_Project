@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<!--
   {% for font in fonts.all %}
     {{ font.user }} <br>
     {{ font.date }}<br>
@@ -23,7 +24,244 @@
     <img src = "{{ font.output_photo1.url }}">
     <br><br><br><br>
   {% endfor %}
-
+-->
   
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Mypage</title>
+  <style type='text/css'>
+  	html,body{
+	background-color:#170B3B;
+	font-family:'나눔스퀘어';
+	margin:0;
+	padding:0;
+	height:100%;
+	}
+
+	/*메뉴 스타일*/
+   h1{
+   font-family:'배달의민족 한나는 열한살';
+   font-weight:bold;
+   font-size:40pt;
+   position:absolute;
+   left:130px;
+   margin-top:-80px;
+   color:white;
+   display:inline;
+   }
+
+   #bar2{
+    font-family:'DX영화자막';
+	font-size:20pt;
+	font-weight:lighter;
+	color:white;
+	margin-left:30pt;
+	}
+	#current{
+	color:red;
+	font-size:40pt;
+	font-weight:bold;
+	}
+
+	/*슬라이드형 메뉴*/
+    input[id="menuicon"] {display:none;}
+	input[id="menuicon"] + label {display:block;margin:30px;width:60px;height:50px;position:relative;cursor:pointer;}
+	input[id="menuicon"] + label span {display:block;position:absolute;width:100%;height:5px;border-radius:30px;background:#fff;transition:all .35s;}
+	input[id="menuicon"] + label span:nth-child(1) {top:0;}
+	input[id="menuicon"] + label span:nth-child(2) {top:50%;transform:translateY(-50%);} 
+	input[id="menuicon"] + label span:nth-child(3) {bottom:0;}
+	input[id="menuicon"]:checked + label {z-index:2;}
+	input[id="menuicon"]:checked + label span {background:#fff;}
+	input[id="menuicon"]:checked + label span:nth-child(1) {top:50%;transform:translateY(-50%) rotate(45deg);}
+	input[id="menuicon"]:checked + label span:nth-child(2) {opacity:0;}
+	input[id="menuicon"]:checked + label span:nth-child(3) {bottom:50%;transform:translateY(50%) rotate(-45deg);}
+	div[class="sidebar"] {width:300px;height:100%;background:#222;position:fixed;top:0;left:-300px;z-index:1;transition:all .35s;}
+	input[id="menuicon"]:checked + label + div {left:0;}
+
+
+	li{
+	color:white;
+	}
+	li a{
+	display:block;
+	text-decoration:none;
+	padding:20pt;
+	padding-left:20pt;
+	line-height:30pt;
+	color: white;
+	font-size:17pt;
+	}
+
+	a{
+	text-decoration:none;
+	color: white;
+	}
+
+	li a:hover{
+	color:#FACC2E;
+	text-decoration:underline;
+	}
+
+
+	#bar{
+	color:white;
+	font-family:'배달의민족 한나는 열한살';
+	font-size:17pt;
+	word-spacing:30pt;
+	position:absolute;
+	margin-top:-50pt;
+	margin-left:85%;
+	}
+
+	#bar p{
+	display:inline;
+	}
+
+	a{
+	text-decoration:none;
+	color: white;
+	}
+
+	footer{
+	background-color:#4a4949;
+	color:white;
+	position:relative;
+	padding:20px;
+	}
+
+	#section1{
+	background-color:#f7f7f7;
+	padding-top:30pt;
+	padding-left:30pt;
+	font-size:15pt;
+	}
+	#article1, #article2, #article3,#article4{
+	font-family:'나눔스퀘어';
+	font-size:20pt;
+	font-weight:bold;
+	}
+
+	table tr td{
+	font-family:"Nanum SaRangHaeADeur";
+	font-size:23pt;
+	font-weight:bold;
+	}
+	input {
+	margin-left:40pt;
+	width:400px;
+	height:30px;
+	font-size:20px;
+	font-family:"나눔스퀘어";
+	text-align:center;
+	}
+
+	table.waiting {
+    width:90%;
+    border-collapse: separate;
+    border-spacing: 1px;
+    text-align: center;
+    line-height: 1.5;
+    margin: 20px 10px;
+}
+	
+	table.waiting tr{
+	font-family:'나눔스퀘어';
+	width: 155px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align:top;
+    color: #fff;
+    background: orange ;
+	font-size:10pt;
+	}
+
+	table.waiting td {
+	color: black;
+    width: 155px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #eee;
+}
+
+   </style>
+ </head>
+ <body>
+ <header>
+  <div style="display:inline;">
+  <section id='section1'>
+  <div >
+  	<article id='article1'>
+	<p style="display:inline;"><span style="border:2px solid orange; margin-right:20px;"></span>계정정보</p>
+	<br>
+	</article>
+	<br>
+
+	<article id='article2'>
+    <div>
+      <p><span style="border:2px solid orange; margin-right:20px;"></span>입력기록</p>
+      <table width=800>
+      {% for font in fonts.all %}
+        <tr>
+        <td align=left valign=top>[{{ font.date }}]</td>
+        </tr>
+        <tr>
+        <td>
+        <img src="{{ font.input_photo1.url }}" width=100 height=100>&nbsp;<img src="{{ font.input_photo2.url }}" width=100 height=100>&nbsp;<img src="{{ font.input_photo3.url }}" width=100 height=100>&nbsp;<img src="{{ font.input_photo4.url }}" width=100 height=100><br>
+        <img src="{{ font.input_photo5.url }}" width=100 height=100>&nbsp;<img src="{{ font.input_photo6.url }}" width=100 height=100>&nbsp;<img src="{{ font.input_photo7.url }}" width=100 height=100>
+        </td>
+        </tr>
+      {% endfor %}
+
+      </table>
+    </div>
+	</article>
+	
+	<article id='article3'>
+    <div>
+      <p><span style="border:2px solid orange; margin-right:20px;"></span>출력기록</p>
+      <table>
+        {% for font in fonts.all %}
+      <tr>
+      <td align=left valign=top>[{{ font.date }}]</td>
+      </tr>
+      <tr><td>
+      <img src="{{ font.output_photo1.url }}" width=700 >
+      </td></tr>
+      {% endfor %}
+
+      </table>
+    </div>
+	</article>
+
+	<article id='article4'>
+    <div>
+      <p><span style="border:2px solid orange; margin-right:20px;"></span>대기목록</p>
+
+      <table class="waiting" style="">
+        {% for font in fonts.all %}
+
+        <tr><th>날짜</th><th>문구</th><th>완성여부</th></tr>
+        <tr><td>{{ font.date }}</td><td>{{ font.phrase1 }}</td><td>{{ font.createlater }}</td></tr>
+        {% endfor %}
+
+      </table>
+    </div>
+	</article>
+	<br>
+ 
+	
+  </section>
+  
+ </body>
+</html>
+
+
 
 {% endblock %}

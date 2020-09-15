@@ -236,8 +236,8 @@ def write_input(request, input_id):
         data5 = request.POST.__getitem__('canvas5')
         data6 = request.POST.__getitem__('canvas6')
         data7 = request.POST.__getitem__('canvas7')
-        # data8 = request.POST.__getitem__('canvas8')
-        # data9 = request.POST.__getitem__('canvas9')
+        data8 = request.POST.__getitem__('canvas8')
+        data9 = request.POST.__getitem__('canvas9')
         
         data1=data1[22:]
         data2=data2[22:]
@@ -246,8 +246,8 @@ def write_input(request, input_id):
         data5=data5[22:]
         data6=data6[22:]
         data7=data7[22:]
-        # data8=data8[22:]
-        # data9=data9[22:]
+        data8=data8[22:]
+        data9=data9[22:]
 
 
         #저장할 경로
@@ -263,8 +263,8 @@ def write_input(request, input_id):
         filename5 = str(request.user) + "_" + day_time + "_" +'web.png'
         filename6 = str(request.user) + "_" + day_time + "_" +'gi.png'
         filename7 = str(request.user) + "_" + day_time + "_" +'cho.png'
-        # filename8 = str(request.user) + "_" + day_time + "_" +'ip.png'
-        # filename9 = str(request.user) + "_" + day_time + "_" +'moon.png'
+        filename8 = str(request.user) + "_" + day_time + "_" +'ip.png'
+        filename9 = str(request.user) + "_" + day_time + "_" +'moon.png'
 
         #'wb'로 파일 open
         image1 = open(path+filename1, "wb")
@@ -274,8 +274,8 @@ def write_input(request, input_id):
         image5 = open(path+filename5, "wb")
         image6 = open(path+filename6, "wb")
         image7 = open(path+filename7, "wb")
-        # image8 = open(path+filename8, "wb")
-        # image9 = open(path+filename9, "wb")
+        image8 = open(path+filename8, "wb")
+        image9 = open(path+filename9, "wb")
         
 
         #디코딩 + 파일에 쓰기
@@ -286,8 +286,8 @@ def write_input(request, input_id):
         image5.write(base64.b64decode(data5))
         image6.write(base64.b64decode(data6))
         image7.write(base64.b64decode(data7))
-        # image8.write(base64.b64decode(data8))
-        # image9.write(base64.b64decode(data9))
+        image8.write(base64.b64decode(data8))
+        image9.write(base64.b64decode(data9))
 
 
         
@@ -298,8 +298,8 @@ def write_input(request, input_id):
         image5.close()
         image6.close()
         image7.close()
-        # image8.close()
-        # image9.close()
+        image8.close()
+        image9.close()
 
 
 
@@ -310,8 +310,8 @@ def write_input(request, input_id):
         web = "./crop/"+ str(request.user) + "_" + day_time + "_" +'web.png'
         gi = "./crop/"+ str(request.user) + "_" + day_time + "_" +'gi.png'
         cho = "./crop/"+ str(request.user) + "_" + day_time + "_" +'cho.png'
-        # ip = "./crop/"+ str(request.user) + "_" + day_time + "_" +'ip.png'
-        # moon= "./crop/"+ str(request.user) + "_" + day_time + "_" +'moon.png'
+        ip = "./crop/"+ str(request.user) + "_" + day_time + "_" +'ip.png'
+        moon= "./crop/"+ str(request.user) + "_" + day_time + "_" +'moon.png'
 
 
         font.input_photo1 = sook 
@@ -321,11 +321,11 @@ def write_input(request, input_id):
         font.input_photo5 = web
         font.input_photo6 = gi
         font.input_photo7 = cho
-        # font.input_photo8 = ip
-        # font.input_photo9 = moon
+        font.input_photo8 = ip
+        font.input_photo9 = moon
 
         
-        font.save(update_fields=['input_photo1', 'input_photo2', 'input_photo3', 'input_photo4', 'input_photo5', 'input_photo6', 'input_photo7']) # 데베에 저장
+        font.save(update_fields=['input_photo1', 'input_photo2', 'input_photo3', 'input_photo4', 'input_photo5', 'input_photo6', 'input_photo7', 'input_photo8', 'input_photo9']) # 데베에 저장
 
 
         return HttpResponse() # 이미지 편집단계로. pk값 유지
@@ -431,7 +431,7 @@ def loading(request, input_id):
         directory = './media/result/'+ str(request.user) + "_" + day_time 
         blank = "./media/blank/blank.png"
 
-        """
+        
         for s, i in zip(string, range(len(string))) :
             if i is 0:
                 result = directory + "/" +  str(i) +'.png'
@@ -454,12 +454,12 @@ def loading(request, input_id):
                 temp = morph(temp)
                 result = cv2.hconcat([result, temp])
                 print(str(i))
-        """
+        
 
         # 결과 이미지 경로 지정
         # 결과 이미지 webserver/Graduate/media/output 경로에 저장하기
         imgName = "./media/output/" + str(request.user) + "_" + day_time  + "_result.png"
-        #cv2.imwrite(imgName, result)
+        cv2.imwrite(imgName, result)
         
         
 

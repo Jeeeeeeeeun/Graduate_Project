@@ -5,6 +5,11 @@
 <html lang="en">
  <head>
   <meta charset="UTF-8">
+
+  <script src= "https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"> </script>
+  <script src= "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"> </script>
+  <script src= "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"> </script>
+
   
   <title>수정하기</title>
 
@@ -230,7 +235,10 @@
       <input type='button' value='-' id='minus'>
       </div>
       </div>
+      <button onClick="sub()">test</button>
 	  <a href="{% url 'fontsapp:loading' font.id %}"><button id="finish">수정완료</button></a>
+   
+
    </section>
    </div>
    
@@ -252,7 +260,7 @@
    var plus=0;
    var minus=0;
 
-    window.onload = function(){
+   window.onload = function(){
       //왼쪽
       var canvas2=document.getElementById('canvas2');
       var ctx2=canvas2.getContext('2d');
@@ -417,7 +425,57 @@
          ctx.fillStyle='white';
          ctx.stroke();
       }
+   };
+
+   function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
     }
+
+   var csrftoken = getCookie('csrftoken');
+
+   function csrfSafeMethod(method) {
+      // these HTTP methods do not require CSRF protection
+      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+   }
+
+   
+
+   function sub() {
+      var canvas = document.getElementById("canvas").toDataURL();
+
+      console.log("hihi")
+      $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+
+        $.ajax({
+            type:"POST",
+            url:"{% url 'fontsapp:input_edit' font.id %}",
+            data:{
+                canvas:canvas,
+            }
+        }).done(function(o){
+            console.log('saved');
+        });
+   }
+   
+   
     
 </script>
 </html>

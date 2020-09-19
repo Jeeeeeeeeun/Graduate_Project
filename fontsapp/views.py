@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.http import HttpResponse
 from .forms import FontForm
 from .models import Font
@@ -12,6 +13,7 @@ import base64
 from matplotlib import pyplot as plt
 import numpy as np
 import threading
+from django.core.mail import EmailMessage
 
 # Create your views here.
 
@@ -76,26 +78,38 @@ def create_later(request, input_id) :
     font.createlater = True
     font.save()
 
+    user = User.objects.get(username=request.user)
+    userEmail = user.email
+
     create_list = {'순':'숙', '숨':'숙', '망':'명', '멍':'명', }
 
     chars = font.no_checkpoint
-    command = ""
+    command = "cd ~/ganjyfont; "
 
     for char in chars :
         try : 
-            command += "sh train.sh " + create_list[char] + " " + char + " 1000; "
+            command += "sh train.sh " + create_list[char] + " " + char + " 5; "
         
         except (KeyError):
-            command += "sh train.sh 문 " + char +  " 1000; "
+            command += "sh train.sh 문 " + char +  " 5; "
 
-    t = threading.Thread(target=doTrain, args=[command], daemon=True)
+    t = threading.Thread(target=doTrain, args=[command, userEmail], daemon=True)
     t.start()
 
+    font.delete()
     return redirect('home')
 
-def doTrain(command) :
-    print(command) ##프린트 바꾸기!
+def doTrain(command, userEmail) :
+    os.system(command) ##프린트 바꾸기!
     print("Train Finish")
+
+    email = EmailMessage(
+        "폰트 학습이 완료 되었습니다",
+        "지금 바로 생성을 시작해보세요! \n http://203.153.146.28:3000",
+        to = [userEmail],
+    )
+    email.send()
+
 
 
 
@@ -340,12 +354,36 @@ def input_edit(request, input_id):
     if request.method=='POST':
         font = get_object_or_404(Font, pk=input_id)
 
-        return render(request, 'input_edit.html', {'font':font})
+        data1 = request.POST.__getitem__('canvas')
+        data1=data1[22:]
 
+        #저장할 경로
+        path = './media/crop/'
+        day = str(font.date)[:10]
+        time = str(font.date)[11:13] + "-" + str(font.date)[14:16]
+        day_time = day + "_" + time
+
+        filename1 = str(request.user) + "_" + day_time + "_" +'sook.png'
+
+        image1 = open(path+filename1, "wb")
+
+
+        #디코딩 + 파일에 쓰기
+        image1.write(base64.b64decode(data1))
+        
+        image1.close()
+
+        sook = "./crop/"+ str(request.user) + "_" + day_time + "_" +'sook.png' # 숙
+
+        font.input_photo1 = sook 
+
+        font.save(update_fields=['input_photo1']) # 데베에 저장
+
+
+        return HttpResponse()
 
     else:
         ## 사진 편집 ##
-
         #크기. 중앙에 맞추기 등 설정 & 변경사항 저장하기
         font = get_object_or_404(Font, pk=input_id)
         return render(request, 'input_edit.html', {'font':font})

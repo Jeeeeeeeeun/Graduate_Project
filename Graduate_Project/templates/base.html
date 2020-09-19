@@ -11,8 +11,8 @@
       <br><br><br><br><br>
       <ul id="login">
           <li><a a href="{% url 'fontsapp:input_phrase' %}">생성시작</a></li>
-          <li><a href="{% url 'accountsapp:mypage' %}">MYPAGE</a></li>
           {% if user.is_authenticated %}
+          <li><a href="{% url 'accountsapp:mypage' %}">MYPAGE</a></li>
           <li><a href="javascript:{document.getElementById('logout').submit()}">로그아웃</a></li>
           <form id="logout" method="POST" action="{% url 'accountsapp:logout' %}">
               {% csrf_token %}
@@ -60,6 +60,6 @@
 <footer>
     <p>팀원 : 김예린 장지은 조세란</p>
    <p>숙명여자대학교 졸업프로젝트</p>
-   <p>이메일: fontfont@sookmyung.ac.kr</p>
+   <p>이메일: fontfontsm@gmail.com</p>
 </footer>
  

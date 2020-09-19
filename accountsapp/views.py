@@ -55,7 +55,8 @@ def logout(request) :
 
 def mypage(request) :
     fonts = Font.objects.filter(user = request.user)
+    user = User.objects.get(username=request.user)
     try :
-        return render(request, 'mypage.html', {'fonts':fonts})
+        return render(request, 'mypage.html', {'fonts':fonts, "user":user})
     except :  
         return render(request, 'mypage.html')

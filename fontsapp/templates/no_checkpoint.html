@@ -192,15 +192,13 @@
                 <img src="../../media/html_imgs/느낌표.png" width=100 height=100 style="margin-top:50pt;">
                 <p style="font-weight:bold; font-size:30pt; margin-top:20pt;">현재 학습이 안된 글자가 포함되어 있습니다. </p>
                 <p>
-                서비스를 계속 진행하시려면 3일정도가 소요됩니다.<br/>추후에 마이페이지를 통해<br/>확인하실 수 있습니다.</p>
-                <p>계속 진행하시겠습니까?</p>
+                서비스를 계속 진행하시려면 3일정도가 소요됩니다.<br/>학습 완료 후 메일을 발송해드립니다.<br/>메일 확인 후 다시 진행해주세요.</p>
 
                 <p style='font-size:20pt;'>없는 글자 : {{ font.no_checkpoint }}</p>
 
                 <!-- <p>출력 글자를 생성하는데 <span id='current'>2~3일</span> 가량이 걸립니다.</p> -->
                 
-                <a href="{% url 'fontsapp:create_later' font.id %}"><button style='background-color:#848484;'>나중에 만들기<span class="arrow-right"></span></button></a>
-                <a href="{% url 'fontsapp:input_choice' font.id %}"><button style='margin-bottom:70pt;'>계속 진행하기<span class="arrow-right"></span></button></a>
+                <a href="{% url 'fontsapp:create_later' font.id %}"><button style='margin-bottom:70pt;'>학습 완료 후 메일 받기<span class="arrow-right"></span></button></a>
                 
             </article>
     </section>

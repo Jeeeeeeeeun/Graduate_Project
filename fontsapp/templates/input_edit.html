@@ -272,18 +272,9 @@
       var btn6=document.getElementById('minus');
 
       var img = new Image();
-        img.src = "../../media/html_imgs/숙.png";
-      img.onload = function(){
-         //ctx
-            ctx.drawImage(img, 0,0, 256,256);
-         ctx.beginPath();
-         ctx.setLineDash([20, 5]);
-         ctx.moveTo(0,128);
-         ctx.lineTo(256,128);
-         ctx.moveTo(128,0);
-         ctx.lineTo(128,256);
-         ctx.stroke();
+      img.src = "../../media/html_imgs/숙.png";
 
+      img.onload = function(){
          //ctx2
          ctx2.drawImage(img,0,0,256,256);
          ctx2.beginPath();
@@ -302,10 +293,24 @@
          ctx3.lineTo(256,128);
          ctx3.moveTo(128,0);
          ctx3.lineTo(128,256);
-         ctx3.stroke();
+         ctx3.stroke();     
+      }
 
-         
-        }
+      var img2 = new Image();
+      img2.src = "../../media/html_imgs/editimg.jpg";
+
+      img2.onload = function(){
+         //ctx
+         ctx.drawImage(img2, 0,0, 256,256);
+         ctx.beginPath();
+         ctx.setLineDash([20, 5]);
+         ctx.moveTo(0,128);
+         ctx.lineTo(256,128);
+         ctx.moveTo(128,0);
+         ctx.lineTo(128,256);
+         ctx.stroke();
+      }
+
       var c_t=canvas.offsetTop;
       var c_l=canvas.offsetLeft;
       var c_w=canvas.width;
@@ -333,7 +338,7 @@
       btn1.onclick=function(){
          right+=1;
          ctx.clearRect(0,0,canvas.width,canvas.height);   
-         ctx.drawImage(img, 0+step*right-step*left, 0-step*up+step*down, img.width-(step*minus)+(step*plus), img.height-(step*minus)+(step*plus));
+         ctx.drawImage(img2, 0+step*right-step*left, 0-step*up+step*down, img.width-(step*minus)+(step*plus), img.height-(step*minus)+(step*plus));
          ctx.beginPath();
          ctx.setLineDash([20, 5]);
          ctx.moveTo(0,128);
@@ -347,7 +352,7 @@
       btn2.onclick=function(){
          left+=1;
          ctx.clearRect(0,0,canvas.width,canvas.height);   
-         ctx.drawImage(img, 0+step*right-step*left, 0-step*up+step*down, img.width-(step*minus)+(step*plus), img.height-(step*minus)+(step*plus));
+         ctx.drawImage(img2, 0+step*right-step*left, 0-step*up+step*down, img.width-(step*minus)+(step*plus), img.height-(step*minus)+(step*plus));
          ctx.beginPath();
          ctx.setLineDash([20, 5]);
          ctx.moveTo(0,128);
@@ -361,7 +366,7 @@
       btn3.onclick=function(){
          up+=1;
          ctx.clearRect(0,0,canvas.width,canvas.height);   
-         ctx.drawImage(img, 0+step*right-step*left, 0-step*up+step*down, img.width-(step*minus)+(step*plus), img.height-(step*minus)+(step*plus));
+         ctx.drawImage(img2, 0+step*right-step*left, 0-step*up+step*down, img.width-(step*minus)+(step*plus), img.height-(step*minus)+(step*plus));
          ctx.beginPath();
          ctx.setLineDash([20, 5]);
          ctx.moveTo(0,128);
@@ -375,7 +380,7 @@
       btn4.onclick=function(){
          down+=1;
          ctx.clearRect(0,0,canvas.width,canvas.height);   
-         ctx.drawImage(img, 0+step*right-step*left, 0-step*up+step*down, img.width-(step*minus)+(step*plus), img.height-(step*minus)+(step*plus));
+         ctx.drawImage(img2, 0+step*right-step*left, 0-step*up+step*down, img.width-(step*minus)+(step*plus), img.height-(step*minus)+(step*plus));
          ctx.beginPath();
          ctx.setLineDash([20, 5]);
          ctx.moveTo(0,128);
@@ -389,7 +394,7 @@
       btn5.onclick=function(){
          plus+=1;
          ctx.clearRect(0,0,canvas.width,canvas.height);         
-         ctx.drawImage(img, 0+step*right-step*left, 0-step*up+step*down, img.width-(step*minus)+(step*plus), img.height-(step*minus)+(step*plus));
+         ctx.drawImage(img2, 0+step*right-step*left, 0-step*up+step*down, img.width-(step*minus)+(step*plus), img.height-(step*minus)+(step*plus));
          ctx.beginPath();
          ctx.setLineDash([20, 5]);
          ctx.moveTo(0,128);
@@ -402,7 +407,7 @@
       btn6.onclick=function(){
          minus+=1;
          ctx.clearRect(0,0,canvas.width,canvas.height);         
-         ctx.drawImage(img, 0+step*right-step*left, 0-step*up+step*down, img.width-(step*minus)+(step*plus), img.height-(step*minus)+(step*plus));
+         ctx.drawImage(img2, 0+step*right-step*left, 0-step*up+step*down, img.width-(step*minus)+(step*plus), img.height-(step*minus)+(step*plus));
          ctx.beginPath();
          ctx.setLineDash([20, 5]);
          ctx.moveTo(0,128);

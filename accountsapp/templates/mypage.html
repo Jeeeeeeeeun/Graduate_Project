@@ -214,7 +214,7 @@
         <tr>
         <td>
         <img src="{{ font.input_photo1.url }}" width=100 height=100>&nbsp;<img src="{{ font.input_photo2.url }}" width=100 height=100>&nbsp;<img src="{{ font.input_photo3.url }}" width=100 height=100>&nbsp;<img src="{{ font.input_photo4.url }}" width=100 height=100><br>
-        <img src="{{ font.input_photo5.url }}" width=100 height=100>&nbsp;<img src="{{ font.input_photo6.url }}" width=100 height=100>&nbsp;<img src="{{ font.input_photo7.url }}" width=100 height=100>
+        <img src="{{ font.input_photo5.url }}" width=100 height=100>&nbsp;<img src="{{ font.input_photo6.url }}" width=100 height=100>&nbsp;<img src="{{ font.input_photo7.url }}" width=100 height=100>&nbsp;<img src="{{ font.input_photo8.url }}" width=100 height=100>&nbsp;<img src="{{ font.input_photo9.url }}" width=100 height=100>
         </td>
         </tr>
       {% endfor %}
@@ -247,8 +247,8 @@
       <table class="waiting" style="">
         {% for font in fonts.all %}
 
-        <tr><th>날짜</th><th>문구</th><th>완성여부</th></tr>
-        <tr><td>{{ font.date }}</td><td>{{ font.phrase1 }}</td><td>{{ font.createlater }}</td></tr>
+        <tr><th>날짜</th><th>문구</th></tr>
+        <tr><td>{{ font.date }}</td><td>{{ font.phrase1 }}</td></tr>
         {% endfor %}
 
       </table>

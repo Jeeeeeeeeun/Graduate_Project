@@ -217,8 +217,7 @@ output : <img src="{{ font.output_photo1.url }}">
 			</p>
 			</div>
 			</div>
-			<button style='margin-bottom:70pt;'>다운로드<span class="arrow-right"></span>
-			</button>
+			<a href="{{ font.output_photo1.url }}" download><button style='margin-bottom:70pt;'>다운로드<span class="arrow-right"></span></button></a>
 			<a href="{% url 'accountsapp:mypage' %}"><button style='background-color:#848484;'>마이페이지로가기<span class="arrow-right"></span></button></a>
 		</article>
 	</section>

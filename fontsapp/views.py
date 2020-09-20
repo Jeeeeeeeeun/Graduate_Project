@@ -79,7 +79,6 @@ def no_checkpoint(request, input_id) :
 
 
 def makeFont(letter):
-    
     code=''
 
     # open lettercode txt file
@@ -120,18 +119,24 @@ def create_later(request, input_id) :
 
     create_list = {'순':'숙', '숨':'숙', '망':'명', '멍':'명', }
 
-    chars = font.no_checkpoint
+    no_chars = font.no_checkpoint
     command = "cd ~/ganjyfont; "
 
-    for char in chars :
+    for char in no_chars :
         makeFont(char)
         command += "python3 fontimg.py; "
 
         try : 
             command += "sh train.sh " + create_list[char] + " " + char + " 5; "
+            chars.append(char)
+            dictionary[create_list[char]] = char
+            print(chars)
         
         except (KeyError):
             command += "sh train.sh 문 " + char +  " 5; "
+            chars.append(char)
+            dictionary['문'] = char
+            print(chars)
 
     t = threading.Thread(target=doTrain, args=[command, userEmail], daemon=True)
     t.start()

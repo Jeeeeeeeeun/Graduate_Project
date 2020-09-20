@@ -79,33 +79,34 @@ def no_checkpoint(request, input_id) :
 
 
 def makeFont(letter):
-    code=''
+    pass
+    # code=''
 
-    # open lettercode txt file
-    f = open("/home/mint/ganjyfont/lettercode.txt", 'r')
-    lines = f.readlines()
+    # # open lettercode txt file
+    # f = open("/home/mint/ganjyfont/lettercode.txt", 'r')
+    # lines = f.readlines()
 
-    # find letter in lettercode and save code
-    for line in lines:
-        if letter in line:
-            #print(line)
-            #print(len(line))
-            #print(line[1:7])
-            code = line[1:7]
-            break
+    # # find letter in lettercode and save code
+    # for line in lines:
+    #     if letter in line:
+    #         #print(line)
+    #         #print(len(line))
+    #         #print(line[1:7])
+    #         code = line[1:7]
+    #         break
 
-    f.close()
-    #print(code)
+    # f.close()
+    # #print(code)
 
-    # make json file    { "kr" : ["\uc219"] }
-    filename='/home/mint/ganjyfont/letter.json' # json dir
+    # # make json file    { "kr" : ["\uc219"] }
+    # filename='/home/mint/ganjyfont/letter.json' # json dir
     
-    code = code.replace("\\/", "/").encode().decode('unicode_escape') # make unicode letter raw
-    data = { 'kr': [code] } # make json data
+    # code = code.replace("\\/", "/").encode().decode('unicode_escape') # make unicode letter raw
+    # data = { 'kr': [code] } # make json data
 
-    # write json data and save file
-    with open(filename, 'w', encoding='UTF-8') as file:
-        json.dump(data, file, ensure_ascii=True, indent='\t')
+    # # write json data and save file
+    # with open(filename, 'w', encoding='UTF-8') as file:
+    #     json.dump(data, file, ensure_ascii=True, indent='\t')
 
 
 # 나중에 생성하기
@@ -129,14 +130,16 @@ def create_later(request, input_id) :
         try : 
             command += "sh train.sh " + create_list[char] + " " + char + " 5; "
             chars.append(char)
-            dictionary[create_list[char]] = char
+            dictionary[char] = create_list[char]
             print(chars)
+            print(dictionary)
         
         except (KeyError):
             command += "sh train.sh 문 " + char +  " 5; "
             chars.append(char)
-            dictionary['문'] = char
+            dictionary[char] = '문'
             print(chars)
+            print(dictionary)
 
     t = threading.Thread(target=doTrain, args=[command, userEmail], daemon=True)
     t.start()

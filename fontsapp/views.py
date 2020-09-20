@@ -78,12 +78,15 @@ def no_checkpoint(request, input_id) :
     return render(request, 'no_checkpoint.html', {'font':font})
 
 
+#-*- coding:utf-8 -*-
+import json
+from collections import OrderedDict
 
 def makeFont(letter):
-    
     code=''
+
     # open lettercode txt file
-    f = open("~/ganjyfont/lettercode.txt", 'r')
+    f = open("/home/mint/ganjyfont/lettercode.txt", 'r')
     lines = f.readlines()
 
     # find letter in lettercode and save code
@@ -96,9 +99,10 @@ def makeFont(letter):
             break
 
     f.close()
+    #print(code)
 
     # make json file    { "kr" : ["\uc219"] }
-    filename='~/ganjyfont/letter.json' # json dir
+    filename='/home/mint/ganjyfont/letter.json' # json dir
     
     code = code.replace("\\/", "/").encode().decode('unicode_escape') # make unicode letter raw
     data = { 'kr': [code] } # make json data
@@ -106,6 +110,7 @@ def makeFont(letter):
     # write json data and save file
     with open(filename, 'w', encoding='UTF-8-sig') as file:
         json.dump(data, file, ensure_ascii=True, indent='\t')
+
 
 
 # 나중에 생성하기

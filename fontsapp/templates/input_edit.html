@@ -461,8 +461,6 @@
 
       var canvas = document.getElementById('canvas');
       var ctx = canvas.getContext('2d');
-      ctx.fillStyle="white";
-      ctx.fillRect(0,0,256,256);
 
       var btn1 = document.getElementById('right');
       var btn2 = document.getElementById('left');
@@ -579,6 +577,7 @@
 
       //숙명여대웹기초입문 img
       var img11 = new Image();
+      console.log(img11);
       img11.src = "{{ font.input_photo1.url }}"
 
       img11.onload = () => {

@@ -78,11 +78,8 @@ def no_checkpoint(request, input_id) :
     return render(request, 'no_checkpoint.html', {'font':font})
 
 
-#-*- coding:utf-8 -*-
-import json
-from collections import OrderedDict
-
 def makeFont(letter):
+    
     code=''
 
     # open lettercode txt file
@@ -112,7 +109,6 @@ def makeFont(letter):
         json.dump(data, file, ensure_ascii=True, indent='\t')
 
 
-
 # 나중에 생성하기
 def create_later(request, input_id) : 
     font = get_object_or_404(Font, pk=input_id) # 사용자 생성 폰트
@@ -129,7 +125,7 @@ def create_later(request, input_id) :
 
     for char in chars :
         makeFont(char)
-        command += "python3 makeimg.py;"
+        command += "python3 fontimg.py; "
 
         try : 
             command += "sh train.sh " + create_list[char] + " " + char + " 5; "
@@ -259,15 +255,15 @@ def scan_input(request, input_id):
             userTime = str(request.user) + "_" + day_time + "_"   
 
 
-            sook = userTime +'sook.png' # 숙
-            myung = userTime +'myung.png' # 명
-            yeo = userTime +'yeo.png' # 여
-            dae = userTime +'dae.png' # 대
-            web = userTime +'web.png' # 웹
-            gi = userTime +'gi.png' # 기
-            cho = userTime +'cho.png' # 초
-            ip = userTime +'ip.png' # 입
-            moon = userTime +'moon.png' # 문
+            sook = "./crop/"+ userTime +'sook.png' # 숙
+            myung = "./crop/"+ userTime +'myung.png' # 명
+            yeo = "./crop/"+ userTime +'yeo.png' # 여
+            dae = "./crop/"+ userTime +'dae.png' # 대
+            web = "./crop/"+ userTime +'web.png' # 웹
+            gi = "./crop/"+ userTime +'gi.png' # 기
+            cho = "./crop/"+ userTime +'cho.png' # 초
+            ip = "./crop/"+ userTime +'ip.png' # 입
+            moon = "./crop/"+ userTime +'moon.png' # 문
             
             font.input_photo1 = sook 
             font.input_photo2 = myung
@@ -317,15 +313,15 @@ def write_input(request, input_id):
 
 
         #DB에 저장
-        sook = "./crop/"+ str(request.user) + "_" + day_time + "_" +'sook.png' # 숙
-        myung = "./crop/"+ str(request.user) + "_" + day_time + "_" +'myung.png' # 명
-        yeo = "./crop/"+ str(request.user) + "_" + day_time + "_" +'yeo.png' # 명
-        dae = "./crop/"+ str(request.user) + "_" + day_time + "_" +'dae.png'
-        web = "./crop/"+ str(request.user) + "_" + day_time + "_" +'web.png'
-        gi = "./crop/"+ str(request.user) + "_" + day_time + "_" +'gi.png'
-        cho = "./crop/"+ str(request.user) + "_" + day_time + "_" +'cho.png'
-        ip = "./crop/"+ str(request.user) + "_" + day_time + "_" +'ip.png'
-        moon= "./crop/"+ str(request.user) + "_" + day_time + "_" +'moon.png'
+        sook = "./crop/"+ userTime +'sook.png' # 숙
+        myung = "./crop/"+ userTime +'myung.png' # 명
+        yeo = "./crop/"+ userTime +'yeo.png' # 명
+        dae = "./crop/"+ userTime +'dae.png'
+        web = "./crop/"+ userTime +'web.png'
+        gi = "./crop/"+ userTime +'gi.png'
+        cho = "./crop/"+ userTime +'cho.png'
+        ip = "./crop/"+ userTime +'ip.png'
+        moon= "./crop/"+ userTime +'moon.png'
 
 
         font.input_photo1 = sook 
@@ -433,6 +429,8 @@ def loading(request, input_id):
         day = str(font.date)[:10]
         time = str(font.date)[11:13] + "-" + str(font.date)[14:16]
         day_time = day + "_" + time
+        userTime = str(request.user) + "_" + day_time + "_"   
+
 
         # 디렉토리에 파일 복사
         mkdir_command = " mkdir ./media/result/" + str(request.user) + "_" + day_time # 이미지 병합 위한 디렉토리 만들기
@@ -444,7 +442,7 @@ def loading(request, input_id):
             mkdir_command = " mkdir ~/ganjyfont/test2/" + str(char) + "/" + str(request.user) + "_" + day_time #학습 돌릴 이미지 모아두는 디렉토리
             os.system(mkdir_command)       
             
-            picname =  str(request.user) + "_" + day_time + "_" + phrase_eng[i] + ".png" # 숙
+            picname =  userTime + phrase_eng[i] + ".png" # 숙
             cp_command = "cp ~/WebServer/Graduate/media/crop/" + picname +  " ~/ganjyfont/test2/" + str(char) + "/" + str(request.user) + "_" + day_time + "/"
             os.system(cp_command) #파일 복사
         
@@ -508,14 +506,14 @@ def loading(request, input_id):
 
         # 결과 이미지 경로 지정
         # 결과 이미지 webserver/Graduate/media/output 경로에 저장하기
-        imgName = "./media/output/" + str(request.user) + "_" + day_time  + "_result.png"
+        imgName = "./media/output/" + userTime  + "result.png"
         cv2.imwrite(imgName, result)
         
         
 
         
         ##### 4. 이미지 db에 저장 #####
-        output_photo = "./output/" + str(request.user) + "_" + day_time  + "_result.png"
+        output_photo = "./output/" + userTime  + "result.png"
         font.output_photo1 = output_photo
         font.save(update_fields=['output_photo1']) # 데베에 저장
 

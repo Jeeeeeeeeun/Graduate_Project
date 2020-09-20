@@ -3,445 +3,1398 @@
 
 <!doctype html>
 <html lang="en">
- <head>
-  <meta charset="UTF-8">
 
-  <script src= "https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"> </script>
-  <script src= "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"> </script>
-  <script src= "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"> </script>
+<head>
+   <meta charset="UTF-8">
 
-  
-  <title>수정하기</title>
-
-  <style type='text/css'>
-   html,body{
-	background-color:#170B3B;
-	font-family:'나눔스퀘어';
-	margin:0;
-	padding:0;
-	height:100%;
-	}
-   /*메뉴 스타일*/
-   h1{
-   font-family:'배달의민족 한나는 열한살';
-   font-weight:bold;
-   font-size:40pt;
-   position:absolute;
-   left:130px;
-   margin-top:-80px;
-   color:white;
-   display:inline;
-   }
-
-   #bar2{
-   font-family:'DX영화자막';
-   font-size:20pt;
-   font-weight:lighter;
-   color:white;
-   margin-left:30pt;
-   }
-   #bar2 span{
-  
-   }
-   #current{
-   color:red;
-   font-size:40pt;
-   font-weight:bold;
-   }
-
-   #bar{
-	color:white;
-	font-family:'배달의민족 한나는 열한살';
-	font-size:17pt;
-	word-spacing:30pt;
-	position:absolute;
-	margin-top:-50pt;
-	margin-left:85%;
-	}
-
-	#bar p{
-	display:inline;
-	}
-
-	a{
-	text-decoration:none;
-	color: white;
-	}
-   
-/*슬라이드형 메뉴*/
-    input[id="menuicon"] {display:none;}
-	input[id="menuicon"] + label {display:block;margin:30px;width:60px;height:50px;position:relative;cursor:pointer;}
-	input[id="menuicon"] + label span {display:block;position:absolute;width:100%;height:5px;border-radius:30px;background:#fff;transition:all .35s;}
-	input[id="menuicon"] + label span:nth-child(1) {top:0;}
-	input[id="menuicon"] + label span:nth-child(2) {top:50%;transform:translateY(-50%);} /* 비슷하게 사용할 수 있는 style top:calc(50% - 2.5px); margin-top:-2.5px;*/
-	input[id="menuicon"] + label span:nth-child(3) {bottom:0;}
-	input[id="menuicon"]:checked + label {z-index:2;}
-	input[id="menuicon"]:checked + label span {background:#fff;}
-	input[id="menuicon"]:checked + label span:nth-child(1) {top:50%;transform:translateY(-50%) rotate(45deg);}
-	input[id="menuicon"]:checked + label span:nth-child(2) {opacity:0;}
-	input[id="menuicon"]:checked + label span:nth-child(3) {bottom:50%;transform:translateY(50%) rotate(-45deg);}
-	div[class="sidebar"] {width:300px;height:100%;background:#222;position:fixed;top:0;left:-300px;z-index:1;transition:all .35s;}
-	input[id="menuicon"]:checked + label + div {left:0;}
-
-	li{
-	color:white;
-	}
-	li a{
-	display:block;
-	text-decoration:none;
-	padding:20pt;
-	padding-left:20pt;
-	line-height:30pt;
-	color: white;
-	
-	font-size:17pt;
-	
-	}
-
-	li a:hover{
-	color:#FACC2E;
-	text-decoration:underline;
-	}
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"> </script>
+   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"> </script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"> </script>
 
 
-   section{
-   margin-top:30pt;
-   text-align:center;
-   font-size:15pt;
-   }
+   <title>수정하기</title>
 
-   /*left-box*/
-   #left-box{
-   float:left;
-   width:40%;
-   }
-   /*right-box*/
-   #right-box{
-   float:right;   
-   width:60%;
-   margin-left:solid 1px black;
-   }
-   #right-txt{
-   border:solid 1px black;
-   border-radius:30pt;
-   width:60%;
-   margin-left:165pt;
-   }
+   <style type='text/css'>
+      #renew canvas {
+         margin-right: 75pt;
+         margin-left: 75pt;
+         margin-bottom: 150pt;
+      }
 
-   input{
-   position:absolute;
-   font-size:20pt;
-   border-radius:10px;
-   border:solid medium white;
-   background-color:#170B3B;
-   color:#fff;
-   font-family:'Dovemayo';
-   }
-    
-   input:hover{
-   background-color:#FACC2E;
-   color:black;
-   font-weight:bold;
-   }
+      html,
+      body {
+         background-color: #170B3B;
+         font-family: '나눔스퀘어';
+         margin: 0;
+         padding: 0;
+         height: 100%;
+      }
 
-   #right-box-p{
-    position:relative;
-    top:100pt;
-    left:250pt;
-   margin-top:-50pt;
-    }
-    #right-box-c{
-    position:absolute;
-    }
+      /*메뉴 스타일*/
+      h1 {
+         font-family: '배달의민족 한나는 열한살';
+         font-weight: bold;
+         font-size: 40pt;
+         position: absolute;
+         left: 130px;
+         margin-top: -80px;
+         color: white;
+         display: inline;
+      }
 
-   #box{
-   display:flex;
-   margin-bottom:30pt;
-   background-color:white;
-   font-family:'나눔스퀘어';
-   }
+      #bar2 {
+         font-family: 'DX영화자막';
+         font-size: 20pt;
+         font-weight: lighter;
+         color: white;
+         margin-left: 30pt;
+      }
+
+      #bar2 span {}
+
+      #current {
+         color: red;
+         font-size: 40pt;
+         font-weight: bold;
+      }
+
+      #bar {
+         color: white;
+         font-family: '배달의민족 한나는 열한살';
+         font-size: 17pt;
+         word-spacing: 30pt;
+         position: absolute;
+         margin-top: -50pt;
+         margin-left: 85%;
+      }
+
+      #bar p {
+         display: inline;
+      }
+
+      a {
+         text-decoration: none;
+         color: white;
+      }
+
+      /*슬라이드형 메뉴*/
+      input[id="menuicon"] {
+         display: none;
+      }
+
+      input[id="menuicon"]+label {
+         display: block;
+         margin: 30px;
+         width: 60px;
+         height: 50px;
+         position: relative;
+         cursor: pointer;
+      }
+
+      input[id="menuicon"]+label span {
+         display: block;
+         position: absolute;
+         width: 100%;
+         height: 5px;
+         border-radius: 30px;
+         background: #fff;
+         transition: all .35s;
+      }
+
+      input[id="menuicon"]+label span:nth-child(1) {
+         top: 0;
+      }
+
+      input[id="menuicon"]+label span:nth-child(2) {
+         top: 50%;
+         transform: translateY(-50%);
+      }
+
+      /* 비슷하게 사용할 수 있는 style top:calc(50% - 2.5px); margin-top:-2.5px;*/
+      input[id="menuicon"]+label span:nth-child(3) {
+         bottom: 0;
+      }
+
+      input[id="menuicon"]:checked+label {
+         z-index: 2;
+      }
+
+      input[id="menuicon"]:checked+label span {
+         background: #fff;
+      }
+
+      input[id="menuicon"]:checked+label span:nth-child(1) {
+         top: 50%;
+         transform: translateY(-50%) rotate(45deg);
+      }
+
+      input[id="menuicon"]:checked+label span:nth-child(2) {
+         opacity: 0;
+      }
+
+      input[id="menuicon"]:checked+label span:nth-child(3) {
+         bottom: 50%;
+         transform: translateY(50%) rotate(-45deg);
+      }
+
+      div[class="sidebar"] {
+         width: 300px;
+         height: 100%;
+         background: #222;
+         position: fixed;
+         top: 0;
+         left: -300px;
+         z-index: 1;
+         transition: all .35s;
+      }
+
+      input[id="menuicon"]:checked+label+div {
+         left: 0;
+      }
+
+      li {
+         color: white;
+      }
+
+      li a {
+         display: block;
+         text-decoration: none;
+         padding: 20pt;
+         padding-left: 20pt;
+         line-height: 30pt;
+         color: white;
+
+         font-size: 17pt;
+
+      }
+
+      li a:hover {
+         color: #FACC2E;
+         text-decoration: underline;
+      }
+
+
+      input {
+         position: absolute;
+         font-size: 20pt;
+         border-radius: 10px;
+         border: solid medium white;
+         background-color: #170B3B;
+         color: #fff;
+         font-family: 'Dovemayo';
+      }
+
+      input:hover {
+         background-color: #FACC2E;
+         color: black;
+         font-weight: bold;
+      }
+
+      #right-box-p {
+         position: relative;
+
+      }
+
+      #right-box-c {
+         position: absolute;
+      }
+
+      #box {
+         display: flex;
+         margin-bottom: 30pt;
+         background-color: white;
+         font-family: '나눔스퀘어';
+      }
 
 
 
-  footer{
-	background-color:#4a4949;
-	color:white;
-	position:relative;
-	padding:20px;
-   }
-  
+      footer {
+         background-color: #4a4949;
+         color: white;
+         position: relative;
+         padding: 20px;
+      }
 
-   #finish{
-   position:relative;
-   left:250pt;
-   bottom:-190pt;
-   border:solid medium white;
-   background-color:#170B3B;
-   color:#fff;
-   font-family:"나눔스퀘어";
-   padding:10pt;
-   font-size:15pt;
-   border-radius:10pt;
-   }
 
-   #finish:hover{
-   opacity:0.5;}
+      #finish {
+         position: relative;
+         border: solid medium white;
+         background-color: #170B3B;
+         color: #fff;
+         font-family: "나눔스퀘어";
+         padding: 10pt;
+         font-size: 15pt;
+         border-radius: 10pt;
+      }
 
-   
+      #finish:hover {
+         opacity: 0.5;
+      }
+
+      #article1 {
+         background-color: white;
+         text-align: center;
+         font-size: 15pt;
+         font-weight: bold;
+         font-family: '나눔스퀘어';
+         padding: 40pt;
+
+      }
+
+      #left-box {
+         float: left;
+         width: 50%;
+
+      }
+
+      /*right-box*/
+      #right-box {
+         float: right;
+         width: 50%;
+
+         /* margin-left:solid 1px black; */
+      }
+
+      #box {
+         margin-bottom: 50pt;
+      }
    </style>
- </head>
- <body>
- <div class="container contents-wrap">
-  <header>
+</head>
 
-  
-   <hr>
-   <div id='bar2'>
-      <span>입력</span>-
-      <span>확인</span>-
-      <span id='current'>수정</span>-
-      <span>학습</span>-
-      <span>결과확인</span>
-   </div>
-   <br>
-   <div id="box";>
-   <section id="left-box">
-   <h2>-예시 이미지-</h2>
-   <canvas id="canvas2" width="256px" height="256px" style="border:1px solid black;"></canvas>
-
-   <br>
-
-   <h2>-틀린 이미지-</h2>
-   <canvas id="canvas3" width="256px" height="256px" style="border:1px solid black;"></canvas>
-   <p>버튼을 이용하여<br>이미지를 가운데에 정렬해주세요!</p>
-
-   </section>
+<body>
+   <div class="container contents-wrap">
+      <header>
 
 
-   <section id="right-box">
-   <h2>-수정하기-</h2>
-   <br>
-   <p>이미지를 상/하/좌/우/확대/축소를 하실 수 있습니다.</p>
-   <p>버튼을 눌러 이미지를 수정 해주세요!</p>
-   <p>▲ : 상 / ▼ : 하 / ◀ : 좌 / ▶ : 우 / + : 확대 / - : 축소</p>
-      <div id="right-box-p">   
-      <div id='right-box-c'>
-      <canvas id="canvas" width="256px" height="256px" style="border:1px solid black;"></canvas>
-      <input type='button' value='◀'  id='left'>
-      <input type='button' value='▶' id='right'>
-      <input type='button' value='▲'  id='up'>
-      <input type='button' value='▼'  id='down'>
-      <input type='button' value='+' id='plus'>
-      <input type='button' value='-' id='minus'>
-      </div>
-      </div>
-      <button onClick="sub()">test</button>
-	  <a href="{% url 'fontsapp:loading' font.id %}"><button id="finish">수정완료</button></a>
-   
+         <hr>
+         <div id='bar2'>
+            <span>입력</span>-
+            <span>확인</span>-
+            <span id='current'>수정</span>-
+            <span>학습</span>-
+            <span>결과확인</span>
+         </div>
+         <br>
+         <article id='article1'>
+            <div id='box'>
+               <div id="left-box">
+                  <h2>-예시 이미지-</h2>
+                  <canvas id="canvas2" width="256px" height="256px" style="border:1px solid black;"></canvas>
+               </div>
+               <div id="right-box">
+                  <h2>-틀린 이미지-</h2>
+                  <canvas id="canvas3" width="256px" height="256px" style="border:1px solid black;"></canvas>
+                  <p>버튼을 이용하여<br>이미지를 가운데에 정렬해주세요!</p>
+               </div>
+            </div>
 
-   </section>
-   </div>
-   
-   <footer>
-   <div>숙명여대 IT 공학과 졸업프로젝트</div>
-   <div>팀원: 1716065 김예린, 1614125 장지은, 1716560 조세란</div>
-   </footer>
+            <h2>-수정하기-</h2>
+            <br>
+            <p>이미지를 상/하/좌/우/확대/축소를 하실 수 있습니다.</p>
+            <p>버튼을 눌러 이미지를 수정 해주세요!</p>
+            <p>▲ : 상 / ▼ : 하 / ◀ : 좌 / ▶ : 우 / + : 확대 / - : 축소</p><br><br><br><br>
 
-   
-   
-   
+            <div id='renew'>
+               <canvas id="canvas" width="256px" height="256px" style="border:1px solid black;"></canvas>
+               <input type='button' value='◀' id='left'>
+               <input type='button' value='▶' id='right'>
+               <input type='button' value='▲' id='up'>
+               <input type='button' value='▼' id='down'>
+               <input type='button' value='+' id='plus'>
+               <input type='button' value='-' id='minus'>
+
+
+
+               <canvas id="canvas22" width="256px" height="256px" style="border:1px solid black;"></canvas>
+               <input type='button' value='◀' id='left2'>
+               <input type='button' value='▶' id='right2'>
+               <input type='button' value='▲' id='up2'>
+               <input type='button' value='▼' id='down2'>
+               <input type='button' value='+' id='plus2'>
+               <input type='button' value='-' id='minus2'>
+
+               <canvas id="canvas33" width="256px" height="256px" style="border:1px solid black;"></canvas>
+               <input type='button' value='◀' id='left3'>
+               <input type='button' value='▶' id='right3'>
+               <input type='button' value='▲' id='up3'>
+               <input type='button' value='▼' id='down3'>
+               <input type='button' value='+' id='plus3'>
+               <input type='button' value='-' id='minus3'>
+
+               <canvas id="canvas44" width="256px" height="256px" style="border:1px solid black;"></canvas>
+               <input type='button' value='◀' id='left4'>
+               <input type='button' value='▶' id='right4'>
+               <input type='button' value='▲' id='up4'>
+               <input type='button' value='▼' id='down4'>
+               <input type='button' value='+' id='plus4'>
+               <input type='button' value='-' id='minus4'>
+
+               <canvas id="canvas55" width="256px" height="256px" style="border:1px solid black;"></canvas>
+               <input type='button' value='◀' id='left5'>
+               <input type='button' value='▶' id='right5'>
+               <input type='button' value='▲' id='up5'>
+               <input type='button' value='▼' id='down5'>
+               <input type='button' value='+' id='plus5'>
+               <input type='button' value='-' id='minus5'>
+
+               <canvas id="canvas66" width="256px" height="256px" style="border:1px solid black;"></canvas>
+               <input type='button' value='◀' id='left6'>
+               <input type='button' value='▶' id='right6'>
+               <input type='button' value='▲' id='up6'>
+               <input type='button' value='▼' id='down6'>
+               <input type='button' value='+' id='plus6'>
+               <input type='button' value='-' id='minus6'>
+
+               <canvas id="canvas77" width="256px" height="256px" style="border:1px solid black;"></canvas>
+               <input type='button' value='◀' id='left7'>
+               <input type='button' value='▶' id='right7'>
+               <input type='button' value='▲' id='up7'>
+               <input type='button' value='▼' id='down7'>
+               <input type='button' value='+' id='plus7'>
+               <input type='button' value='-' id='minus7'>
+
+               <canvas id="canvas88" width="256px" height="256px" style="border:1px solid black;"></canvas>
+               <input type='button' value='◀' id='left8'>
+               <input type='button' value='▶' id='right8'>
+               <input type='button' value='▲' id='up8'>
+               <input type='button' value='▼' id='down8'>
+               <input type='button' value='+' id='plus8'>
+               <input type='button' value='-' id='minus8'>
+
+               <canvas id="canvas99" width="256px" height="256px" style="border:1px solid black;"></canvas>
+               <input type='button' value='◀' id='left9'>
+               <input type='button' value='▶' id='right9'>
+               <input type='button' value='▲' id='up9'>
+               <input type='button' value='▼' id='down9'>
+               <input type='button' value='+' id='plus9'>
+               <input type='button' value='-' id='minus9'>
+
+            </div>
+
+            <button id="finish" onClick="sub()">임시저장</button>
+            <a href="{% url 'fontsapp:loading' font.id %}"><button id="finish">수정완료</button></a>
+
+
+         </article>
+
+
+
+
+
+
 </body>
- <script type="text/javascript">
-   var step=20;
-   var right=0;
-   var left=0;
-   var up=0;
-   var down=0;
-   var plus=0;
-   var minus=0;
+<script type="text/javascript">
+   var step = 20;
+   var right = 0;
+   var left = 0;
+   var up = 0;
+   var down = 0;
+   var plus = 0;
+   var minus = 0;
 
-   window.onload = function(){
-      //왼쪽
-      var canvas2=document.getElementById('canvas2');
-      var ctx2=canvas2.getContext('2d');
+   var step2 = 20;
+   var right2 = 0;
+   var left2 = 0;
+   var up2 = 0;
+   var down2 = 0;
+   var plus2 = 0;
+   var minus2 = 0;
 
-      var canvas3=document.getElementById('canvas3');
-      var ctx3=canvas3.getContext('2d');
+   var step3 = 20;
+   var right3 = 0;
+   var left3 = 0;
+   var up3 = 0;
+   var down3 = 0;
+   var plus3 = 0;
+   var minus3 = 0;
 
-      //오른쪽
-      var canvas=document.getElementById('canvas');
-      var ctx=canvas.getContext('2d');
+   var step4 = 20;
+   var right4 = 0;
+   var left4 = 0;
+   var up4 = 0;
+   var down4 = 0;
+   var plus4 = 0;
+   var minus4 = 0;
 
-      var btn1=document.getElementById('right');
-      var btn2=document.getElementById('left');
-      var btn3=document.getElementById('up');
-      var btn4=document.getElementById('down');
-      var btn5=document.getElementById('plus');
-      var btn6=document.getElementById('minus');
+   var right5 = 0;
+   var left5 = 0;
+   var up5 = 0;
+   var down5 = 0;
+   var plus5 = 0;
+   var minus5 = 0;
+
+   var right6 = 0;
+   var left6 = 0;
+   var up6 = 0;
+   var down6 = 0;
+   var plus6 = 0;
+   var minus6 = 0;
+
+   var right7 = 0;
+   var left7 = 0;
+   var up7 = 0;
+   var down7 = 0;
+   var plus7 = 0;
+   var minus7 = 0;
+
+   var right8 = 0;
+   var left8 = 0;
+   var up8 = 0;
+   var down8 = 0;
+   var plus8 = 0;
+   var minus8 = 0;
+
+   var right9 = 0;
+   var left9 = 0;
+   var up9 = 0;
+   var down9 = 0;
+   var plus9 = 0;
+   var minus9 = 0;
+
+   window.onload = function () {
+
+      var canvas2 = document.getElementById('canvas2');
+      var ctx2 = canvas2.getContext('2d');
+
+      var canvas3 = document.getElementById('canvas3');
+      var ctx3 = canvas3.getContext('2d');
+
+      var canvas = document.getElementById('canvas');
+      var ctx = canvas.getContext('2d');
+      ctx.fillStyle="white";
+      ctx.fillRect(0,0,256,256);
+
+      var btn1 = document.getElementById('right');
+      var btn2 = document.getElementById('left');
+      var btn3 = document.getElementById('up');
+      var btn4 = document.getElementById('down');
+      var btn5 = document.getElementById('plus');
+      var btn6 = document.getElementById('minus');
+
+      var canvas22 = document.getElementById('canvas22');
+      var ctx22 = canvas22.getContext('2d');
+
+      var btn2_1 = document.getElementById('right2');
+      var btn2_2 = document.getElementById('left2');
+      var btn2_3 = document.getElementById('up2');
+      var btn2_4 = document.getElementById('down2');
+      var btn2_5 = document.getElementById('plus2');
+      var btn2_6 = document.getElementById('minus2');
+
+      var canvas33 = document.getElementById('canvas33');
+      var ctx33 = canvas33.getContext('2d');
+
+      var btn3_1 = document.getElementById('right3');
+      var btn3_2 = document.getElementById('left3');
+      var btn3_3 = document.getElementById('up3');
+      var btn3_4 = document.getElementById('down3');
+      var btn3_5 = document.getElementById('plus3');
+      var btn3_6 = document.getElementById('minus3');
+
+      var canvas44 = document.getElementById('canvas44');
+      var ctx44 = canvas44.getContext('2d');
+
+      var btn4_1 = document.getElementById('right4');
+      var btn4_2 = document.getElementById('left4');
+      var btn4_3 = document.getElementById('up4');
+      var btn4_4 = document.getElementById('down4');
+      var btn4_5 = document.getElementById('plus4');
+      var btn4_6 = document.getElementById('minus4');
+
+      var canvas55 = document.getElementById('canvas55');
+      var ctx55 = canvas55.getContext('2d');
+
+      var btn5_1 = document.getElementById('right5');
+      var btn5_2 = document.getElementById('left5');
+      var btn5_3 = document.getElementById('up5');
+      var btn5_4 = document.getElementById('down5');
+      var btn5_5 = document.getElementById('plus5');
+      var btn5_6 = document.getElementById('minus5');
+
+      var canvas66 = document.getElementById('canvas66');
+      var ctx66 = canvas66.getContext('2d');
+
+      var btn6_1 = document.getElementById('right6');
+      var btn6_2 = document.getElementById('left6');
+      var btn6_3 = document.getElementById('up6');
+      var btn6_4 = document.getElementById('down6');
+      var btn6_5 = document.getElementById('plus6');
+      var btn6_6 = document.getElementById('minus6');
+
+      var canvas77 = document.getElementById('canvas77');
+      var ctx77 = canvas77.getContext('2d');
+
+      var btn7_1 = document.getElementById('right7');
+      var btn7_2 = document.getElementById('left7');
+      var btn7_3 = document.getElementById('up7');
+      var btn7_4 = document.getElementById('down7');
+      var btn7_5 = document.getElementById('plus7');
+      var btn7_6 = document.getElementById('minus7');
+
+      var canvas88 = document.getElementById('canvas88');
+      var ctx88 = canvas88.getContext('2d');
+
+      var btn8_1 = document.getElementById('right8');
+      var btn8_2 = document.getElementById('left8');
+      var btn8_3 = document.getElementById('up8');
+      var btn8_4 = document.getElementById('down8');
+      var btn8_5 = document.getElementById('plus8');
+      var btn8_6 = document.getElementById('minus8');
+
+      var canvas99 = document.getElementById('canvas99');
+      var ctx99 = canvas99.getContext('2d');
+
+      var btn9_1 = document.getElementById('right9');
+      var btn9_2 = document.getElementById('left9');
+      var btn9_3 = document.getElementById('up9');
+      var btn9_4 = document.getElementById('down9');
+      var btn9_5 = document.getElementById('plus9');
+      var btn9_6 = document.getElementById('minus9');
 
       var img = new Image();
       img.src = "../../media/html_imgs/숙.png";
 
-      img.onload = function(){
+      img.onload = () => {
          //ctx2
-         ctx2.drawImage(img,0,0,256,256);
+         ctx2.drawImage(img, 0, 0, 256, 256);
          ctx2.beginPath();
          ctx2.setLineDash([20, 5]);
-         ctx2.moveTo(0,128);
-         ctx2.lineTo(256,128);
-         ctx2.moveTo(128,0);
-         ctx2.lineTo(128,256);
+         ctx2.moveTo(0, 128);
+         ctx2.lineTo(256, 128);
+         ctx2.moveTo(128, 0);
+         ctx2.lineTo(128, 256);
          ctx2.stroke();
 
          //ctx3
-         ctx3.drawImage(img,50,30,256,256);
+         ctx3.drawImage(img, 50, 30, 256, 256);
          ctx3.beginPath();
          ctx3.setLineDash([20, 5]);
-         ctx3.moveTo(0,128);
-         ctx3.lineTo(256,128);
-         ctx3.moveTo(128,0);
-         ctx3.lineTo(128,256);
-         ctx3.stroke();     
+         ctx3.moveTo(0, 128);
+         ctx3.lineTo(256, 128);
+         ctx3.moveTo(128, 0);
+         ctx3.lineTo(128, 256);
+         ctx3.stroke();
       }
 
-      var img2 = new Image();
-      img2.src = "../../media/html_imgs/editimg.jpg";
 
-      img2.onload = function(){
-         //ctx
-         ctx.drawImage(img2, 0,0, 256,256);
-         ctx.beginPath();
-         ctx.setLineDash([20, 5]);
-         ctx.moveTo(0,128);
-         ctx.lineTo(256,128);
-         ctx.moveTo(128,0);
-         ctx.lineTo(128,256);
+      //숙명여대웹기초입문 img
+      var img11 = new Image();
+      img11.src = "{{ font.input_photo1.url }}"
+
+      img11.onload = () => {
+         ctx.drawImage(img11, 0, 0, 256, 256);
          ctx.stroke();
       }
 
-      var c_t=canvas.offsetTop;
-      var c_l=canvas.offsetLeft;
-      var c_w=canvas.width;
-      var c_h=canvas.height;
+      var img22 = new Image();
+      img22.src = "{{ font.input_photo2.url }}"
+
+      img22.onload = () => {
+         ctx22.drawImage(img22, 0, 0, 256, 256);
+         ctx22.stroke();
+      }
+
+      var img33 = new Image();
+      img33.src = "{{ font.input_photo3.url }}"
+
+      img33.onload = () => {
+         ctx33.drawImage(img33, 0, 0, 256, 256);
+         ctx33.stroke();
+      }
+
+      var img44 = new Image();
+      img44.src = "{{ font.input_photo4.url }}"
+
+      img44.onload = () => {
+         ctx44.drawImage(img44, 0, 0, 256, 256);
+         ctx44.stroke();
+      }
+
+      var img55 = new Image();
+      img55.src = "{{ font.input_photo5.url }}"
+
+      img55.onload = () => {
+         ctx55.drawImage(img55, 0, 0, 256, 256);
+         ctx55.stroke();
+      }
+
+      var img66 = new Image();
+      img66.src = "{{ font.input_photo6.url }}"
+
+      img66.onload = () => {
+         ctx66.drawImage(img66, 0, 0, 256, 256);
+         ctx66.stroke();
+      }
+
+      var img77 = new Image();
+      img77.src = "{{ font.input_photo7.url }}"
+
+      img77.onload = () => {
+         ctx77.drawImage(img77, 0, 0, 256, 256);
+         ctx77.stroke();
+      }
+
+      var img88 = new Image();
+      img88.src = "{{ font.input_photo8.url }}"
+
+      img88.onload = () => {
+         ctx88.drawImage(img88, 0, 0, 256, 256);
+         ctx88.stroke();
+      }
+
+      var img99 = new Image();
+      img99.src = "{{ font.input_photo9.url }}"
+
+      img99.onload = () => {
+         ctx99.drawImage(img99, 0, 0, 256, 256);
+         ctx99.stroke();
+      }
+
+
+      var c_t = canvas.offsetTop;
+      var c_l = canvas.offsetLeft;
+      var c_w = canvas.width;
+      var c_h = canvas.height;
       //document.write(c_t,c_l); 90,40
 
-      btn1.style.left=c_l+c_w+30+"px";
-      btn1.style.top=c_t+(c_h/2)+"px";
-      
-      btn2.style.left=c_l-60+"px";
-      btn2.style.top=c_t+(c_h/2)+"px";
+      var c_t2 = canvas22.offsetTop;
+      var c_l2 = canvas22.offsetLeft;
+      var c_w2 = canvas22.width;
+      var c_h2 = canvas22.height;
 
-      btn3.style.left=c_l+(c_w/2)-15+"px";
-      btn3.style.top=c_t-45+"px";
+      var c_t3 = canvas33.offsetTop;
+      var c_l3 = canvas33.offsetLeft;
+      var c_w3 = canvas33.width;
+      var c_h3 = canvas33.height;
 
-      btn4.style.left=c_l+(c_w/2)-15+"px";
-      btn4.style.top=c_t+c_h+30+"px";
+      var c_t4 = canvas44.offsetTop;
+      var c_l4 = canvas44.offsetLeft;
+      var c_w4 = canvas44.width;
+      var c_h4 = canvas44.height;
 
-      btn5.style.left=c_l+c_w-30+"px";
-      btn5.style.top=c_t+c_h+30+"px";
+      var c_t5 = canvas55.offsetTop;
+      var c_l5 = canvas55.offsetLeft;
+      var c_w5 = canvas55.width;
+      var c_h5 = canvas55.height;
 
-      btn6.style.left=c_l+"px";
-      btn6.style.top=c_t+c_h+30+"px";
+      var c_t6 = canvas66.offsetTop;
+      var c_l6 = canvas66.offsetLeft;
+      var c_w6 = canvas66.width;
+      var c_h6 = canvas66.height;
 
-      btn1.onclick=function(){
-         right+=1;
-         ctx.clearRect(0,0,canvas.width,canvas.height);   
-         ctx.drawImage(img2, 0+step*right-step*left, 0-step*up+step*down, img.width-(step*minus)+(step*plus), img.height-(step*minus)+(step*plus));
+      var c_t7 = canvas77.offsetTop;
+      var c_l7 = canvas77.offsetLeft;
+      var c_w7 = canvas77.width;
+      var c_h7 = canvas77.height;
+
+      var c_t8 = canvas88.offsetTop;
+      var c_l8 = canvas88.offsetLeft;
+      var c_w8 = canvas88.width;
+      var c_h8 = canvas88.height;
+
+      var c_t9 = canvas99.offsetTop;
+      var c_l9 = canvas99.offsetLeft;
+      var c_w9 = canvas99.width;
+      var c_h9 = canvas99.height;
+
+      btn1.style.left = c_l + c_w + 30 + "px";
+      btn1.style.top = c_t + (c_h / 2) + "px";
+
+      btn2.style.left = c_l - 60 + "px";
+      btn2.style.top = c_t + (c_h / 2) + "px";
+
+      btn3.style.left = c_l + (c_w / 2) - 15 + "px";
+      btn3.style.top = c_t - 45 + "px";
+
+      btn4.style.left = c_l + (c_w / 2) - 15 + "px";
+      btn4.style.top = c_t + c_h + 30 + "px";
+
+      btn5.style.left = c_l + c_w - 30 + "px";
+      btn5.style.top = c_t + c_h + 30 + "px";
+
+      btn6.style.left = c_l + "px";
+      btn6.style.top = c_t + c_h + 30 + "px";
+
+      btn2_1.style.left = c_l2 + c_w2 + 30 + "px";
+      btn2_1.style.top = c_t2 + (c_h2 / 2) + "px";
+
+      btn2_2.style.left = c_l2 - 60 + "px";
+      btn2_2.style.top = c_t2 + (c_h2 / 2) + "px";
+
+      btn2_3.style.left = c_l2 + (c_w2 / 2) - 15 + "px";
+      btn2_3.style.top = c_t2 - 45 + "px";
+
+      btn2_4.style.left = c_l2 + (c_w2 / 2) - 15 + "px";
+      btn2_4.style.top = c_t2 + c_h2 + 30 + "px";
+
+      btn2_5.style.left = c_l2 + c_w2 - 30 + "px";
+      btn2_5.style.top = c_t2 + c_h2 + 30 + "px";
+
+      btn2_6.style.left = c_l2 + "px";
+      btn2_6.style.top = c_t2 + c_h2 + 30 + "px";
+
+      btn3_1.style.left = c_l3 + c_w3 + 30 + "px";
+      btn3_1.style.top = c_t3 + (c_h3 / 2) + "px";
+
+      btn3_2.style.left = c_l3 - 60 + "px";
+      btn3_2.style.top = c_t3 + (c_h3 / 2) + "px";
+
+      btn3_3.style.left = c_l3 + (c_w3 / 2) - 15 + "px";
+      btn3_3.style.top = c_t3 - 45 + "px";
+
+      btn3_4.style.left = c_l3 + (c_w3 / 2) - 15 + "px";
+      btn3_4.style.top = c_t3 + c_h3 + 30 + "px";
+
+      btn3_5.style.left = c_l3 + c_w3 - 30 + "px";
+      btn3_5.style.top = c_t3 + c_h3 + 30 + "px";
+
+      btn3_6.style.left = c_l3 + "px";
+      btn3_6.style.top = c_t3 + c_h3 + 30 + "px";
+
+      btn4_1.style.left = c_l4 + c_w4 + 30 + "px";
+      btn4_1.style.top = c_t4 + (c_h4 / 2) + "px";
+
+      btn4_2.style.left = c_l4 - 60 + "px";
+      btn4_2.style.top = c_t4 + (c_h4 / 2) + "px";
+
+      btn4_3.style.left = c_l4 + (c_w4 / 2) - 15 + "px";
+      btn4_3.style.top = c_t4 - 45 + "px";
+
+      btn4_4.style.left = c_l4 + (c_w4 / 2) - 15 + "px";
+      btn4_4.style.top = c_t4 + c_h4 + 30 + "px";
+
+      btn4_5.style.left = c_l4 + c_w4 - 30 + "px";
+      btn4_5.style.top = c_t4 + c_h4 + 30 + "px";
+
+      btn4_6.style.left = c_l4 + "px";
+      btn4_6.style.top = c_t4 + c_h4 + 30 + "px";
+
+      btn5_1.style.left = c_l5 + c_w5 + 30 + "px";
+      btn5_1.style.top = c_t5 + (c_h5 / 2) + "px";
+      btn5_2.style.left = c_l5 - 60 + "px";
+      btn5_2.style.top = c_t5 + (c_h5 / 2) + "px";
+      btn5_3.style.left = c_l5 + (c_w5 / 2) - 15 + "px";
+      btn5_3.style.top = c_t5 - 45 + "px";
+      btn5_4.style.left = c_l5 + (c_w5 / 2) - 15 + "px";
+      btn5_4.style.top = c_t5 + c_h5 + 30 + "px";
+      btn5_5.style.left = c_l5 + c_w5 - 30 + "px";
+      btn5_5.style.top = c_t5 + c_h5 + 30 + "px";
+      btn5_6.style.left = c_l5 + "px";
+      btn5_6.style.top = c_t5 + c_h5 + 30 + "px";
+
+      btn6_1.style.left = c_l6 + c_w6 + 30 + "px";
+      btn6_1.style.top = c_t6 + (c_h6 / 2) + "px";
+      btn6_2.style.left = c_l6 - 60 + "px";
+      btn6_2.style.top = c_t6 + (c_h6 / 2) + "px";
+      btn6_3.style.left = c_l6 + (c_w6 / 2) - 15 + "px";
+      btn6_3.style.top = c_t6 - 45 + "px";
+      btn6_4.style.left = c_l6 + (c_w6 / 2) - 15 + "px";
+      btn6_4.style.top = c_t6 + c_h6 + 30 + "px";
+      btn6_5.style.left = c_l6 + c_w6 - 30 + "px";
+      btn6_5.style.top = c_t6 + c_h6 + 30 + "px";
+      btn6_6.style.left = c_l6 + "px";
+      btn6_6.style.top = c_t6 + c_h6 + 30 + "px";
+
+      btn7_1.style.left = c_l7 + c_w7 + 30 + "px";
+      btn7_1.style.top = c_t7 + (c_h7 / 2) + "px";
+      btn7_2.style.left = c_l7 - 60 + "px";
+      btn7_2.style.top = c_t7 + (c_h7 / 2) + "px";
+      btn7_3.style.left = c_l7 + (c_w7 / 2) - 15 + "px";
+      btn7_3.style.top = c_t7 - 45 + "px";
+      btn7_4.style.left = c_l7 + (c_w7 / 2) - 15 + "px";
+      btn7_4.style.top = c_t7 + c_h7 + 30 + "px";
+      btn7_5.style.left = c_l7 + c_w7 - 30 + "px";
+      btn7_5.style.top = c_t7 + c_h7 + 30 + "px";
+      btn7_6.style.left = c_l7 + "px";
+      btn7_6.style.top = c_t7 + c_h7 + 30 + "px";
+
+      btn8_1.style.left = c_l8 + c_w8 + 30 + "px";
+      btn8_1.style.top = c_t8 + (c_h8 / 2) + "px";
+      btn8_2.style.left = c_l8 - 60 + "px";
+      btn8_2.style.top = c_t8 + (c_h8 / 2) + "px";
+      btn8_3.style.left = c_l8 + (c_w8 / 2) - 15 + "px";
+      btn8_3.style.top = c_t8 - 45 + "px";
+      btn8_4.style.left = c_l8 + (c_w8 / 2) - 15 + "px";
+      btn8_4.style.top = c_t8 + c_h8 + 30 + "px";
+      btn8_5.style.left = c_l8 + c_w8 - 30 + "px";
+      btn8_5.style.top = c_t8 + c_h8 + 30 + "px";
+      btn8_6.style.left = c_l8 + "px";
+      btn8_6.style.top = c_t8 + c_h8 + 30 + "px";
+
+      btn9_1.style.left = c_l9 + c_w9 + 30 + "px";
+      btn9_1.style.top = c_t9 + (c_h9 / 2) + "px";
+      btn9_2.style.left = c_l9 - 60 + "px";
+      btn9_2.style.top = c_t9 + (c_h9 / 2) + "px";
+      btn9_3.style.left = c_l9 + (c_w9 / 2) - 15 + "px";
+      btn9_3.style.top = c_t9 - 45 + "px";
+      btn9_4.style.left = c_l9 + (c_w9 / 2) - 15 + "px";
+      btn9_4.style.top = c_t9 + c_h9 + 30 + "px";
+      btn9_5.style.left = c_l9 + c_w9 - 30 + "px";
+      btn9_5.style.top = c_t9 + c_h9 + 30 + "px";
+      btn9_6.style.left = c_l9 + "px";
+      btn9_6.style.top = c_t9 + c_h9 + 30 + "px";
+
+
+      //Button right
+      btn1.onclick = function () {
+         right += 1;
+         ctx.fillStyle="white";
+         ctx.fillRect(0,0,256,256);
+         ctx.drawImage(img11, 0 + step * right - step * left, 0 - step * up + step * down, img.width - (step * minus) + (step * plus), img.height - (step * minus) + (step * plus));
          ctx.beginPath();
-         ctx.setLineDash([20, 5]);
-         ctx.moveTo(0,128);
-         ctx.lineTo(256,128);
-         ctx.moveTo(128,0);
-         ctx.lineTo(128,256);
-         ctx.fillStyle='white';
          ctx.stroke();
       }
 
-      btn2.onclick=function(){
-         left+=1;
-         ctx.clearRect(0,0,canvas.width,canvas.height);   
-         ctx.drawImage(img2, 0+step*right-step*left, 0-step*up+step*down, img.width-(step*minus)+(step*plus), img.height-(step*minus)+(step*plus));
+      btn2_1.onclick = function () {
+         right2 += 1;
+         ctx22.fillStyle="white";
+         ctx22.fillRect(0,0,256,256);
+         ctx22.drawImage(img22, 0 + step2 * right2 - step2 * left2, 0 - step2 * up2 + step2 * down2, img.width - (step2 * minus2) + (step2 * plus2), img.height - (step2 * minus2) + (step2 * plus2));
+         ctx22.beginPath();
+         ctx22.stroke();
+      }
+
+      btn3_1.onclick = function () {
+         right3 += 1;
+         ctx33.fillStyle="white";
+         ctx33.fillRect(0,0,256,256);
+         ctx33.drawImage(img33, 0 + step3 * right3 - step3 * left3, 0 - step3 * up3 + step3 * down3, img.width - (step3 * minus3) + (step3 * plus3), img.height - (step3 * minus3) + (step3 * plus3));
+         ctx33.beginPath();
+         ctx33.fillStyle = 'white';
+         ctx33.stroke();
+      }
+
+      btn4_1.onclick = function () {
+         right4 += 1;
+         ctx44.fillStyle="white";
+         ctx44.fillRect(0,0,256,256);
+         ctx44.drawImage(img44, 0 + step4 * right4 - step4 * left4, 0 - step4 * up4 + step4 * down4, img.width - (step4 * minus4) + (step4 * plus4), img.height - (step4 * minus4) + (step4 * plus4));
+         ctx44.beginPath();
+         ctx44.fillStyle = 'white';
+         ctx44.stroke();
+      }
+
+      btn5_1.onclick = function () {
+         right5 += 1;
+         ctx55.fillStyle="white";
+         ctx55.fillRect(0,0,256,256);
+         ctx55.drawImage(img55, 0 + step * right5 - step * left5, 0 - step * up5 + step * down5, img.width - (step * minus5) + (step * plus5), img.height - (step * minus5) + (step * plus5));
+         ctx55.beginPath();
+         ctx55.fillStyle = 'white';
+         ctx55.stroke();
+      }
+
+      btn6_1.onclick = function () {
+         right6 += 1;
+         ctx66.fillStyle="white";
+         ctx66.fillRect(0,0,256,256);
+         ctx66.drawImage(img66, 0 + step * right6 - step * left6, 0 - step * up6 + step * down6, img.width - (step * minus6) + (step * plus6), img.height - (step * minus6) + (step * plus6));
+         ctx66.beginPath();
+         ctx66.fillStyle = 'white';
+         ctx66.stroke();
+      }
+
+      btn7_1.onclick = function () {
+         right7 += 1;
+         ctx77.fillStyle="white";
+         ctx77.fillRect(0,0,256,256);
+         ctx77.drawImage(img77, 0 + step * right7 - step * left7, 0 - step * up7 + step * down7, img.width - (step * minus7) + (step * plus7), img.height - (step * minus7) + (step * plus7));
+         ctx77.beginPath();
+         ctx77.fillStyle = 'white';
+         ctx77.stroke();
+      }
+
+      btn8_1.onclick = function () {
+         right8 += 1;
+         ctx88.fillStyle="white";
+         ctx88.fillRect(0,0,256,256);
+         ctx88.drawImage(img88, 0 + step * right8 - step * left8, 0 - step * up8 + step * down8, img.width - (step * minus8) + (step * plus8), img.height - (step * minus8) + (step * plus8));
+         ctx88.beginPath();
+         ctx88.fillStyle = 'white';
+         ctx88.stroke();
+      }
+
+      btn9_1.onclick = function () {
+         right9 += 1;
+         ctx99.fillStyle="white";
+         ctx99.fillRect(0,0,256,256);
+         ctx99.drawImage(img99, 0 + step * right9 - step * left9, 0 - step * up9 + step * down9, img.width - (step * minus9) + (step * plus9), img.height - (step * minus9) + (step * plus9));
+         ctx99.beginPath();
+         ctx99.fillStyle = 'white';
+         ctx99.stroke();
+      }
+
+      //Button Left
+      btn2.onclick = function () {
+         left += 1;
+         ctx.fillStyle="white";
+         ctx.fillRect(0,0,256,256);
+         ctx.drawImage(img11, 0 + step * right - step * left, 0 - step * up + step * down, img.width - (step * minus) + (step * plus), img.height - (step * minus) + (step * plus));
          ctx.beginPath();
-         ctx.setLineDash([20, 5]);
-         ctx.moveTo(0,128);
-         ctx.lineTo(256,128);
-         ctx.moveTo(128,0);
-         ctx.lineTo(128,256);
-         ctx.fillStyle='white';
          ctx.stroke();
       }
 
-      btn3.onclick=function(){
-         up+=1;
-         ctx.clearRect(0,0,canvas.width,canvas.height);   
-         ctx.drawImage(img2, 0+step*right-step*left, 0-step*up+step*down, img.width-(step*minus)+(step*plus), img.height-(step*minus)+(step*plus));
+      btn2_2.onclick = function () {
+         left2 += 1;
+         ctx22.fillStyle="white";
+         ctx22.fillRect(0,0,256,256);
+         ctx22.drawImage(img22, 0 + step2 * right2 - step2 * left2, 0 - step2 * up2 + step2 * down2, img.width - (step2 * minus2) + (step2 * plus2), img.height - (step2 * minus2) + (step2 * plus2));
+         ctx22.beginPath();
+         ctx22.fillStyle = 'white';
+         ctx22.stroke();
+      }
+
+      btn3_2.onclick = function () {
+         left3 += 1;
+         ctx33.fillStyle="white";
+         ctx33.fillRect(0,0,256,256);
+         ctx33.drawImage(img33, 0 + step3 * right3 - step3 * left3, 0 - step3 * up3 + step3 * down3, img.width - (step3 * minus3) + (step3 * plus3), img.height - (step3 * minus3) + (step3 * plus3));
+         ctx33.beginPath();
+         ctx33.fillStyle = 'white';
+         ctx33.stroke();
+      }
+
+      btn4_2.onclick = function () {
+         left4 += 1;
+         ctx44.fillStyle="white";
+         ctx44.fillRect(0,0,256,256);
+         ctx44.drawImage(img44, 0 + step4 * right4 - step4 * left4, 0 - step4 * up4 + step4 * down4, img.width - (step4 * minus4) + (step4 * plus4), img.height - (step4 * minus4) + (step4 * plus4));
+         ctx44.beginPath();
+         ctx44.fillStyle = 'white';
+         ctx44.stroke();
+      }
+
+      btn5_2.onclick = function () {
+         left5 += 1;
+         ctx55.fillStyle="white";
+         ctx55.fillRect(0,0,256,256);
+         ctx55.drawImage(img55, 0 + step * right5 - step * left5, 0 - step * up5 + step * down5, img.width - (step * minus5) + (step * plus5), img.height - (step * minus5) + (step * plus5));
+         ctx55.beginPath();
+         ctx55.fillStyle = 'white';
+         ctx55.stroke();
+      }
+
+      btn6_2.onclick = function () {
+         leftt6 += 1;
+         ctx66.fillStyle="white";
+         ctx66.fillRect(0,0,256,256);
+         ctx66.drawImage(img66, 0 + step * right6 - step * left6, 0 - step * up6 + step * down6, img.width - (step * minus6) + (step * plus6), img.height - (step * minus6) + (step * plus6));
+         ctx66.beginPath();
+         ctx66.fillStyle = 'white';
+         ctx66.stroke();
+      }
+
+      btn7_2.onclick = function () {
+         left7 += 1;
+         ctx77.fillStyle="white";
+         ctx77.fillRect(0,0,256,256);
+         ctx77.drawImage(img77, 0 + step * right7 - step * left7, 0 - step * up7 + step * down7, img.width - (step * minus7) + (step * plus7), img.height - (step * minus7) + (step * plus7));
+         ctx77.beginPath();
+         ctx77.fillStyle = 'white';
+         ctx77.stroke();
+      }
+
+      btn8_2.onclick = function () {
+         left8 += 1;
+         ctx88.fillStyle="white";
+         ctx88.fillRect(0,0,256,256);
+         ctx88.drawImage(img88, 0 + step * right8 - step * left8, 0 - step * up8 + step * down8, img.width - (step * minus8) + (step * plus8), img.height - (step * minus8) + (step * plus8));
+         ctx88.beginPath();
+         ctx88.fillStyle = 'white';
+         ctx88.stroke();
+      }
+
+      btn9_2.onclick = function () {
+         left9 += 1;
+         ctx99.fillStyle="white";
+         ctx99.fillRect(0,0,256,256);
+         ctx99.drawImage(img99, 0 + step * right9 - step * left9, 0 - step * up9 + step * down9, img.width - (step * minus9) + (step * plus9), img.height - (step * minus9) + (step * plus9));
+         ctx99.beginPath();
+         ctx99.fillStyle = 'white';
+         ctx99.stroke();
+      }
+
+
+      //Button Up
+      btn3.onclick = function () {
+         up += 1;
+         ctx.fillStyle="white";
+         ctx.fillRect(0,0,256,256);
+         ctx.drawImage(img11, 0 + step * right - step * left, 0 - step * up + step * down, img.width - (step * minus) + (step * plus), img.height - (step * minus) + (step * plus));
          ctx.beginPath();
-         ctx.setLineDash([20, 5]);
-         ctx.moveTo(0,128);
-         ctx.lineTo(256,128);
-         ctx.moveTo(128,0);
-         ctx.lineTo(128,256);
-         ctx.fillStyle='white';
+         ctx.fillStyle = 'white';
          ctx.stroke();
       }
 
-      btn4.onclick=function(){
-         down+=1;
-         ctx.clearRect(0,0,canvas.width,canvas.height);   
-         ctx.drawImage(img2, 0+step*right-step*left, 0-step*up+step*down, img.width-(step*minus)+(step*plus), img.height-(step*minus)+(step*plus));
+      btn2_3.onclick = function () {
+         up2 += 1;
+         ctx22.fillStyle="white";
+         ctx22.fillRect(0,0,256,256);
+         ctx22.drawImage(img22, 0 + step2 * right2 - step2 * left2, 0 - step2 * up2 + step2 * down2, img.width - (step2 * minus2) + (step2 * plus2), img.height - (step2 * minus2) + (step2 * plus2));
+         ctx22.beginPath();
+         ctx22.fillStyle = 'white';
+         ctx22.stroke();
+      }
+
+      btn3_3.onclick = function () {
+         up3 += 1;
+         ctx33.fillStyle="white";
+         ctx33.fillRect(0,0,256,256);
+         ctx33.drawImage(img33, 0 + step3 * right3 - step3 * left3, 0 - step3 * up3 + step3 * down3, img.width - (step3 * minus3) + (step3 * plus3), img.height - (step3 * minus3) + (step3 * plus3));
+         ctx33.beginPath();
+         ctx33.fillStyle = 'white';
+         ctx33.stroke();
+      }
+
+      btn4_3.onclick = function () {
+         up4 += 1;
+         ctx44.fillStyle="white";
+         ctx44.fillRect(0,0,256,256);
+         ctx44.drawImage(img44, 0 + step4 * right4 - step4 * left4, 0 - step4 * up4 + step4 * down4, img.width - (step4 * minus4) + (step4 * plus4), img.height - (step4 * minus4) + (step4 * plus4));
+         ctx44.beginPath();
+         ctx44.fillStyle = 'white';
+         ctx44.stroke();
+      }
+
+      btn5_3.onclick = function () {
+         up5 += 1;
+         ctx55.fillStyle="white";
+         ctx55.fillRect(0,0,256,256);
+         ctx55.drawImage(img55, 0 + step * right5 - step * left5, 0 - step * up5 + step * down5, img.width - (step * minus5) + (step * plus5), img.height - (step * minus5) + (step * plus5));
+         ctx55.beginPath();
+         ctx55.fillStyle = 'white';
+         ctx55.stroke();
+      }
+
+      btn6_3.onclick = function () {
+         up6 += 1;
+         ctx66.fillStyle="white";
+         ctx66c.fillRect(0,0,256,256);
+         ctx66.drawImage(img66, 0 + step * right6 - step * left6, 0 - step * up6 + step * down6, img.width - (step * minus6) + (step * plus6), img.height - (step * minus6) + (step * plus6));
+         ctx66.beginPath();
+         ctx66.fillStyle = 'white';
+         ctx66.stroke();
+      }
+
+      btn7_3.onclick = function () {
+         up7 += 1;
+         ctx77.fillStyle="white";
+         ctx77.fillRect(0,0,256,256);
+         ctx77.drawImage(img77, 0 + step * right7 - step * left7, 0 - step * up7 + step * down7, img.width - (step * minus7) + (step * plus7), img.height - (step * minus7) + (step * plus7));
+         ctx77.beginPath();
+         ctx77.fillStyle = 'white';
+         ctx77.stroke();
+      }
+
+      btn8_3.onclick = function () {
+         up8 += 1;
+         ctx88.fillStyle="white";
+         ctx88.fillRect(0,0,256,256);
+         ctx88.drawImage(img88, 0 + step * right8 - step * left8, 0 - step * up8 + step * down8, img.width - (step * minus8) + (step * plus8), img.height - (step * minus8) + (step * plus8));
+         ctx88.beginPath();
+         ctx88.fillStyle = 'white';
+         ctx88.stroke();
+      }
+
+      btn9_3.onclick = function () {
+         up9 += 1;
+         ctx99.fillStyle="white";
+         ctx99.fillRect(0,0,256,256);
+         ctx99.drawImage(img99, 0 + step * right9 - step * left9, 0 - step * up9 + step * down9, img.width - (step * minus9) + (step * plus9), img.height - (step * minus9) + (step * plus9));
+         ctx99.beginPath();
+         ctx99.fillStyle = 'white';
+         ctx99.stroke();
+      }
+
+
+
+      //Button Down
+      btn4.onclick = function () {
+         down += 1;
+         ctx.drawImage(img11, 0 + step * right - step * left, 0 - step * up + step * down, img.width - (step * minus) + (step * plus), img.height - (step * minus) + (step * plus));
          ctx.beginPath();
-         ctx.setLineDash([20, 5]);
-         ctx.moveTo(0,128);
-         ctx.lineTo(256,128);
-         ctx.moveTo(128,0);
-         ctx.lineTo(128,256);
-         ctx.fillStyle='white';
+         ctx.fillStyle = 'white';
          ctx.stroke();
       }
 
-      btn5.onclick=function(){
-         plus+=1;
-         ctx.clearRect(0,0,canvas.width,canvas.height);         
-         ctx.drawImage(img2, 0+step*right-step*left, 0-step*up+step*down, img.width-(step*minus)+(step*plus), img.height-(step*minus)+(step*plus));
+      btn2_4.onclick = function () {
+         down2 += 1;
+         ctx22.fillStyle="white";
+         ctx22.fillRect(0,0,256,256);
+         ctx22.drawImage(img22, 0 + step2 * right2 - step2 * left2, 0 - step2 * up2 + step2 * down2, img.width - (step2 * minus2) + (step2 * plus2), img.height - (step2 * minus2) + (step2 * plus2));
+         ctx22.beginPath();
+         ctx22.fillStyle = 'white';
+         ctx22.stroke();
+      }
+
+      btn3_4.onclick = function () {
+         down3 += 1;
+         ctx33.fillStyle="white";
+         ctx33.fillRect(0,0,256,256);
+         ctx33.drawImage(img33, 0 + step3 * right3 - step3 * left3, 0 - step3 * up3 + step3 * down3, img.width - (step3 * minus3) + (step3 * plus3), img.height - (step3 * minus3) + (step3 * plus3));
+         ctx33.beginPath();
+         ctx33.fillStyle = 'white';
+         ctx33.stroke();
+      }
+
+      btn4_4.onclick = function () {
+         down4 += 1;
+         ctx44.fillStyle="white";
+         ctx44.fillRect(0,0,256,256);
+         ctx44.drawImage(img44, 0 + step4 * right4 - step4 * left4, 0 - step4 * up4 + step4 * down4, img.width - (step4 * minus4) + (step4 * plus4), img.height - (step4 * minus4) + (step4 * plus4));
+         ctx44.beginPath();
+         ctx44.fillStyle = 'white';
+         ctx44.stroke();
+      }
+
+      btn5_4.onclick = function () {
+         down5 += 1;
+         ctx55.fillStyle="white";
+         ctx55.fillRect(0,0,256,256);
+         ctx55.drawImage(img55, 0 + step * right5 - step * left5, 0 - step * up5 + step * down5, img.width - (step * minus5) + (step * plus5), img.height - (step * minus5) + (step * plus5));
+         ctx55.beginPath();
+         ctx55.fillStyle = 'white';
+         ctx55.stroke();
+      }
+
+      btn6_4.onclick = function () {
+         down6 += 1;
+         ctx66.fillStyle="white";
+         ctx66c.fillRect(0,0,256,256);
+         ctx66.drawImage(img66, 0 + step * right6 - step * left6, 0 - step * up6 + step * down6, img.width - (step * minus6) + (step * plus6), img.height - (step * minus6) + (step * plus6));
+         ctx66.beginPath();
+         ctx66.fillStyle = 'white';
+         ctx66.stroke();
+      }
+
+      btn7_4.onclick = function () {
+         down7 += 1;
+         ctx77.fillStyle="white";
+         ctx77.fillRect(0,0,256,256);
+         ctx77.drawImage(img77, 0 + step * right7 - step * left7, 0 - step * up7 + step * down7, img.width - (step * minus7) + (step * plus7), img.height - (step * minus7) + (step * plus7));
+         ctx77.beginPath();
+         ctx77.fillStyle = 'white';
+         ctx77.stroke();
+      }
+
+      btn8_4.onclick = function () {
+         down8 += 1;
+         ctx88.fillStyle="white";
+         ctx88.fillRect(0,0,256,256);
+         ctx88.drawImage(img88, 0 + step * right8 - step * left8, 0 - step * up8 + step * down8, img.width - (step * minus8) + (step * plus8), img.height - (step * minus8) + (step * plus8));
+         ctx88.beginPath();
+         ctx88.fillStyle = 'white';
+         ctx88.stroke();
+      }
+
+      btn9_4.onclick = function () {
+         down9 += 1;
+         ctx99.fillStyle="white";
+         ctx99.fillRect(0,0,256,256);
+         ctx99.drawImage(img99, 0 + step * right9 - step * left9, 0 - step * up9 + step * down9, img.width - (step * minus9) + (step * plus9), img.height - (step * minus9) + (step * plus9));
+         ctx99.beginPath();
+         ctx99.fillStyle = 'white';
+         ctx99.stroke();
+      }
+
+
+      //Button plus
+      btn5.onclick = function () {
+         plus += 1;
+         ctx.drawImage(img11, 0 + step * right - step * left, 0 - step * up + step * down, img.width - (step * minus) + (step * plus), img.height - (step * minus) + (step * plus));
          ctx.beginPath();
-         ctx.setLineDash([20, 5]);
-         ctx.moveTo(0,128);
-         ctx.lineTo(256,128);
-         ctx.moveTo(128,0);
-         ctx.lineTo(128,256);
-         ctx.fillStyle='white';
+         ctx.fillStyle = 'white';
          ctx.stroke();
       }
-      btn6.onclick=function(){
-         minus+=1;
-         ctx.clearRect(0,0,canvas.width,canvas.height);         
-         ctx.drawImage(img2, 0+step*right-step*left, 0-step*up+step*down, img.width-(step*minus)+(step*plus), img.height-(step*minus)+(step*plus));
+
+      btn2_5.onclick = function () {
+         plus2 += 1;
+         ctx22.fillStyle="white";
+         ctx22.fillRect(0,0,256,256);
+         ctx22.drawImage(img22, 0 + step2 * right2 - step2 * left2, 0 - step2 * up2 + step2 * down2, img.width - (step2 * minus2) + (step2 * plus2), img.height - (step2 * minus2) + (step2 * plus2));
+         ctx22.beginPath();
+         ctx22.fillStyle = 'white';
+         ctx22.stroke();
+      }
+
+      btn3_5.onclick = function () {
+         plus3 += 1;
+         ctx33.fillStyle="white";
+         ctx33.fillRect(0,0,256,256);
+         ctx33.drawImage(img33, 0 + step3 * right3 - step3 * left3, 0 - step3 * up3 + step3 * down3, img.width - (step3 * minus3) + (step3 * plus3), img.height - (step3 * minus3) + (step3 * plus3));
+         ctx33.beginPath();
+         ctx33.fillStyle = 'white';
+         ctx33.stroke();
+      }
+
+      btn4_5.onclick = function () {
+         plus4 += 1;
+         ctx44.fillStyle="white";
+         ctx44.fillRect(0,0,256,256);
+         ctx44.drawImage(img44, 0 + step4 * right4 - step4 * left4, 0 - step4 * up4 + step4 * down4, img.width - (step4 * minus4) + (step4 * plus4), img.height - (step4 * minus4) + (step4 * plus4));
+         ctx44.beginPath();
+         ctx44.fillStyle = 'white';
+         ctx44.stroke();
+      }
+
+      btn5_5.onclick = function () {
+         plus5 += 1;
+         ctx55.fillStyle="white";
+         ctx55.fillRect(0,0,256,256);
+         ctx55.drawImage(img55, 0 + step * right5 - step * left5, 0 - step * up5 + step * down5, img.width - (step * minus5) + (step * plus5), img.height - (step * minus5) + (step * plus5));
+         ctx55.beginPath();
+         ctx55.fillStyle = 'white';
+         ctx55.stroke();
+      }
+
+      btn6_5.onclick = function () {
+         plus6 += 1;
+         ctx66.fillStyle="white";
+         ctx66c.fillRect(0,0,256,256);
+         ctx66.drawImage(img66, 0 + step * right6 - step * left6, 0 - step * up6 + step * down6, img.width - (step * minus6) + (step * plus6), img.height - (step * minus6) + (step * plus6));
+         ctx66.beginPath();
+         ctx66.fillStyle = 'white';
+         ctx66.stroke();
+      }
+
+      btn7_5.onclick = function () {
+         plus7 += 1;
+         ctx77.fillStyle="white";
+         ctx77.fillRect(0,0,256,256);
+         ctx77.drawImage(img77, 0 + step * right7 - step * left7, 0 - step * up7 + step * down7, img.width - (step * minus7) + (step * plus7), img.height - (step * minus7) + (step * plus7));
+         ctx77.beginPath();
+         ctx77.fillStyle = 'white';
+         ctx77.stroke();
+      }
+
+      btn8_5.onclick = function () {
+         plus8 += 1;
+         ctx88.fillStyle="white";
+         ctx88.fillRect(0,0,256,256);
+         ctx88.drawImage(img88, 0 + step * right8 - step * left8, 0 - step * up8 + step * down8, img.width - (step * minus8) + (step * plus8), img.height - (step * minus8) + (step * plus8));
+         ctx88.beginPath();
+         ctx88.fillStyle = 'white';
+         ctx88.stroke();
+      }
+
+      btn9_5.onclick = function () {
+         plus9 += 1;
+         ctx99.fillStyle="white";
+         ctx99.fillRect(0,0,256,256);
+         ctx99.drawImage(img99, 0 + step * right9 - step * left9, 0 - step * up9 + step * down9, img.width - (step * minus9) + (step * plus9), img.height - (step * minus9) + (step * plus9));
+         ctx99.beginPath();
+         ctx99.fillStyle = 'white';
+         ctx99.stroke();
+      }
+
+
+      //Button minus
+      btn6.onclick = function () {
+         minus += 1;
+         ctx.drawImage(img11, 0 + step * right - step * left, 0 - step * up + step * down, img.width - (step * minus) + (step * plus), img.height - (step * minus) + (step * plus));
          ctx.beginPath();
-         ctx.setLineDash([20, 5]);
-         ctx.moveTo(0,128);
-         ctx.lineTo(256,128);
-         ctx.moveTo(128,0);
-         ctx.lineTo(128,256);
-         ctx.fillStyle='white';
+         ctx.fillStyle = 'white';
          ctx.stroke();
+      }
+
+      btn2_6.onclick = function () {
+         minus2 += 1;
+         ctx22.fillStyle="white";
+         ctx22.fillRect(0,0,256,256);
+         ctx22.drawImage(img22, 0 + step2 * right2 - step2 * left2, 0 - step2 * up2 + step2 * down2, img.width - (step2 * minus2) + (step2 * plus2), img.height - (step2 * minus2) + (step2 * plus2));
+         ctx22.beginPath();
+         ctx22.fillStyle = 'white';
+         ctx22.stroke();
+      }
+
+      btn3_6.onclick = function () {
+         minus3 += 1;
+         ctx33.fillStyle="white";
+         ctx33.fillRect(0,0,256,256);
+         ctx33.drawImage(img33, 0 + step3 * right3 - step3 * left3, 0 - step3 * up3 + step3 * down3, img.width - (step3 * minus3) + (step3 * plus3), img.height - (step3 * minus3) + (step3 * plus3));
+         ctx33.beginPath();
+         ctx33.fillStyle = 'white';
+         ctx33.stroke();
+      }
+
+      btn4_6.onclick = function () {
+         minus4 += 1;
+         ctx44.fillStyle="white";
+         ctx44.fillRect(0,0,256,256);
+         ctx44.drawImage(img44, 0 + step4 * right4 - step4 * left4, 0 - step4 * up4 + step4 * down4, img.width - (step4 * minus4) + (step4 * plus4), img.height - (step4 * minus4) + (step4 * plus4));
+         ctx44.beginPath();
+         ctx44.fillStyle = 'white';
+         ctx44.stroke();
+      }
+
+      btn5_6.onclick = function () {
+         minus5 += 1;
+         ctx55.fillStyle="white";
+         ctx55.fillRect(0,0,256,256);
+         ctx55.drawImage(img55, 0 + step * right5 - step * left5, 0 - step * up5 + step * down5, img.width - (step * minus5) + (step * plus5), img.height - (step * minus5) + (step * plus5));
+         ctx55.beginPath();
+         ctx55.fillStyle = 'white';
+         ctx55.stroke();
+      }
+
+      btn6_6.onclick = function () {
+         minus6 += 1;
+         ctx66.fillStyle="white";
+         ctx66c.fillRect(0,0,256,256);
+         ctx66.drawImage(img66, 0 + step * right6 - step * left6, 0 - step * up6 + step * down6, img.width - (step * minus6) + (step * plus6), img.height - (step * minus6) + (step * plus6));
+         ctx66.beginPath();
+         ctx66.fillStyle = 'white';
+         ctx66.stroke();
+      }
+
+      btn7_6.onclick = function () {
+         minus7 += 1;
+         ctx77.fillStyle="white";
+         ctx77.fillRect(0,0,256,256);
+         ctx77.drawImage(img77, 0 + step * right7 - step * left7, 0 - step * up7 + step * down7, img.width - (step * minus7) + (step * plus7), img.height - (step * minus7) + (step * plus7));
+         ctx77.beginPath();
+         ctx77.fillStyle = 'white';
+         ctx77.stroke();
+      }
+
+      btn8_6.onclick = function () {
+         minus8 += 1;
+         ctx88.fillStyle="white";
+         ctx88.fillRect(0,0,256,256);
+         ctx88.drawImage(img88, 0 + step * right8 - step * left8, 0 - step * up8 + step * down8, img.width - (step * minus8) + (step * plus8), img.height - (step * minus8) + (step * plus8));
+         ctx88.beginPath();
+         ctx88.fillStyle = 'white';
+         ctx88.stroke();
+      }
+
+      btn9_6.onclick = function () {
+         minus9 += 1;
+         ctx99.fillStyle="white";
+         ctx99.fillRect(0,0,256,256);
+         ctx99.drawImage(img99, 0 + step * right9 - step * left9, 0 - step * up9 + step * down9, img.width - (step * minus9) + (step * plus9), img.height - (step * minus9) + (step * plus9));
+         ctx99.beginPath();
+         ctx99.fillStyle = 'white';
+         ctx99.stroke();
       }
    };
 
+
+
    function getCookie(name) {
-        var cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = cookies[i].trim();
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+         var cookies = document.cookie.split(';');
+         for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+               cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+               break;
             }
-        }
-        return cookieValue;
-    }
+         }
+      }
+      return cookieValue;
+   }
 
    var csrftoken = getCookie('csrftoken');
 
@@ -450,34 +1403,46 @@
       return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
    }
 
-   
-
    function sub() {
       var canvas = document.getElementById("canvas").toDataURL();
+      var canvas22 = document.getElementById("canvas22").toDataURL();
+      var canvas33 = document.getElementById("canvas33").toDataURL();
+      var canvas44 = document.getElementById("canvas44").toDataURL();
+      var canvas55 = document.getElementById("canvas55").toDataURL();
+      var canvas66 = document.getElementById("canvas66").toDataURL();
+      var canvas77 = document.getElementById("canvas77").toDataURL();
+      var canvas88 = document.getElementById("canvas88").toDataURL();
+      var canvas99 = document.getElementById("canvas99").toDataURL();
 
-      console.log("hihi")
       $.ajaxSetup({
-            beforeSend: function(xhr, settings) {
-                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                }
+         beforeSend: function (xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+               xhr.setRequestHeader("X-CSRFToken", csrftoken);
             }
-        });
+         }
+      });
 
-        $.ajax({
-            type:"POST",
-            url:"{% url 'fontsapp:input_edit' font.id %}",
-            data:{
-                canvas:canvas,
-            }
-        }).done(function(o){
-            console.log('saved');
-        });
+      $.ajax({
+         type: "POST",
+         url: "{% url 'fontsapp:input_edit' font.id %}",
+         data: {
+            canvas: canvas,
+            canvas22: canvas22,
+            canvas33: canvas33,
+            canvas44: canvas44,
+            canvas55: canvas55,
+            canvas66: canvas66,
+            canvas77: canvas77,
+            canvas88: canvas88,
+            canvas99: canvas99,
+         }
+      }).done(function (o) {
+         console.log('saved');
+      });
    }
-   
-   
-    
+
 </script>
+
 </html>
 
 {% endblock %}

@@ -27,84 +27,92 @@
 
 <!doctype html>
 <html lang="en">
- <head>
-  <meta charset="UTF-8">
 
-  <title>Document</title>
-  <style type='text/css'>
+<head>
+	<meta charset="UTF-8">
 
-	html{
-	 background:#170B3B;
-        
-	}
+	<title>Document</title>
+	<style type='text/css'>
+		html {
+			background: #170B3B;
 
-	#startbutton{
-	border-radius:50pt;
-	background-color:white;
-	color:black;
-	font-size:10pt;
-	padding:10pt;
-	font-family:"나눔스퀘어";
-	transition-property:background-color;
-	transition-duration:2s;
-	margin-top:50pt;
-	width:200%;
-	margin-left:-25pt;
-	}
-	#startbutton:hover{
-	background-color:#FACC2E;
-	font-weight:bold;
-	}
+		}
 
-	.square{
-	  width:80px;
-	  margin-top: 20%;
-	  margin-left: calc(50% - 40px);
-	  margin-left: -webkit-calc(50% - 40px);
-	  margin-left: -moz-calc(50% - 40px);
-	  background:#170B3B;
-	}
+		#startbutton {
+			border-radius: 50pt;
+			background-color: white;
+			color: black;
+			font-size: 10pt;
+			padding: 10pt;
+			font-family: "나눔스퀘어";
+			transition-property: background-color;
+			transition-duration: 2s;
+			margin-top: 50pt;
+			width: 200%;
+			margin-left: -25pt;
+		}
 
-	.spin {
-	  height: 70px;
-	  width: 70px;
-	  border-radius: 50%;
-	  border:dashed 5px white;
-	  -webkit-animation-name: spin;
-	  -webkit-animation-duration: 1.5s;
-	  -webkit-animation-iteration-count: infinite;
-	  -webkit-animation-timing-function: linear;
-	}
+		#startbutton:hover {
+			background-color: #FACC2E;
+			font-weight: bold;
+		}
 
-	@-webkit-keyframes spin {
-	  from   {  -webkit-transform: rotate(0deg); }
-	  to   {  -webkit-transform: rotate(360deg); }
-	}
-  </style>
-  <script>
-    function start(){
-        document.getElementById('startbutton').style.visibility = "hidden";
-        document.getElementById('loading_img').style.visibility = "visible";
-    }
+		.square {
+			width: 80px;
+			margin-top: 20%;
+			margin-left: calc(50% - 40px);
+			margin-left: -webkit-calc(50% - 40px);
+			margin-left: -moz-calc(50% - 40px);
+			background: #170B3B;
+		}
 
+		.spin {
+			height: 70px;
+			width: 70px;
+			border-radius: 50%;
+			border: dashed 5px white;
+			-webkit-animation-name: spin;
+			-webkit-animation-duration: 1.5s;
+			-webkit-animation-iteration-count: infinite;
+			-webkit-animation-timing-function: linear;
+		}
 
-  </script>
- </head>
- <body>
-  <div class="square">
+		@-webkit-keyframes spin {
+			from {
+				-webkit-transform: rotate(0deg);
+			}
 
-    <form method="post" action="{% url 'fontsapp:loading' font.id %}">
-        {% csrf_token %}
-        <input type="submit" onclick="start()" value="글자 생성 시작하기" id="startbutton" />
-      </form>
+			to {
+				-webkit-transform: rotate(360deg);
+			}
+		}
+	</style>
+	<script>
+		function start() {
+			document.getElementById('startbutton').style.visibility = "hidden";
+			document.getElementById('loading_img').style.visibility = "visible";
+		}
 
 
-    <div id="loading_img" style="visibility:hidden; position:absolute; top:50%; left:45%">
-        <div class="spin"></div>
-    </div>
+	</script>
+</head>
 
-  </div>
- </body>
+<body>
+	<div class="square">
+
+		<form method="post" action="{% url 'fontsapp:loading' font.id %}">
+			{% csrf_token %}
+			<input type="submit" onclick="start()" value="글자 생성 시작하기" id="startbutton" />
+		</form>
+
+
+		<div id="loading_img" style="visibility:hidden; position:absolute; top:50%; left:45%">
+			<div class="spin"></div>
+		</div>
+
+	</div>
+</body>
+
 </html>
 
 

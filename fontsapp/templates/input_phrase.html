@@ -16,330 +16,408 @@
 
 <!doctype html>
 <html lang="en">
- <head>
-  <meta charset="UTF-8">
-  
-  <title>Input</title>
-   <style type='text/css'>
-  	html,body{
-	background-color:#170B3B;
-	font-family:'나눔스퀘어';
-	margin:0;
-	padding:0;
-	height:100%;
 
-	}
+<head>
+	<meta charset="UTF-8">
 
-	/*메뉴 스타일*/
-   h1{
-   font-family:'배달의민족 한나는 열한살';
-   font-weight:bold;
-   font-size:40pt;
-   position:absolute;
-   left:130px;
-   margin-top:-80px;
-   color:white;
-   display:inline;
-   }
+	<title>Input</title>
+	<style type='text/css'>
+		html,
+		body {
+			background-color: #170B3B;
+			font-family: '나눔스퀘어';
+			margin: 0;
+			padding: 0;
+			height: 100%;
 
-   #title{
-   font-family:'나눔스퀘어';
-   font-weight:bold;
-   font-size:35pt;
-   }
-	header{
-	height:75px;
-	padding:1rem;
-	font-weight:bold;
-	display:flex;
-	justify-content:space-between;
-	align-items:center;
-	}
-	#bar2{
-	margin-left:30pt;
-	font-size:20pt;
-	font-weight:lighter;
-	color:white;
-	font-family:"DX영화자막";
-	}
-	#current{
-	color:red;
-	font-size:40pt;
-	font-weight:bold;
-	}
-	#article1{
-	background-color:#f7f7f7;
-	text-align:center;
-	font-size:50pt;
-	font-family:'배달의민족 한나는 열한살';
-	animation-duration:1s;
-    animation-name:slidein,fadein;
-	animation-fill-mode: forwards;
-	
-	}
-	.sub{
-	font-family:"Nanum SaRangHaeADeur"; 
-	font-weight:bold;
-	font-size:15pt;
-	margin-top:-40pt;
-	line-height:5pt;
-	}
-	.abs1{
-	position:absolute; 
-	top:90%;
-	left:50%;
-	transform:translate(-50%,-50%)
-	}
-	.abs2{
-	position:absolute; 
-	top:90%;
-	left:50%;
-	transform:translate(-50%,-50%)
-	}
-	input{
-	border:solid gray;
-	border-radius:5px;
-	padding:20px;
-	text-align:center;
-	font-family:'나눔고딕';
-	font-size:19px;
-	}
+		}
 
-    .input {
-        border:solid gray;
-        border-radius:5px;
-        padding:20px;
-        text-align:center;
-        font-family:'나눔고딕';
-        font-size:19px;
-    }
-	#submit_button{
-	  
-	  padding:20px;
-	  font-size:20pt;
-	  border-radius:10px 0 10px 0; 
-	  border:solid medium white;
-	  background-color:#170B3B;
-	  color:#fff;
-	  font-family:'Dovemayo';
-	}
-	#submit_button:hover{
-	  background-color:#FACC2E;
-	  color:black:
-	  font-weight:bold;
-	}
-	footer{
-	background-color:#4a4949;
-	color:white;
-	position:relative;
-	padding:20px;
-	}
+		/*메뉴 스타일*/
+		h1 {
+			font-family: '배달의민족 한나는 열한살';
+			font-weight: bold;
+			font-size: 40pt;
+			position: absolute;
+			left: 130px;
+			margin-top: -80px;
+			color: white;
+			display: inline;
+		}
+
+		#title {
+			font-family: '나눔스퀘어';
+			font-weight: bold;
+			font-size: 35pt;
+		}
+
+		header {
+			height: 75px;
+			padding: 1rem;
+			font-weight: bold;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		#bar2 {
+			margin-left: 30pt;
+			font-size: 20pt;
+			font-weight: lighter;
+			color: white;
+			font-family: "DX영화자막";
+		}
+
+		#current {
+			color: red;
+			font-size: 40pt;
+			font-weight: bold;
+		}
+
+		#article1 {
+			background-color: #f7f7f7;
+			text-align: center;
+			font-size: 50pt;
+			font-family: '배달의민족 한나는 열한살';
+			animation-duration: 1s;
+			animation-name: slidein, fadein;
+			animation-fill-mode: forwards;
+
+		}
+
+		.sub {
+			font-family: "Nanum SaRangHaeADeur";
+			font-weight: bold;
+			font-size: 15pt;
+			margin-top: -40pt;
+			line-height: 5pt;
+		}
+
+		.abs1 {
+			position: absolute;
+			top: 90%;
+			left: 50%;
+			transform: translate(-50%, -50%)
+		}
+
+		.abs2 {
+			position: absolute;
+			top: 90%;
+			left: 50%;
+			transform: translate(-50%, -50%)
+		}
+
+		input {
+			border: solid gray;
+			border-radius: 5px;
+			padding: 20px;
+			text-align: center;
+			font-family: '나눔고딕';
+			font-size: 19px;
+		}
+
+		.input {
+			border: solid gray;
+			border-radius: 5px;
+			padding: 20px;
+			text-align: center;
+			font-family: '나눔고딕';
+			font-size: 19px;
+		}
+
+		#submit_button {
+
+			padding: 20px;
+			font-size: 20pt;
+			border-radius: 10px 0 10px 0;
+			border: solid medium white;
+			background-color: #170B3B;
+			color: #fff;
+			font-family: 'Dovemayo';
+		}
+
+		#submit_button:hover {
+			background-color: #FACC2E;
+			color: black: font-weight:bold;
+		}
+
+		footer {
+			background-color: #4a4949;
+			color: white;
+			position: relative;
+			padding: 20px;
+		}
 
 		/*슬라이드형 메뉴*/
-    input[id="menuicon"] {display:none;}
-	input[id="menuicon"] + label {display:block;margin:30px;width:60px;height:50px;position:relative;cursor:pointer;}
-	input[id="menuicon"] + label span {display:block;position:absolute;width:100%;height:5px;border-radius:30px;background:#fff;transition:all .35s;}
-	input[id="menuicon"] + label span:nth-child(1) {top:0;}
-	input[id="menuicon"] + label span:nth-child(2) {top:50%;transform:translateY(-50%);} 
-	input[id="menuicon"] + label span:nth-child(3) {bottom:0;}
-	input[id="menuicon"]:checked + label {z-index:2;}
-	input[id="menuicon"]:checked + label span {background:#fff;}
-	input[id="menuicon"]:checked + label span:nth-child(1) {top:50%;transform:translateY(-50%) rotate(45deg);}
-	input[id="menuicon"]:checked + label span:nth-child(2) {opacity:0;}
-	input[id="menuicon"]:checked + label span:nth-child(3) {bottom:50%;transform:translateY(50%) rotate(-45deg);}
-	div[class="sidebar"] {width:300px;height:100%;background:#222;position:fixed;top:0;left:-300px;z-index:1;transition:all .35s;}
-	input[id="menuicon"]:checked + label + div {left:0;}
+		input[id="menuicon"] {
+			display: none;
+		}
 
-	li{
-	color:white;
-	}
-	li a{
-	display:block;
-	text-decoration:none;
-	padding:20pt;
-	padding-left:20pt;
-	line-height:30pt;
-	color: white;
-	
-	font-size:17pt;
-	
-	}
+		input[id="menuicon"]+label {
+			display: block;
+			margin: 30px;
+			width: 60px;
+			height: 50px;
+			position: relative;
+			cursor: pointer;
+		}
 
-	li a:hover{
-	color:#FACC2E;
-	text-decoration:underline;
-	}
+		input[id="menuicon"]+label span {
+			display: block;
+			position: absolute;
+			width: 100%;
+			height: 5px;
+			border-radius: 30px;
+			background: #fff;
+			transition: all .35s;
+		}
 
-	#bar{
-	color:white;
-	font-family:'배달의민족 한나는 열한살';
-	font-size:17pt;
-	word-spacing:30pt;
-	position:absolute;
-	margin-top:-50pt;
-	margin-left:85%;
-	}
+		input[id="menuicon"]+label span:nth-child(1) {
+			top: 0;
+		}
 
-	#bar p{
-	display:inline;
-	}
+		input[id="menuicon"]+label span:nth-child(2) {
+			top: 50%;
+			transform: translateY(-50%);
+		}
 
-	a{
-	text-decoration:none;
-	color: white;
-	}
+		input[id="menuicon"]+label span:nth-child(3) {
+			bottom: 0;
+		}
 
-	#input_phrase1{
-	font-family:"타이포_쌍문동";
-	font-size:35pt;
-	font-weight:bold;
-	text-align:left;
-	line-height:11pt;
-	margin-left:100pt;
-	/* animation-duration:1s;
+		input[id="menuicon"]:checked+label {
+			z-index: 2;
+		}
+
+		input[id="menuicon"]:checked+label span {
+			background: #fff;
+		}
+
+		input[id="menuicon"]:checked+label span:nth-child(1) {
+			top: 50%;
+			transform: translateY(-50%) rotate(45deg);
+		}
+
+		input[id="menuicon"]:checked+label span:nth-child(2) {
+			opacity: 0;
+		}
+
+		input[id="menuicon"]:checked+label span:nth-child(3) {
+			bottom: 50%;
+			transform: translateY(50%) rotate(-45deg);
+		}
+
+		div[class="sidebar"] {
+			width: 300px;
+			height: 100%;
+			background: #222;
+			position: fixed;
+			top: 0;
+			left: -300px;
+			z-index: 1;
+			transition: all .35s;
+		}
+
+		input[id="menuicon"]:checked+label+div {
+			left: 0;
+		}
+
+		li {
+			color: white;
+		}
+
+		li a {
+			display: block;
+			text-decoration: none;
+			padding: 20pt;
+			padding-left: 20pt;
+			line-height: 30pt;
+			color: white;
+
+			font-size: 17pt;
+
+		}
+
+		li a:hover {
+			color: #FACC2E;
+			text-decoration: underline;
+		}
+
+		#bar {
+			color: white;
+			font-family: '배달의민족 한나는 열한살';
+			font-size: 17pt;
+			word-spacing: 30pt;
+			position: absolute;
+			margin-top: -50pt;
+			margin-left: 85%;
+		}
+
+		#bar p {
+			display: inline;
+		}
+
+		a {
+			text-decoration: none;
+			color: white;
+		}
+
+		#input_phrase1 {
+			font-family: "타이포_쌍문동";
+			font-size: 35pt;
+			font-weight: bold;
+			text-align: left;
+			line-height: 11pt;
+			margin-left: 100pt;
+			/* animation-duration:1s;
 	    animation-name:slidein,fadein;
 	animation-fill-mode: forwards; */
-	}
+		}
 
-	.input_phrase3{
-	 /*  display:none; */
-	  line-height:25pt;
-	  color:#616365;
-	  font-size:17pt;
-	  font-weight:bold;
-	  font-family:'나눔스퀘어'; word-spacing:4pt; letter-spacing:1pt; 
-	  margin-top:-10pt; text-align:left; margin-left:100pt;
+		.input_phrase3 {
+			/*  display:none; */
+			line-height: 25pt;
+			color: #616365;
+			font-size: 17pt;
+			font-weight: bold;
+			font-family: '나눔스퀘어';
+			word-spacing: 4pt;
+			letter-spacing: 1pt;
+			margin-top: -10pt;
+			text-align: left;
+			margin-left: 100pt;
 
-	 /*  animation-duration:1s;
+			/*  animation-duration:1s;
 	  animation-delay:1s;
 	  animation-name:slidein,fadein2;
 	  animation-fill-mode: forwards; */
-	 
-	}
 
-	.input_phrase3 .block{
-	display:inline-block;
-	}
+		}
 
-	@keyframes slidein {
+		.input_phrase3 .block {
+			display: inline-block;
+		}
 
-  	from{
-  	margin-left: 20%; 
-  	width: 100%;
-  	}
+		@keyframes slidein {
 
-  	to{
-  	margin-left: 0pt;
-  	width: 100%;
-  	}
-  }
+			from {
+				margin-left: 20%;
+				width: 100%;
+			}
 
-  @keyframes fadein{
-	  0%{
-	  	opacity:0;
-	  }
-	  100%{
-		opacity:1;
-	  }
-  }
+			to {
+				margin-left: 0pt;
+				width: 100%;
+			}
+		}
 
-  @keyframes fadein2{
-	  0%{
-	  	opacity:0;
-	  }
-	  100%{
-		opacity:1;
-	  }
-  }
+		@keyframes fadein {
+			0% {
+				opacity: 0;
+			}
 
+			100% {
+				opacity: 1;
+			}
+		}
 
-  #input_phrase2{
-  font-size:55pt; 
-  color:#0000ff; 
-  }
-  #input_phrase4{
-  font-family:"나눔스퀘어";
-  margin-left:10pt;
-  font-size: 13pt;
-  text-align:left;
-  }
-  
+		@keyframes fadein2 {
+			0% {
+				opacity: 0;
+			}
+
+			100% {
+				opacity: 1;
+			}
+		}
 
 
+		#input_phrase2 {
+			font-size: 55pt;
+			color: #0000ff;
+		}
+
+		#input_phrase4 {
+			font-family: "나눔스퀘어";
+			margin-left: 10pt;
+			font-size: 13pt;
+			text-align: left;
+		}
 	</style>
- </head>
- <body leftmargin="0" rightmargin="0">
+</head>
 
- <nav>
- <hr>
-	 <div id='bar2'>
-		<span id='current'>입력</span>-
-		<span>확인</span>-
-		<span>수정</span>-
-		<span>학습</span>-
-		<span>결과확인</span>
-	 </div>
- </nav><br>
- <section>
+<body leftmargin="0" rightmargin="0">
+
+	<nav>
+		<hr>
+		<div id='bar2'>
+			<span id='current'>입력</span>-
+			<span>확인</span>-
+			<span>수정</span>-
+			<span>학습</span>-
+			<span>결과확인</span>
+		</div>
+	</nav><br>
+	<section>
 		<article id='article1'>
-		<br>
-		<div id="input_phrase1">
-		<p>입력문구</p>
-		<p id="input_phrase2">숙명여대 웹기초입문</p>
-		</div>
+			<br>
+			<div id="input_phrase1">
+				<p>입력문구</p>
+				<p id="input_phrase2">숙명여대 웹기초입문</p>
+			</div>
 
-		<div class="input_phrase3">
-		<p>사용자님께서 입력하실 문구는<br><span style="color:#FACC2E; font-size:25pt;">"숙명여대 웹기초입문"</span>입니다.<br>
-		입력문구는 해당문구만 입력하셔야 합니다.</p>
-		</div>
+			<div class="input_phrase3">
+				<p>사용자님께서 입력하실 문구는<br><span style="color:#FACC2E; font-size:25pt;">"숙명여대 웹기초입문"</span>입니다.<br>
+					입력문구는 해당문구만 입력하셔야 합니다.</p>
+			</div>
 
-		<br>
+			<br>
 
-		<div id="input_phrase1">
-		<p>출력문구</p>
-		<p style="font-size:40pt; color:#0000ff; ">기본문구: 눈송이는 졸업을 꿈꾸지</p>
-		</div>
-		<div class="input_phrase3">
-		<p>출력하고 싶은 문구를<br/><span style="color:#FACC2E; font-size:25pt;">15자 이내</span>로 입력해주세요.<br>
-		아무것도 입력을 안하신다면,<br>
-		기본문구("눈송이는 졸업을 꿈꾸지")가 출력문구가 됩니다.<br>
-		단, 특수문자는 허용되지 않습니다.</p>
-		</div>
-		<div id="input_phrase1">
-		<!-- <div id="input_phrase4">
+			<div id="input_phrase1">
+				<p>출력문구</p>
+				<p style="font-size:40pt; color:#0000ff; ">기본문구: 눈송이는 졸업을 꿈꾸지</p>
+			</div>
+			<div class="input_phrase3">
+				<p>출력하고 싶은 문구를<br /><span style="color:#FACC2E; font-size:25pt;">15자 이내</span>로 입력해주세요.<br>
+					아무것도 입력을 안하신다면,<br>
+					기본문구("눈송이는 졸업을 꿈꾸지")가 출력문구가 됩니다.<br>
+					단, 특수문자는 허용되지 않습니다.</p>
+			</div>
+			<div id="input_phrase1">
+				<!-- <div id="input_phrase4">
 		<p>현재 학습된????~~~~</p>
         </div> -->
-        <div style="paddingTop:30px">
-        <form method="POST" enctype="multipart/form-data" novalidate>
-            {% csrf_token %}
-            {{ form.phrase1 }}
-            <input id="submit_button" type="submit" value="입력하기">
-        </form>
-        </div>    
-        </div>
-        
-		<br><br>
+				<div style="paddingTop:30px">
+					<form method="POST" enctype="multipart/form-data" novalidate>
+						{% csrf_token %}
+						{{ form.phrase1 }}
+						<input id="submit_button" type="submit" value="입력하기">
+					</form>
+				</div>
+			</div>
+
+			<br><br>
 
 		</article>
- </section>
+	</section>
 
- </body>
+</body>
+
 </html>
 
 
 <script>
 	document.addEventListener('animationstart', function (e) {
-		if(e.animationName=='fadein2'){
-			 e.target.classList.add('block');
+		if (e.animationName == 'fadein2') {
+			e.target.classList.add('block');
 		}
 	}
-	window.onload = function (){
-		window.scrollTo(0,0);
-		var ele=document.getElementById('input');
-		ele.focus();
-	}
+	window.onload = function () {
+			window.scrollTo(0, 0);
+			var ele = document.getElementById('input');
+			ele.focus();
+		}
 
 </script>
 
 
-{% endblock %} 
+{% endblock %}

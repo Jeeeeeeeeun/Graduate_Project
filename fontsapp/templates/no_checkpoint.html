@@ -18,192 +18,264 @@
 
 <!doctype html>
 <html lang="en">
- <head>
-  <meta charset="UTF-8">
-  
-  <title>Sorry</title>
-   <style type='text/css'>
-  	html,body{
-	background-color:#170B3B;
-	font-family:'나눔스퀘어';
-	margin:0;
-	padding:0;
-	height:100%;
-	}
 
-	/*메뉴 스타일*/
-   h1{
-   font-family:'배달의민족 한나는 열한살';
-   font-weight:bold;
-   font-size:40pt;
-   position:absolute;
-   left:130px;
-   margin-top:-80px;
-   color:white;
-   display:inline;
-   }
+<head>
+	<meta charset="UTF-8">
 
+	<title>Sorry</title>
+	<style type='text/css'>
+		html,
+		body {
+			background-color: #170B3B;
+			font-family: '나눔스퀘어';
+			margin: 0;
+			padding: 0;
+			height: 100%;
+		}
 
-	/*슬라이드형 메뉴*/
-    input[id="menuicon"] {display:none;}
-	input[id="menuicon"] + label {display:block;margin:30px;width:60px;height:50px;position:relative;cursor:pointer;}
-	input[id="menuicon"] + label span {display:block;position:absolute;width:100%;height:5px;border-radius:30px;background:#fff;transition:all .35s;}
-	input[id="menuicon"] + label span:nth-child(1) {top:0;}
-	input[id="menuicon"] + label span:nth-child(2) {top:50%;transform:translateY(-50%);} 
-	input[id="menuicon"] + label span:nth-child(3) {bottom:0;}
-	input[id="menuicon"]:checked + label {z-index:2;}
-	input[id="menuicon"]:checked + label span {background:#fff;}
-	input[id="menuicon"]:checked + label span:nth-child(1) {top:50%;transform:translateY(-50%) rotate(45deg);}
-	input[id="menuicon"]:checked + label span:nth-child(2) {opacity:0;}
-	input[id="menuicon"]:checked + label span:nth-child(3) {bottom:50%;transform:translateY(50%) rotate(-45deg);}
-	div[class="sidebar"] {width:300px;height:100%;background:#222;position:fixed;top:0;left:-300px;z-index:1;transition:all .35s;}
-	input[id="menuicon"]:checked + label + div {left:0;}
+		/*메뉴 스타일*/
+		h1 {
+			font-family: '배달의민족 한나는 열한살';
+			font-weight: bold;
+			font-size: 40pt;
+			position: absolute;
+			left: 130px;
+			margin-top: -80px;
+			color: white;
+			display: inline;
+		}
 
 
-	li{
-	color:white;
-	}
-	li a{
-	display:block;
-	text-decoration:none;
-	padding:20pt;
-	padding-left:20pt;
-	line-height:30pt;
-	color: white;
-	
-	font-size:17pt;
-	
-	}
+		/*슬라이드형 메뉴*/
+		input[id="menuicon"] {
+			display: none;
+		}
 
-	a{
-	text-decoration:none;
-	color: white;
-	}
+		input[id="menuicon"]+label {
+			display: block;
+			margin: 30px;
+			width: 60px;
+			height: 50px;
+			position: relative;
+			cursor: pointer;
+		}
 
-	li a:hover{
-	color:#FACC2E;
-	text-decoration:underline;
-	}
+		input[id="menuicon"]+label span {
+			display: block;
+			position: absolute;
+			width: 100%;
+			height: 5px;
+			border-radius: 30px;
+			background: #fff;
+			transition: all .35s;
+		}
+
+		input[id="menuicon"]+label span:nth-child(1) {
+			top: 0;
+		}
+
+		input[id="menuicon"]+label span:nth-child(2) {
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		input[id="menuicon"]+label span:nth-child(3) {
+			bottom: 0;
+		}
+
+		input[id="menuicon"]:checked+label {
+			z-index: 2;
+		}
+
+		input[id="menuicon"]:checked+label span {
+			background: #fff;
+		}
+
+		input[id="menuicon"]:checked+label span:nth-child(1) {
+			top: 50%;
+			transform: translateY(-50%) rotate(45deg);
+		}
+
+		input[id="menuicon"]:checked+label span:nth-child(2) {
+			opacity: 0;
+		}
+
+		input[id="menuicon"]:checked+label span:nth-child(3) {
+			bottom: 50%;
+			transform: translateY(50%) rotate(-45deg);
+		}
+
+		div[class="sidebar"] {
+			width: 300px;
+			height: 100%;
+			background: #222;
+			position: fixed;
+			top: 0;
+			left: -300px;
+			z-index: 1;
+			transition: all .35s;
+		}
+
+		input[id="menuicon"]:checked+label+div {
+			left: 0;
+		}
 
 
-	#bar{
-	color:white;
-	font-family:'배달의민족 한나는 열한살';
-	font-size:17pt;
-	word-spacing:30pt;
-	position:absolute;
-	margin-top:-50pt;
-	margin-left:85%;
-	}
+		li {
+			color: white;
+		}
 
-	#bar p{
-	display:inline;
-	}
+		li a {
+			display: block;
+			text-decoration: none;
+			padding: 20pt;
+			padding-left: 20pt;
+			line-height: 30pt;
+			color: white;
 
-	a{
-	text-decoration:none;
-	color: white;
-	}
-	header{
-	height:75px;
-	padding:1rem;
-	font-weight:bold;
-	display:flex;
-	justify-content:space-between;
-	align-items:center;
-	}
-	#bar2{
-	font-size:20pt;
-	font-weight:lighter;
-	background-color:#f7f7f7;
-	}
-	#current{
-	color:red;
-	font-size:40pt;
-	font-weight:bold;
-	
-	}
-	#article1{
-	background-color:#f7f7f7;
-	text-align:center;
-	font-size:25pt;
-	}
-	footer{
-	background-color:#4a4949;
-	color:white;
-	position:relative;
-	padding:20px;
-	margin-top:-10px;
-	
-	padding:20pt;
-	}
+			font-size: 17pt;
 
-	button{
-    font-size: 16px;
-    border: 0;
-    border-radius: 5px;
-    outline: 0;
-    padding: 10px 30px;
-    margin-top: 15px;
-	border:1px solid gray;
-	color:#fff;
-	font-family:'Dovemayo';
-	background-color:#170B3B;
-	cursor:pointer;
-	}
+		}
 
-	/* button:hover{
+		a {
+			text-decoration: none;
+			color: white;
+		}
+
+		li a:hover {
+			color: #FACC2E;
+			text-decoration: underline;
+		}
+
+
+		#bar {
+			color: white;
+			font-family: '배달의민족 한나는 열한살';
+			font-size: 17pt;
+			word-spacing: 30pt;
+			position: absolute;
+			margin-top: -50pt;
+			margin-left: 85%;
+		}
+
+		#bar p {
+			display: inline;
+		}
+
+		a {
+			text-decoration: none;
+			color: white;
+		}
+
+		header {
+			height: 75px;
+			padding: 1rem;
+			font-weight: bold;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		#bar2 {
+			font-size: 20pt;
+			font-weight: lighter;
+			background-color: #f7f7f7;
+		}
+
+		#current {
+			color: red;
+			font-size: 40pt;
+			font-weight: bold;
+
+		}
+
+		#article1 {
+			background-color: #f7f7f7;
+			text-align: center;
+			font-size: 25pt;
+		}
+
+		footer {
+			background-color: #4a4949;
+			color: white;
+			position: relative;
+			padding: 20px;
+			margin-top: -10px;
+
+			padding: 20pt;
+		}
+
+		button {
+			font-size: 16px;
+			border: 0;
+			border-radius: 5px;
+			outline: 0;
+			padding: 10px 30px;
+			margin-top: 15px;
+			border: 1px solid gray;
+			color: #fff;
+			font-family: 'Dovemayo';
+			background-color: #170B3B;
+			cursor: pointer;
+		}
+
+		/* button:hover{
 	  background-color:#FACC2E;
 	  color:black:
 	  font-weight:bold;
 	
 	} */
 
-	.arrow-right{
-	position: absolute;
-	display: inline-block;
-	width:0; height:0;
-	border-top:8px solid transparent;
-	border-bottom:8px solid transparent;
-	border-right:8px solid transparent;
-	border-left:8px solid white;
-	margin-left:15px;
-	margin-top:2px;
-	animation: horizontal 0.7s ease-in-out infinite;
-	}
-	@keyframes horizontal {
-	  0% {
-		margin-left: 9px;
-	  }
-	  50% {
-		margin-left: 11px;
-	  }
-	  100% {
-		margin-left: 9px;
-	  }
-	}
+		.arrow-right {
+			position: absolute;
+			display: inline-block;
+			width: 0;
+			height: 0;
+			border-top: 8px solid transparent;
+			border-bottom: 8px solid transparent;
+			border-right: 8px solid transparent;
+			border-left: 8px solid white;
+			margin-left: 15px;
+			margin-top: 2px;
+			animation: horizontal 0.7s ease-in-out infinite;
+		}
 
-    </style>
-    
-    <body leftmargin="0" rightmargin="0">
-    <section>
-            <article id='article1'>
-            <br>
-                <img src="../../media/html_imgs/느낌표.png" width=100 height=100 style="margin-top:50pt;">
-                <p style="font-weight:bold; font-size:30pt; margin-top:20pt;">현재 학습이 안된 글자가 포함되어 있습니다. </p>
-                <p>
-                서비스를 계속 진행하시려면 3일정도가 소요됩니다.<br/>학습 완료 후 메일을 발송해드립니다.<br/>메일 확인 후 다시 진행해주세요.</p>
+		@keyframes horizontal {
+			0% {
+				margin-left: 9px;
+			}
 
-                <p style='font-size:20pt;'>없는 글자 : {{ font.no_checkpoint }}</p>
+			50% {
+				margin-left: 11px;
+			}
 
-                <!-- <p>출력 글자를 생성하는데 <span id='current'>2~3일</span> 가량이 걸립니다.</p> -->
-                
-                <a href="{% url 'fontsapp:create_later' font.id %}"><button style='margin-bottom:70pt;'>학습 완료 후 메일 받기<span class="arrow-right"></span></button></a>
-                
-            </article>
-    </section>
-    </body>
-    </html>
+			100% {
+				margin-left: 9px;
+			}
+		}
+	</style>
+
+<body leftmargin="0" rightmargin="0">
+	<section>
+		<article id='article1'>
+			<br>
+			<img src="../../media/html_imgs/느낌표.png" width=100 height=100 style="margin-top:50pt;">
+			<p style="font-weight:bold; font-size:30pt; margin-top:20pt;">현재 학습이 안된 글자가 포함되어 있습니다. </p>
+			<p>
+				서비스를 계속 진행하시려면 3일정도가 소요됩니다.<br />학습 완료 후 메일을 발송해드립니다.<br />메일 확인 후 다시 진행해주세요.</p>
+
+			<p style='font-size:20pt;'>없는 글자 : {{ font.no_checkpoint }}</p>
+
+			<!-- <p>출력 글자를 생성하는데 <span id='current'>2~3일</span> 가량이 걸립니다.</p> -->
+
+			<a href="{% url 'fontsapp:create_later' font.id %}"><button style='margin-bottom:70pt;'>학습 완료 후 메일 받기<span
+						class="arrow-right"></span></button></a>
+
+		</article>
+	</section>
+</body>
+
+</html>
 
 
 

@@ -3,116 +3,128 @@
 
 <!doctype html>
 <html lang="en">
- <head>
-  <meta charset="UTF-8">
 
-   
-  <script src= "https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"> </script>
-  <script src= "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"> </script>
-  <script src= "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"> </script>
+<head>
+   <meta charset="UTF-8">
 
- 
-  <title>태블릿으로 입력하기</title>
+
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"> </script>
+   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"> </script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"> </script>
+
+
+   <title>태블릿으로 입력하기</title>
    <style type='text/css'>
-     html,body{
-   background-color:#170B3B;
-   font-family:'DX영화자막';
-   margin:0;
-   padding:0;
-   height:100%;
-   }
+      html,
+      body {
+         background-color: #170B3B;
+         font-family: 'DX영화자막';
+         margin: 0;
+         padding: 0;
+         height: 100%;
+      }
 
-   /*메뉴 스타일*/
-   h1{
-   font-family:'배달의민족 한나는 열한살';
-   font-weight:bold;
-   font-size:40pt;
-   position:absolute;
-   left:130px;
-   margin-top:-80px;
-   color:white;
-   display:inline;
-   }
-   #bar2{
-   font-size:20pt;
-   font-weight:lighter;
-   color:white;
-   margin-left:30pt;
-   }
-   #current{
-   color:red;
-   font-size:40pt;
-   font-weight:bold;
-   }
+      /*메뉴 스타일*/
+      h1 {
+         font-family: '배달의민족 한나는 열한살';
+         font-weight: bold;
+         font-size: 40pt;
+         position: absolute;
+         left: 130px;
+         margin-top: -80px;
+         color: white;
+         display: inline;
+      }
 
-   section{
-   padding:30pt;
-   margin-top:20pt;
-   text-align:center;
-   font-size:15pt;
-   background-color:white;
-   width:70%;
-   margin-left:160pt;
-   }
+      #bar2 {
+         font-size: 20pt;
+         font-weight: lighter;
+         color: white;
+         margin-left: 30pt;
+      }
 
-   h2{
-   font-weight:bold;
-   color:#170B3B;
-   }
+      #current {
+         color: red;
+         font-size: 40pt;
+         font-weight: bold;
+      }
 
-   /*button*/
-   input{
-   padding:40pt;
-   margin:20pt;
-   }
+      section {
+         padding: 30pt;
+         margin-top: 20pt;
+         text-align: center;
+         font-size: 15pt;
+         background-color: white;
+         width: 70%;
+         margin-left: 160pt;
+      }
 
-   /*step1*/
-   #xs{
-   background:url("./원.png") no-repeat;
-   background-position:center;
-   background-size:10px;
-   }
-   #s{
-   background:url("./원.png") no-repeat;
-   background-position:center;
-   background-size:20px;
-   }
-   #m{
-   background:url("./원.png") no-repeat;
-   background-position:center;
-   background-size:30px;
-   }
-   #l{
-   background:url("./원.png") no-repeat;
-   background-position:center;
-   background-size:40px;
-   }
-   
-   /*step2*/
-   .inlineBlock{
-   display:inline-block;
-   }
-   .text{
-   font-family:'배달의민족 한나는 열한살';
-   font-weight:bold;
-   font-size:25pt;
-   }
-   #btn_group{
-   position:relative;
-   margin-top: 20px;
-   margin-left: 10px;
-   }
-   #btn_group button{
-   border: 1px solid gray;
-   background-color: rgba(0,0,0,0);
-   padding: 5px;
-   font-family:'Dovemayo';
-   font-size:14pt;
-   }
-   #btn_group button:hover{
-   background-color: #F8E0F1;
-   }
-   /* #btn1,#btn3{
+      h2 {
+         font-weight: bold;
+         color: #170B3B;
+      }
+
+      /*button*/
+      input {
+         padding: 40pt;
+         margin: 20pt;
+      }
+
+      /*step1*/
+      #xs {
+         background: url("./원.png") no-repeat;
+         background-position: center;
+         background-size: 10px;
+      }
+
+      #s {
+         background: url("./원.png") no-repeat;
+         background-position: center;
+         background-size: 20px;
+      }
+
+      #m {
+         background: url("./원.png") no-repeat;
+         background-position: center;
+         background-size: 30px;
+      }
+
+      #l {
+         background: url("./원.png") no-repeat;
+         background-position: center;
+         background-size: 40px;
+      }
+
+      /*step2*/
+      .inlineBlock {
+         display: inline-block;
+      }
+
+      .text {
+         font-family: '배달의민족 한나는 열한살';
+         font-weight: bold;
+         font-size: 25pt;
+      }
+
+      #btn_group {
+         position: relative;
+         margin-top: 20px;
+         margin-left: 10px;
+      }
+
+      #btn_group button {
+         border: 1px solid gray;
+         background-color: rgba(0, 0, 0, 0);
+         padding: 5px;
+         font-family: 'Dovemayo';
+         font-size: 14pt;
+      }
+
+      #btn_group button:hover {
+         background-color: #F8E0F1;
+      }
+
+      /* #btn1,#btn3{
    border-top-left-radius: 5px;
    border-bottom-left-radius: 5px;
    }
@@ -121,634 +133,701 @@
    border-bottom-right-radius: 5px;    
    } */
 
-   /*step3*/
-   #submitcanvas{
-   margin-top:30px;
-   padding:20px;
-   font-size:20pt;
-   border-radius:10px 0 10px 0;
-   border:solid medium white;
-   background-color:#170B3B;
-   color:#fff;
-   font-family:'Dovemayo';
-   }
-   #submitcanvas:hover{
-   background-color:#FACC2E;
-   color:black:
-   font-weight:bold;
-   }
+      /*step3*/
+      #submitcanvas {
+         margin-top: 30px;
+         padding: 20px;
+         font-size: 20pt;
+         border-radius: 10px 0 10px 0;
+         border: solid medium white;
+         background-color: #170B3B;
+         color: #fff;
+         font-family: 'Dovemayo';
+      }
 
-   footer{
-   background-color:#4a4949;
-   color:white;
-   position:relative;
-   padding:20px;
-   }
+      #submitcanvas:hover {
+         background-color: #FACC2E;
+         color: black: font-weight:bold;
+      }
+
+      footer {
+         background-color: #4a4949;
+         color: white;
+         position: relative;
+         padding: 20px;
+      }
 
       /*슬라이드형 메뉴*/
-    input[id="menuicon"] {display:none;}
-   input[id="menuicon"] + label {display:block;margin:30px;width:60px;height:50px;position:relative;cursor:pointer;}
-   input[id="menuicon"] + label span {display:block;position:absolute;width:100%;height:5px;border-radius:30px;background:#fff;transition:all .35s;}
-   input[id="menuicon"] + label span:nth-child(1) {top:0;}
-   input[id="menuicon"] + label span:nth-child(2) {top:50%;transform:translateY(-50%);}
-   input[id="menuicon"] + label span:nth-child(3) {bottom:0;}
-   input[id="menuicon"]:checked + label {z-index:2;}
-   input[id="menuicon"]:checked + label span {background:#fff;}
-   input[id="menuicon"]:checked + label span:nth-child(1) {top:50%;transform:translateY(-50%) rotate(45deg);}
-   input[id="menuicon"]:checked + label span:nth-child(2) {opacity:0;}
-   input[id="menuicon"]:checked + label span:nth-child(3) {bottom:50%;transform:translateY(50%) rotate(-45deg);}
-   div[class="sidebar"] {width:300px;height:100%;background:#222;position:fixed;top:0;left:-300px;z-index:1;transition:all .35s;}
-   input[id="menuicon"]:checked + label + div {left:0;}
+      input[id="menuicon"] {
+         display: none;
+      }
+
+      input[id="menuicon"]+label {
+         display: block;
+         margin: 30px;
+         width: 60px;
+         height: 50px;
+         position: relative;
+         cursor: pointer;
+      }
+
+      input[id="menuicon"]+label span {
+         display: block;
+         position: absolute;
+         width: 100%;
+         height: 5px;
+         border-radius: 30px;
+         background: #fff;
+         transition: all .35s;
+      }
+
+      input[id="menuicon"]+label span:nth-child(1) {
+         top: 0;
+      }
+
+      input[id="menuicon"]+label span:nth-child(2) {
+         top: 50%;
+         transform: translateY(-50%);
+      }
+
+      input[id="menuicon"]+label span:nth-child(3) {
+         bottom: 0;
+      }
+
+      input[id="menuicon"]:checked+label {
+         z-index: 2;
+      }
+
+      input[id="menuicon"]:checked+label span {
+         background: #fff;
+      }
+
+      input[id="menuicon"]:checked+label span:nth-child(1) {
+         top: 50%;
+         transform: translateY(-50%) rotate(45deg);
+      }
+
+      input[id="menuicon"]:checked+label span:nth-child(2) {
+         opacity: 0;
+      }
+
+      input[id="menuicon"]:checked+label span:nth-child(3) {
+         bottom: 50%;
+         transform: translateY(50%) rotate(-45deg);
+      }
+
+      div[class="sidebar"] {
+         width: 300px;
+         height: 100%;
+         background: #222;
+         position: fixed;
+         top: 0;
+         left: -300px;
+         z-index: 1;
+         transition: all .35s;
+      }
+
+      input[id="menuicon"]:checked+label+div {
+         left: 0;
+      }
 
 
-   li{
-   color:white;
-   }
-   li a{
-   display:block;
-   text-decoration:none;
-   padding:20pt;
-   padding-left:20pt;
-   line-height:30pt;
-   color: white;
-   
-   font-size:17pt;
-   
-   }
+      li {
+         color: white;
+      }
 
-   a{
-   text-decoration:none;
-   color: white;
-   }
+      li a {
+         display: block;
+         text-decoration: none;
+         padding: 20pt;
+         padding-left: 20pt;
+         line-height: 30pt;
+         color: white;
 
-   li a:hover{
-   color:#FACC2E;
-   text-decoration:underline;
-   }
+         font-size: 17pt;
+
+      }
+
+      a {
+         text-decoration: none;
+         color: white;
+      }
+
+      li a:hover {
+         color: #FACC2E;
+         text-decoration: underline;
+      }
 
 
-   #bar{
-   color:white;
-   font-family:'배달의민족 한나는 열한살';
-   font-size:17pt;
-   word-spacing:30pt;
-   position:absolute;
-   margin-top:-50pt;
-   margin-left:85%;
-   }
+      #bar {
+         color: white;
+         font-family: '배달의민족 한나는 열한살';
+         font-size: 17pt;
+         word-spacing: 30pt;
+         position: absolute;
+         margin-top: -50pt;
+         margin-left: 85%;
+      }
 
-   #bar p{
-   display:inline;
-   }
+      #bar p {
+         display: inline;
+      }
 
-   a{
-   text-decoration:none;
-   color: white;
-   }
-
-   
-   
+      a {
+         text-decoration: none;
+         color: white;
+      }
    </style>
- </head>
- <body onload="init()">
+</head>
 
- <div class="container contents-wrap">
-   <hr>
-   <div id='bar2'>
-      <span id='current'>입력</span>-
-      <span>확인</span>-
-      <span>수정</span>-
-      <span>학습</span>-
-      <span>결과확인</span>
-   </div>
+<body onload="init()">
 
-   <section id="part1">
-   <h2>-STEP1-<br><span id='current'>펜 굵기</span>를 선택해주세요.</h2>
-   <input type="button" id='xs' onclick='pen(1);'></input>
-   <input type="button" id='s' onclick='pen(5);'></input>
-   <input type="button" id='m' onclick='pen(10);'></input>
-   <input type="button" id='l' onclick='pen(15);'></input>
-   </section>
-
-
-   
-   <section id="part2">
-   <h2>-STEP2-<br><span id='current'>&lt;숙명여대웹기초입문&gt;</span><br>글자를 <span id='current'>입력해주세요</span>.</h2>
-   <p style="color:red;">반드시 숙명여대웹기초입문 글씨만 입력해주세요.</p>
-   <p>글자를 입력하신 후에 글자를 지울 수도 수정할 수도 있습니다.</p>
-   <h2 style='margin-top:70pt;margin-bottom:5pt;'>-예시-</h2>
-   <img src='../../media/html_imgs/종이.png' width=700 height=350><br><br>
-   <!-- canvas1 -->
-   <div class='inlineBlock'>
-      <p class='text'>숙</p>
-      <canvas id="canvas" style="border:solid 1px black;" width="256" height="256"></canvas>
-      <div id='btn_group'>
-         <button id='btn1'>지우기</button><!-- <button id='btn2' onclick="window.open('수정하기.html')">수정하기</button>
-         <button>임시저장하기</button> -->
+   <div class="container contents-wrap">
+      <hr>
+      <div id='bar2'>
+         <span id='current'>입력</span>-
+         <span>확인</span>-
+         <span>수정</span>-
+         <span>학습</span>-
+         <span>결과확인</span>
       </div>
-   </div>
-   <!-- canvas2 -->
-   <div class='inlineBlock'>
-      <p class='text'>명</p>
-      <canvas id="canvas2" style="border:solid 1px black;" width="256" height="256"></canvas>
-      <div id='btn_group'>
-         <button id='btn3'>지우기</button><!-- <button id='btn4' onclick="window.open('수정하기.html')">수정하기</button>
+
+      <section id="part1">
+         <h2>-STEP1-<br><span id='current'>펜 굵기</span>를 선택해주세요.</h2>
+         <input type="button" id='xs' onclick='pen(1);'></input>
+         <input type="button" id='s' onclick='pen(5);'></input>
+         <input type="button" id='m' onclick='pen(10);'></input>
+         <input type="button" id='l' onclick='pen(15);'></input>
+      </section>
+
+
+
+      <section id="part2">
+         <h2>-STEP2-<br><span id='current'>&lt;숙명여대웹기초입문&gt;</span><br>글자를 <span id='current'>입력해주세요</span>.</h2>
+         <p style="color:red;">반드시 숙명여대웹기초입문 글씨만 입력해주세요.</p>
+         <p>글자를 입력하신 후에 글자를 지울 수도 수정할 수도 있습니다.</p>
+         <h2 style='margin-top:70pt;margin-bottom:5pt;'>-예시-</h2>
+         <img src='../../media/html_imgs/종이.png' width=700 height=350><br><br>
+         <!-- canvas1 -->
+         <div class='inlineBlock'>
+            <p class='text'>숙</p>
+            <canvas id="canvas" style="border:solid 1px black;" width="256" height="256"></canvas>
+            <div id='btn_group'>
+               <button id='btn1'>지우기</button>
+               <!-- <button id='btn2' onclick="window.open('수정하기.html')">수정하기</button>
          <button>임시저장하기</button> -->
-      </div>
-   </div>
-   <!-- canvas3 -->
-   <div class='inlineBlock'>
-      <p class='text'>여</p>
-      <canvas id="canvas3" style="border:solid 1px black;" width="256" height="256"></canvas>
-      <div id='btn_group'>
-         <button id='btn5'>지우기</button><!-- <button id='btn6' onclick="window.open('수정하기.html')">수정하기</button>
+            </div>
+         </div>
+         <!-- canvas2 -->
+         <div class='inlineBlock'>
+            <p class='text'>명</p>
+            <canvas id="canvas2" style="border:solid 1px black;" width="256" height="256"></canvas>
+            <div id='btn_group'>
+               <button id='btn3'>지우기</button>
+               <!-- <button id='btn4' onclick="window.open('수정하기.html')">수정하기</button>
          <button>임시저장하기</button> -->
-      </div>
-   </div>
-   <!-- canvas4 -->
-   <div class='inlineBlock'>
-      <p class='text'>대</p>
-      <canvas id="canvas4" style="border:solid 1px black;" width="256" height="256"></canvas>
-      <div id='btn_group'>
-         <button id='btn7'>지우기</button><!-- <button id='btn8' onclick="window.open('수정하기.html')">수정하기</button>
+            </div>
+         </div>
+         <!-- canvas3 -->
+         <div class='inlineBlock'>
+            <p class='text'>여</p>
+            <canvas id="canvas3" style="border:solid 1px black;" width="256" height="256"></canvas>
+            <div id='btn_group'>
+               <button id='btn5'>지우기</button>
+               <!-- <button id='btn6' onclick="window.open('수정하기.html')">수정하기</button>
          <button>임시저장하기</button> -->
-      </div>
-   </div>
-
-   <br><br><br><br>
-   <!-- canvas5 -->
-   <div class='inlineBlock'>
-      <p class='text'>웹</p>
-      <canvas id="canvas5" style="border:solid 1px black;" width="256" height="256"></canvas>
-      <div id='btn_group'>
-         <button id='btn9'>지우기</button><!-- <button id='btn10' onclick="window.open('수정하기.html')">수정하기</button>
+            </div>
+         </div>
+         <!-- canvas4 -->
+         <div class='inlineBlock'>
+            <p class='text'>대</p>
+            <canvas id="canvas4" style="border:solid 1px black;" width="256" height="256"></canvas>
+            <div id='btn_group'>
+               <button id='btn7'>지우기</button>
+               <!-- <button id='btn8' onclick="window.open('수정하기.html')">수정하기</button>
          <button>임시저장하기</button> -->
-      </div>
-   </div>
-   <!-- canvas6 -->
-   <div class='inlineBlock'>
-      <p class='text'>기</p>
-      <canvas id="canvas6" style="border:solid 1px black;" width="256" height="256"></canvas>
-      <div id='btn_group'>
-         <button id='btn11'>지우기</button><!-- <button id='btn12' onclick="window.open('수정하기.html')">수정하기</button>
+            </div>
+         </div>
+
+         <br><br><br><br>
+         <!-- canvas5 -->
+         <div class='inlineBlock'>
+            <p class='text'>웹</p>
+            <canvas id="canvas5" style="border:solid 1px black;" width="256" height="256"></canvas>
+            <div id='btn_group'>
+               <button id='btn9'>지우기</button>
+               <!-- <button id='btn10' onclick="window.open('수정하기.html')">수정하기</button>
          <button>임시저장하기</button> -->
-      </div>
-   </div>
-   <!-- canvas7 -->
-   <div class='inlineBlock'>
-      <p class='text'>초</p>
-      <canvas id="canvas7" style="border:solid 1px black;" width="256" height="256"></canvas>
-      <div id='btn_group'>
-         <button id='btn13'>지우기</button><!-- <button id='btn14' onclick="window.open('수정하기.html')">수정하기</button>
+            </div>
+         </div>
+         <!-- canvas6 -->
+         <div class='inlineBlock'>
+            <p class='text'>기</p>
+            <canvas id="canvas6" style="border:solid 1px black;" width="256" height="256"></canvas>
+            <div id='btn_group'>
+               <button id='btn11'>지우기</button>
+               <!-- <button id='btn12' onclick="window.open('수정하기.html')">수정하기</button>
          <button>임시저장하기</button> -->
-      </div>
-   </div><br>
-   <!-- canvas8 -->
-   <div class='inlineBlock'>
-      <p class='text'>입</p>
-      <canvas id="canvas8" style="border:solid 1px black;" width="256" height="256"></canvas>
-      <div id='btn_group'>
-         <button id='btn15'>지우기</button><!-- <button id='btn14' onclick="window.open('수정하기.html')">수정하기</button>
+            </div>
+         </div>
+         <!-- canvas7 -->
+         <div class='inlineBlock'>
+            <p class='text'>초</p>
+            <canvas id="canvas7" style="border:solid 1px black;" width="256" height="256"></canvas>
+            <div id='btn_group'>
+               <button id='btn13'>지우기</button>
+               <!-- <button id='btn14' onclick="window.open('수정하기.html')">수정하기</button>
          <button>임시저장하기</button> -->
-      </div>
-   </div>
-   <!-- canvas9 -->
-   <div class='inlineBlock'>
-      <p class='text'>문</p>
-      <canvas id="canvas9" style="border:solid 1px black;" width="256" height="256"></canvas>
-      <div id='btn_group'>
-         <button id='btn17'>지우기</button><!-- <button id='btn14' onclick="window.open('수정하기.html')">수정하기</button>
+            </div>
+         </div><br>
+         <!-- canvas8 -->
+         <div class='inlineBlock'>
+            <p class='text'>입</p>
+            <canvas id="canvas8" style="border:solid 1px black;" width="256" height="256"></canvas>
+            <div id='btn_group'>
+               <button id='btn15'>지우기</button>
+               <!-- <button id='btn14' onclick="window.open('수정하기.html')">수정하기</button>
          <button>임시저장하기</button> -->
-      </div>
+            </div>
+         </div>
+         <!-- canvas9 -->
+         <div class='inlineBlock'>
+            <p class='text'>문</p>
+            <canvas id="canvas9" style="border:solid 1px black;" width="256" height="256"></canvas>
+            <div id='btn_group'>
+               <button id='btn17'>지우기</button>
+               <!-- <button id='btn14' onclick="window.open('수정하기.html')">수정하기</button>
+         <button>임시저장하기</button> -->
+            </div>
+         </div>
+         <div style="padding-top: 5rem;">
+            <button id="submitcanvas" onclick="sub()" style="margin-top:-30px;">임시저장하기</button><br>
+         </div>
+      </section>
+      <br>
+
+      <section id="part3">
+         <h2>-STEP3-<br>글자 작성을 끝내셨다면<br><span id='current'>글자 제출하기 버튼</span>을 클릭해주세요.</h2>
+         <a href="{% url 'fontsapp:input_edit' font.id %}"><button id='submit'>글자 제출하기</button></a>
+      </section>
+      <br>
    </div>
-   <div style="padding-top: 5rem;">
-   <button id="submitcanvas" onclick="sub()" style="margin-top:-30px;" >임시저장하기</button><br>
-   </div>
-   </section>
-   <br>
-
-   <section id="part3">
-   <h2>-STEP3-<br>글자 작성을 끝내셨다면<br><span id='current'>글자 제출하기 버튼</span>을 클릭해주세요.</h2>  
-   <a href="{% url 'fontsapp:input_edit' font.id %}"><button id='submit'>글자 제출하기</button></a>
-   </section>
-   <br>
-</div>
 
 
-<script>
-   var canvas, context;
-   var canvas2, context2;
-   var canvas3, context3;
-   var canvas4, context4;
-   var canvas5, context5;
-   var canvas6, context6;
-   var canvas7, context7;
-   var canvas8, context8;
-   var canvas9, context9;
-   var p_Thick=3;
+   <script>
+      var canvas, context;
+      var canvas2, context2;
+      var canvas3, context3;
+      var canvas4, context4;
+      var canvas5, context5;
+      var canvas6, context6;
+      var canvas7, context7;
+      var canvas8, context8;
+      var canvas9, context9;
+      var p_Thick = 3;
 
 
-    function init() {
-      canvas = document.getElementById("canvas");
-      context = canvas.getContext("2d");
-      context.lineWidth = p_Thick;
-      context.fillStyle="white",
-      context.fillRect(0,0,256,256);
+      function init() {
+         canvas = document.getElementById("canvas");
+         context = canvas.getContext("2d");
+         context.lineWidth = p_Thick;
+         context.fillStyle = "white";
+         context.fillRect(0, 0, 256, 256);
 
-      canvas2 = document.getElementById("canvas2");
-      context2 = canvas2.getContext("2d");
-      context2.lineWidth = p_Thick;
-      context2.fillStyle="white",
-      context2.fillRect(0,0,256,256);
-
-
-      
-      canvas3 = document.getElementById("canvas3");
-      context3 = canvas3.getContext("2d");
-      context3.lineWidth = p_Thick;
-      context3.fillStyle="white",
-      context3.fillRect(0,0,256,256);
-
-      canvas4 = document.getElementById("canvas4");
-      context4 = canvas4.getContext("2d");
-      context4.lineWidth = p_Thick;
-      context4.fillStyle="white",
-      context4.fillRect(0,0,256,256);
-
-      canvas5 = document.getElementById("canvas5");
-      context5 = canvas5.getContext("2d");
-      context5.lineWidth = p_Thick;
-      context5.fillStyle="white",
-      context5.fillRect(0,0,256,256);
-
-      canvas6 = document.getElementById("canvas6");
-      context6 = canvas6.getContext("2d");
-      context6.lineWidth = p_Thick;
-      context6.fillStyle="white",
-      context6.fillRect(0,0,256,256);
-
-      canvas7 = document.getElementById("canvas7");
-      context7 = canvas7.getContext("2d");
-      context7.lineWidth = p_Thick;
-      context7.fillStyle="white",
-      context7.fillRect(0,0,256,256);
-
-      canvas8 = document.getElementById("canvas8");
-      context8 = canvas8.getContext("2d");
-      context8.lineWidth = p_Thick;
-      context8.fillStyle="white",
-      context8.fillRect(0,0,256,256);
-
-      canvas9 = document.getElementById("canvas9");
-      context9 = canvas9.getContext("2d");
-      context9.lineWidth = p_Thick;
-      context9.fillStyle="white",
-      context9.fillRect(0,0,256,256);
+         canvas2 = document.getElementById("canvas2");
+         context2 = canvas2.getContext("2d");
+         context2.lineWidth = p_Thick;
+         context2.fillStyle = "white";
+         context2.fillRect(0, 0, 256, 256);
 
 
-      // 마우스 리스너 등록. e는 MouseEvent 객체
-      canvas.addEventListener("mousemove", function (e) { move1(e) }, false);
-      canvas.addEventListener("mousedown", function (e) { down(e) }, false);
-      canvas.addEventListener("mouseup", function (e) { up(e) }, false);
-      canvas.addEventListener("mouseout", function (e) { out(e) }, false);
 
-      canvas2.addEventListener("mousemove", function (e) { move2(e) }, false);
-      canvas2.addEventListener("mousedown", function (e) { down(e) }, false);
-      canvas2.addEventListener("mouseup", function (e) { up(e) }, false);
-      canvas2.addEventListener("mouseout", function (e) { out(e) }, false);
+         canvas3 = document.getElementById("canvas3");
+         context3 = canvas3.getContext("2d");
+         context3.lineWidth = p_Thick;
+         context3.fillStyle = "white";
+         context3.fillRect(0, 0, 256, 256);
 
-      canvas3.addEventListener("mousemove", function (e) { move3(e) }, false);
-      canvas3.addEventListener("mousedown", function (e) { down(e) }, false);
-      canvas3.addEventListener("mouseup", function (e) { up(e) }, false);
-      canvas3.addEventListener("mouseout", function (e) { out(e) }, false);
+         canvas4 = document.getElementById("canvas4");
+         context4 = canvas4.getContext("2d");
+         context4.lineWidth = p_Thick;
+         context4.fillStyle = "white";
+         context4.fillRect(0, 0, 256, 256);
 
-      canvas4.addEventListener("mousemove", function (e) { move4(e) }, false);
-      canvas4.addEventListener("mousedown", function (e) { down(e) }, false);
-      canvas4.addEventListener("mouseup", function (e) { up(e) }, false);
-      canvas4.addEventListener("mouseout", function (e) { out(e) }, false);
+         canvas5 = document.getElementById("canvas5");
+         context5 = canvas5.getContext("2d");
+         context5.lineWidth = p_Thick;
+         context5.fillStyle = "white";
+         context5.fillRect(0, 0, 256, 256);
 
-      canvas5.addEventListener("mousemove", function (e) { move5(e) }, false);
-      canvas5.addEventListener("mousedown", function (e) { down(e) }, false);
-      canvas5.addEventListener("mouseup", function (e) { up(e) }, false);
-      canvas5.addEventListener("mouseout", function (e) { out(e) }, false);
+         canvas6 = document.getElementById("canvas6");
+         context6 = canvas6.getContext("2d");
+         context6.lineWidth = p_Thick;
+         context6.fillStyle = "white";
+         context6.fillRect(0, 0, 256, 256);
 
-      canvas6.addEventListener("mousemove", function (e) { move6(e) }, false);
-      canvas6.addEventListener("mousedown", function (e) { down(e) }, false);
-      canvas6.addEventListener("mouseup", function (e) { up(e) }, false);
-      canvas6.addEventListener("mouseout", function (e) { out(e) }, false);
+         canvas7 = document.getElementById("canvas7");
+         context7 = canvas7.getContext("2d");
+         context7.lineWidth = p_Thick;
+         context7.fillStyle = "white";
+         context7.fillRect(0, 0, 256, 256);
 
-      canvas7.addEventListener("mousemove", function (e) { move7(e) }, false);
-      canvas7.addEventListener("mousedown", function (e) { down(e) }, false);
-      canvas7.addEventListener("mouseup", function (e) { up(e) }, false);
-      canvas7.addEventListener("mouseout", function (e) { out(e) }, false);
+         canvas8 = document.getElementById("canvas8");
+         context8 = canvas8.getContext("2d");
+         context8.lineWidth = p_Thick;
+         context8.fillStyle = "white";
+         context8.fillRect(0, 0, 256, 256);
 
-      canvas8.addEventListener("mousemove", function (e) { move8(e) }, false);
-      canvas8.addEventListener("mousedown", function (e) { down(e) }, false);
-      canvas8.addEventListener("mouseup", function (e) { up(e) }, false);
-      canvas8.addEventListener("mouseout", function (e) { out(e) }, false);
+         canvas9 = document.getElementById("canvas9");
+         context9 = canvas9.getContext("2d");
+         context9.lineWidth = p_Thick;
+         context9.fillStyle = "white";
+         context9.fillRect(0, 0, 256, 256);
 
-      canvas9.addEventListener("mousemove", function (e) { move9(e) }, false);
-      canvas9.addEventListener("mousedown", function (e) { down(e) }, false);
-      canvas9.addEventListener("mouseup", function (e) { up(e) }, false);
-      canvas9.addEventListener("mouseout", function (e) { out(e) }, false);
 
-      btn1.onclick=function(){
-         context.clearRect(0,0,canvas.width,canvas.height);
-         context.fillStyle="white",
-         context.fillRect(0,0,256,256);
+         // 마우스 리스너 등록. e는 MouseEvent 객체
+         canvas.addEventListener("mousemove", function (e) { move1(e) }, false);
+         canvas.addEventListener("mousedown", function (e) { down(e) }, false);
+         canvas.addEventListener("mouseup", function (e) { up(e) }, false);
+         canvas.addEventListener("mouseout", function (e) { out(e) }, false);
+
+         canvas2.addEventListener("mousemove", function (e) { move2(e) }, false);
+         canvas2.addEventListener("mousedown", function (e) { down(e) }, false);
+         canvas2.addEventListener("mouseup", function (e) { up(e) }, false);
+         canvas2.addEventListener("mouseout", function (e) { out(e) }, false);
+
+         canvas3.addEventListener("mousemove", function (e) { move3(e) }, false);
+         canvas3.addEventListener("mousedown", function (e) { down(e) }, false);
+         canvas3.addEventListener("mouseup", function (e) { up(e) }, false);
+         canvas3.addEventListener("mouseout", function (e) { out(e) }, false);
+
+         canvas4.addEventListener("mousemove", function (e) { move4(e) }, false);
+         canvas4.addEventListener("mousedown", function (e) { down(e) }, false);
+         canvas4.addEventListener("mouseup", function (e) { up(e) }, false);
+         canvas4.addEventListener("mouseout", function (e) { out(e) }, false);
+
+         canvas5.addEventListener("mousemove", function (e) { move5(e) }, false);
+         canvas5.addEventListener("mousedown", function (e) { down(e) }, false);
+         canvas5.addEventListener("mouseup", function (e) { up(e) }, false);
+         canvas5.addEventListener("mouseout", function (e) { out(e) }, false);
+
+         canvas6.addEventListener("mousemove", function (e) { move6(e) }, false);
+         canvas6.addEventListener("mousedown", function (e) { down(e) }, false);
+         canvas6.addEventListener("mouseup", function (e) { up(e) }, false);
+         canvas6.addEventListener("mouseout", function (e) { out(e) }, false);
+
+         canvas7.addEventListener("mousemove", function (e) { move7(e) }, false);
+         canvas7.addEventListener("mousedown", function (e) { down(e) }, false);
+         canvas7.addEventListener("mouseup", function (e) { up(e) }, false);
+         canvas7.addEventListener("mouseout", function (e) { out(e) }, false);
+
+         canvas8.addEventListener("mousemove", function (e) { move8(e) }, false);
+         canvas8.addEventListener("mousedown", function (e) { down(e) }, false);
+         canvas8.addEventListener("mouseup", function (e) { up(e) }, false);
+         canvas8.addEventListener("mouseout", function (e) { out(e) }, false);
+
+         canvas9.addEventListener("mousemove", function (e) { move9(e) }, false);
+         canvas9.addEventListener("mousedown", function (e) { down(e) }, false);
+         canvas9.addEventListener("mouseup", function (e) { up(e) }, false);
+         canvas9.addEventListener("mouseout", function (e) { out(e) }, false);
+
+         btn1.onclick = function () {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.fillStyle = "white";
+            context.fillRect(0, 0, 256, 256);
+            context.beginPath();
+         }
+
+         btn3.onclick = function () {
+            context2.clearRect(0, 0, canvas2.width, canvas2.height);
+            context2.fillStyle = "white";
+            context2.fillRect(0, 0, 256, 256);
+            context2.beginPath();
+         }
+
+         btn5.onclick = function () {
+            context3.clearRect(0, 0, canvas3.width, canvas3.height);
+            context3.fillStyle = "white";
+            context3.fillRect(0, 0, 256, 256);
+            context3.beginPath();
+         }
+
+         btn7.onclick = function () {
+            context4.clearRect(0, 0, canvas4.width, canvas4.height);
+            context4.fillStyle = "white";
+            context4.fillRect(0, 0, 256, 256);
+            context4.beginPath();
+         }
+
+         btn9.onclick = function () {
+            context5.clearRect(0, 0, canvas5.width, canvas5.height);
+            context5.fillStyle = "white";
+            context5.fillRect(0, 0, 256, 256);
+            context5.beginPath();
+         }
+
+         btn11.onclick = function () {
+            context6.clearRect(0, 0, canvas6.width, canvas6.height);
+            context6.fillStyle = 'white';
+            context6.fillRect(0, 0, 256, 256);
+            context6.beginPath();
+         }
+
+         btn13.onclick = function () {
+            context7.clearRect(0, 0, canvas7.width, canvas7.height);
+            context7.fillStyle = 'white';
+            context7.fillRect(0, 0, 256, 256);
+            context7.beginPath();
+         }
+
+         btn15.onclick = function () {
+            context8.clearRect(0, 0, canvas8.width, canvas8.height);
+            context8.fillStyle = 'white';
+            context8.fillRect(0, 0, 256, 256);
+            context8.beginPath();
+         }
+
+         btn17.onclick = function () {
+            context9.clearRect(0, 0, canvas9.width, canvas9.height);
+            context9.fillStyle = 'white';
+            context9.fillRect(0, 0, 256, 256);
+            context9.beginPath();
+         }
+
+      }
+
+      var startX = 0, startY = 0; // 드래깅동안, 처음 마우스가 눌러진 좌표
+      var drawing = false;
+
+
+      function draw1(curX, curY) {
          context.beginPath();
+         context.lineWidth = p_Thick;
+         context.moveTo(startX, startY);
+         context.lineTo(curX, curY);
+         context.stroke();
       }
 
-      btn3.onclick=function(){
-         context2.clearRect(0,0,canvas2.width,canvas2.height);
-         context2.fillStyle="white",
-         context2.fillRect(0,0,256,256);
+
+      function down(e) {
+         startX = e.offsetX; startY = e.offsetY;
+         drawing = true;
+      }
+
+      function up(e) { drawing = false; }
+
+      function move1(e) {
+         if (!drawing) return; // 마우스가 눌러지지 않았으면 리턴
+         var curX = e.offsetX, curY = e.offsetY;
+         draw1(curX, curY);
+         startX = curX; startY = curY;
+      }
+
+      function out(e) { drawing = false; }
+
+      //canvas2
+      function move2(e) {
+         if (!drawing) return; // 마우스가 눌러지지 않았으면 리턴
+         var curX = e.offsetX, curY = e.offsetY;
+         draw2(curX, curY);
+         startX = curX; startY = curY;
+      }
+      function draw2(curX, curY) {
          context2.beginPath();
+         context2.fillStyle = 'white';
+         context2.lineWidth = p_Thick;
+         context2.moveTo(startX, startY);
+         context2.lineTo(curX, curY);
+         context2.stroke();
       }
 
-      btn5.onclick=function(){
-         context3.clearRect(0,0,canvas3.width,canvas3.height);
-         context3.fillStyle="white",
-         context3.fillRect(0,0,256,256);
+      //canvas3
+      function move3(e) {
+         if (!drawing) return; // 마우스가 눌러지지 않았으면 리턴
+         var curX = e.offsetX, curY = e.offsetY;
+         draw3(curX, curY);
+         startX = curX; startY = curY;
+      }
+      function draw3(curX, curY) {
          context3.beginPath();
+         context3.fillStyle = 'white';
+         context3.lineWidth = p_Thick;
+         context3.moveTo(startX, startY);
+         context3.lineTo(curX, curY);
+         context3.stroke();
       }
 
-      btn7.onclick=function(){
-         context4.clearRect(0,0,canvas4.width,canvas4.height);
-         context4.fillStyle="white",
-         context4.fillRect(0,0,256,256);
+      //canvas4
+      function move4(e) {
+         if (!drawing) return; // 마우스가 눌러지지 않았으면 리턴
+         var curX = e.offsetX, curY = e.offsetY;
+         draw4(curX, curY);
+         startX = curX; startY = curY;
+      }
+      function draw4(curX, curY) {
          context4.beginPath();
+         context4.fillStyle = 'white';
+         context4.lineWidth = p_Thick;
+         context4.moveTo(startX, startY);
+         context4.lineTo(curX, curY);
+         context4.stroke();
       }
 
-      btn9.onclick=function(){
-         context5.clearRect(0,0,canvas5.width,canvas5.height);
-         context5.fillStyle="white",
-         context5.fillRect(0,0,256,256);
+      //canvas5
+      function move5(e) {
+         if (!drawing) return; // 마우스가 눌러지지 않았으면 리턴
+         var curX = e.offsetX, curY = e.offsetY;
+         draw5(curX, curY);
+         startX = curX; startY = curY;
+      }
+      function draw5(curX, curY) {
          context5.beginPath();
+         context5.fillStyle = 'white';
+         context5.lineWidth = p_Thick;
+         context5.moveTo(startX, startY);
+         context5.lineTo(curX, curY);
+         context5.stroke();
       }
 
-      btn11.onclick=function(){
-         context6.clearRect(0,0,canvas6.width,canvas6.height);
-         context6.fillStyle='white';
-         context6.fillRect(0,0,256,256);
+      //canvas6
+      function move6(e) {
+         if (!drawing) return; // 마우스가 눌러지지 않았으면 리턴
+         var curX = e.offsetX, curY = e.offsetY;
+         draw6(curX, curY);
+         startX = curX; startY = curY;
+      }
+      function draw6(curX, curY) {
          context6.beginPath();
+         context6.fillStyle = 'white';
+         context6.lineWidth = p_Thick;
+         context6.moveTo(startX, startY);
+         context6.lineTo(curX, curY);
+         context6.stroke();
       }
 
-      btn13.onclick=function(){
-         context7.clearRect(0,0,canvas7.width,canvas7.height);
-         context7.fillStyle='white';
-         context7.fillRect(0,0,256,256);
+      //canvas7
+      function move7(e) {
+         if (!drawing) return; // 마우스가 눌러지지 않았으면 리턴
+         var curX = e.offsetX, curY = e.offsetY;
+         draw7(curX, curY);
+         startX = curX; startY = curY;
+      }
+      function draw7(curX, curY) {
          context7.beginPath();
+         context7.fillStyle = 'white';
+         context7.lineWidth = p_Thick;
+         context7.moveTo(startX, startY);
+         context7.lineTo(curX, curY);
+         context7.stroke();
       }
 
-     btn15.onclick=function(){
-         context8.clearRect(0,0,canvas8.width,canvas8.height);
-         context8.fillStyle='white';
-         context8.fillRect(0,0,256,256);
+      //canvas8
+      function move8(e) {
+         if (!drawing) return; // 마우스가 눌러지지 않았으면 리턴
+         var curX = e.offsetX, curY = e.offsetY;
+         draw8(curX, curY);
+         startX = curX; startY = curY;
+      }
+      function draw8(curX, curY) {
          context8.beginPath();
+         context8.fillStyle = 'white';
+         context8.lineWidth = p_Thick;
+         context8.moveTo(startX, startY);
+         context8.lineTo(curX, curY);
+         context8.stroke();
       }
 
-     btn17.onclick=function(){
-         context9.clearRect(0,0,canvas9.width,canvas9.height);
-         context9.fillStyle='white';
-         context9.fillRect(0,0,256,256);
+      //canvas9
+      function move9(e) {
+         if (!drawing) return; // 마우스가 눌러지지 않았으면 리턴
+         var curX = e.offsetX, curY = e.offsetY;
+         draw9(curX, curY);
+         startX = curX; startY = curY;
+      }
+      function draw9(curX, curY) {
          context9.beginPath();
+         context9.fillStyle = 'white';
+         context9.lineWidth = p_Thick;
+         context9.moveTo(startX, startY);
+         context9.lineTo(curX, curY);
+         context9.stroke();
       }
-     
-    }
 
-   var startX=0, startY=0; // 드래깅동안, 처음 마우스가 눌러진 좌표
-    var drawing=false;
+      //펜사이즈
+      function pen(pen_size) {
+         p_Thick = pen_size;
+      }
 
-   
-   function draw1(curX, curY) {
-      context.beginPath();
-      context.lineWidth = p_Thick;
-      context.moveTo(startX, startY);
-      context.lineTo(curX, curY);
-      context.stroke();
-    }
-   
 
-    function down(e) {
-        startX = e.offsetX; startY = e.offsetY;
-        drawing = true;
-    }
-
-    function up(e) { drawing = false; }
-
-    function move1(e) {
-        if(!drawing) return; // 마우스가 눌러지지 않았으면 리턴
-        var curX = e.offsetX, curY = e.offsetY;
-        draw1(curX, curY);
-        startX = curX; startY = curY;
-    }
-
-    function out(e) { drawing = false; }
-
-   //canvas2
-   function move2(e) {
-        if(!drawing) return; // 마우스가 눌러지지 않았으면 리턴
-        var curX = e.offsetX, curY = e.offsetY;
-        draw2(curX, curY);
-        startX = curX; startY = curY;
-    }
-   function draw2(curX, curY) {
-      context2.beginPath();
-      context2.fillStyle='white';
-      context2.lineWidth = p_Thick;
-      context2.moveTo(startX, startY);
-      context2.lineTo(curX, curY);
-      context2.stroke();
-    }
-
-   //canvas3
-   function move3(e) {
-        if(!drawing) return; // 마우스가 눌러지지 않았으면 리턴
-        var curX = e.offsetX, curY = e.offsetY;
-        draw3(curX, curY);
-        startX = curX; startY = curY;
-    }
-   function draw3(curX, curY) {
-      context3.beginPath();
-      context3.fillStyle='white';
-      context3.lineWidth = p_Thick;
-      context3.moveTo(startX, startY);
-      context3.lineTo(curX, curY);
-      context3.stroke();
-    }
-
-   //canvas4
-   function move4(e) {
-        if(!drawing) return; // 마우스가 눌러지지 않았으면 리턴
-        var curX = e.offsetX, curY = e.offsetY;
-        draw4(curX, curY);
-        startX = curX; startY = curY;
-    }
-   function draw4(curX, curY) {
-      context4.beginPath();
-      context4.fillStyle='white';
-      context4.lineWidth = p_Thick;
-      context4.moveTo(startX, startY);
-      context4.lineTo(curX, curY);
-      context4.stroke();
-    }
-
-   //canvas5
-   function move5(e) {
-      if(!drawing) return; // 마우스가 눌러지지 않았으면 리턴
-      var curX = e.offsetX, curY = e.offsetY;
-      draw5(curX, curY);
-      startX = curX; startY = curY;
-    }
-   function draw5(curX, curY) {
-      context5.beginPath();
-      context5.fillStyle='white';
-      context5.lineWidth = p_Thick;
-      context5.moveTo(startX, startY);
-      context5.lineTo(curX, curY);
-      context5.stroke();
-    }
-
-   //canvas6
-   function move6(e) {
-        if(!drawing) return; // 마우스가 눌러지지 않았으면 리턴
-        var curX = e.offsetX, curY = e.offsetY;
-        draw6(curX, curY);
-        startX = curX; startY = curY;
-    }
-   function draw6(curX, curY) {
-      context6.beginPath();
-      context6.fillStyle='white';
-      context6.lineWidth = p_Thick;
-      context6.moveTo(startX, startY);
-      context6.lineTo(curX, curY);
-      context6.stroke();
-    }
-
-   //canvas7
-   function move7(e) {
-        if(!drawing) return; // 마우스가 눌러지지 않았으면 리턴
-        var curX = e.offsetX, curY = e.offsetY;
-        draw7(curX, curY);
-        startX = curX; startY = curY;
-    }
-   function draw7(curX, curY) {
-      context7.beginPath();
-      context7.fillStyle='white';
-      context7.lineWidth = p_Thick;
-      context7.moveTo(startX, startY);
-      context7.lineTo(curX, curY);
-      context7.stroke();
-    }
-
-    //canvas8
-   function move8(e) {
-      if(!drawing) return; // 마우스가 눌러지지 않았으면 리턴
-      var curX = e.offsetX, curY = e.offsetY;
-      draw8(curX, curY);
-      startX = curX; startY = curY;
-    }
-   function draw8(curX, curY) {
-      context8.beginPath();
-      context8.fillStyle='white';
-      context8.lineWidth = p_Thick;
-      context8.moveTo(startX, startY);
-      context8.lineTo(curX, curY);
-      context8.stroke();
-    }
-
-    //canvas9
-   function move9(e) {
-        if(!drawing) return; // 마우스가 눌러지지 않았으면 리턴
-        var curX = e.offsetX, curY = e.offsetY;
-        draw9(curX, curY);
-        startX = curX; startY = curY;
-    }
-   function draw9(curX, curY) {
-      context9.beginPath();
-      context9.fillStyle='white';
-      context9.lineWidth = p_Thick;
-      context9.moveTo(startX, startY);
-      context9.lineTo(curX, curY);
-      context9.stroke();
-    }
-
-   //펜사이즈
-   function pen(pen_size){
-      p_Thick=pen_size;
-   }
-
-   
-    function getCookie(name) {
-        var cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
+      function getCookie(name) {
+         var cookieValue = null;
+         if (document.cookie && document.cookie !== '') {
             var cookies = document.cookie.split(';');
             for (var i = 0; i < cookies.length; i++) {
-                var cookie = cookies[i].trim();
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
+               var cookie = cookies[i].trim();
+               // Does this cookie string begin with the name we want?
+               if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+               }
             }
-        }
-        return cookieValue;
-    }
+         }
+         return cookieValue;
+      }
 
-    var csrftoken = getCookie('csrftoken');
+      var csrftoken = getCookie('csrftoken');
 
-    function csrfSafeMethod(method) {
-        // these HTTP methods do not require CSRF protection
-        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-    }
+      function csrfSafeMethod(method) {
+         // these HTTP methods do not require CSRF protection
+         return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+      }
 
-    function sub(){
-        var canvas = document.getElementById("canvas").toDataURL();
-        var canvas2 = document.getElementById("canvas2").toDataURL();
-        var canvas3 = document.getElementById("canvas3").toDataURL();
-        var canvas4 = document.getElementById("canvas4").toDataURL();
-        var canvas5 = document.getElementById("canvas5").toDataURL();
-        var canvas6 = document.getElementById("canvas6").toDataURL();
-        var canvas7 = document.getElementById("canvas7").toDataURL();
-        var canvas8 = document.getElementById("canvas8").toDataURL();
-        var canvas9 = document.getElementById("canvas9").toDataURL();
-       
-        console.log("hihihi");
-        $.ajaxSetup({
-            beforeSend: function(xhr, settings) {
-                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                }
+      function sub() {
+         var canvas = document.getElementById("canvas").toDataURL();
+         var canvas2 = document.getElementById("canvas2").toDataURL();
+         var canvas3 = document.getElementById("canvas3").toDataURL();
+         var canvas4 = document.getElementById("canvas4").toDataURL();
+         var canvas5 = document.getElementById("canvas5").toDataURL();
+         var canvas6 = document.getElementById("canvas6").toDataURL();
+         var canvas7 = document.getElementById("canvas7").toDataURL();
+         var canvas8 = document.getElementById("canvas8").toDataURL();
+         var canvas9 = document.getElementById("canvas9").toDataURL();
+
+         console.log("hihihi");
+         $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+               if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+               }
             }
-        });
+         });
 
-        $.ajax({
-            type:"POST",
-            url:"{% url 'fontsapp:write_input' font.id %}",
-            data:{
-                canvas:canvas,
-                canvas2:canvas2,
-                canvas3:canvas3,
-                canvas4:canvas4,
-                canvas5:canvas5,
-                canvas6:canvas6,
-                canvas7:canvas7,
-                canvas8:canvas8,
-                canvas9:canvas9,
+         $.ajax({
+            type: "POST",
+            url: "{% url 'fontsapp:write_input' font.id %}",
+            data: {
+               canvas: canvas,
+               canvas2: canvas2,
+               canvas3: canvas3,
+               canvas4: canvas4,
+               canvas5: canvas5,
+               canvas6: canvas6,
+               canvas7: canvas7,
+               canvas8: canvas8,
+               canvas9: canvas9,
             }
-        }).done(function(o){
+         }).done(function (o) {
             console.log('saved');
-        });
-    };
+         });
+      };
 
-   
-</script>
+
+   </script>
 </body>
+
 </html>
 
 
 
 
 {% endblock %}
-

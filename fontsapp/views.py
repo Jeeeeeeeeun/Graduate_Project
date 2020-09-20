@@ -11,11 +11,17 @@ from PIL import Image
 import re
 import base64
 from matplotlib import pyplot as plt
+import json
+from collections import OrderedDict
 import numpy as np
 import threading
 from django.core.mail import EmailMessage
 
 # Create your views here.
+chars = ['눈', '송', '이', '는', '졸', '업', '을', '꿈', '꾸', '지', ' ']  # 체크포인트 있는 글자 리스트    
+dictionary = {'이':'여', '지':'기', '송':'숙', '졸':'초', '업':'입', '눈':'숙', '는':'문', '을':'문', '꿈':'문', '꾸':'문', ' ':'blank'}
+
+
 
 def home(request) :
     return render(request, 'home.html')
@@ -25,7 +31,6 @@ def home(request) :
 def input_phrase(request): 
     ## 입력 문구 작성 ##
     
-    chars = ['눈', '송', '이', '는', '졸', '업', '을', '꿈', '꾸', '지', ' ']  # 체크포인트 있는 글자 리스트    
     not_exists = ""  # 없는 글자 --> 데베에 추가하기
 
     if request.method=='POST': # 제출 버튼 눌렀을 때
@@ -73,12 +78,43 @@ def no_checkpoint(request, input_id) :
     return render(request, 'no_checkpoint.html', {'font':font})
 
 
+
+def makeFont(letter):
+    
+    code=''
+    # open lettercode txt file
+    f = open("~/ganjyfont/lettercode.txt", 'r')
+    lines = f.readlines()
+
+    # find letter in lettercode and save code
+    for line in lines:
+        if letter in line:
+            #print(line)
+            #print(len(line))
+            #print(line[1:7])
+            code = line[1:7]
+            break
+
+    f.close()
+
+    # make json file    { "kr" : ["\uc219"] }
+    filename='~/ganjyfont/letter.json' # json dir
+    
+    code = code.replace("\\/", "/").encode().decode('unicode_escape') # make unicode letter raw
+    data = { 'kr': [code] } # make json data
+
+    # write json data and save file
+    with open(filename, 'w', encoding='UTF-8-sig') as file:
+        json.dump(data, file, ensure_ascii=True, indent='\t')
+
+
+# 나중에 생성하기
 def create_later(request, input_id) : 
-    font = get_object_or_404(Font, pk=input_id)
+    font = get_object_or_404(Font, pk=input_id) # 사용자 생성 폰트
     font.createlater = True
     font.save()
 
-    user = User.objects.get(username=request.user)
+    user = User.objects.get(username=request.user) # 사용자 정보
     userEmail = user.email
 
     create_list = {'순':'숙', '숨':'숙', '망':'명', '멍':'명', }
@@ -87,6 +123,9 @@ def create_later(request, input_id) :
     command = "cd ~/ganjyfont; "
 
     for char in chars :
+        makeFont(char)
+        command += "python3 ttf-to-jpg_by_jyjeon-train.py;"
+
         try : 
             command += "sh train.sh " + create_list[char] + " " + char + " 5; "
         
@@ -99,18 +138,19 @@ def create_later(request, input_id) :
     font.delete()
     return redirect('home')
 
+
+# 학습용 thread 함수
 def doTrain(command, userEmail) :
-    os.system(command) ##프린트 바꾸기!
+    os.system(command)
     print("Train Finish")
 
+    #메일 발송
     email = EmailMessage(
         "폰트 학습이 완료 되었습니다",
         "지금 바로 생성을 시작해보세요! \n http://203.153.146.28:3000",
         to = [userEmail],
     )
     email.send()
-
-
 
 
 #read
@@ -239,19 +279,116 @@ def write_input(request, input_id):
     ## 직접 입력 ##
 
     # canvas의 이미지 가져와서 Font.input_photo1에 저장하기
-    
     if request.method=='POST': # 제출 버튼 눌렀을 떄
         font = get_object_or_404(Font, pk=input_id) #현재 객체
 
+        data1 = request.POST.__getitem__('canvas')[22:]
+        data2 = request.POST.__getitem__('canvas2')[22:]
+        data3 = request.POST.__getitem__('canvas3')[22:]
+        data4 = request.POST.__getitem__('canvas4')[22:]
+        data5 = request.POST.__getitem__('canvas5')[22:]
+        data6 = request.POST.__getitem__('canvas6')[22:]
+        data7 = request.POST.__getitem__('canvas7')[22:]
+        data8 = request.POST.__getitem__('canvas8')[22:]
+        data9 = request.POST.__getitem__('canvas9')[22:]
+    
+        #저장할 경로
+        path = './media/crop/'
+        day = str(font.date)[:10]
+        time = str(font.date)[11:13] + "-" + str(font.date)[14:16]
+        day_time = day + "_" + time
+
+        filename1 = str(request.user) + "_" + day_time + "_" +'sook.png'
+        filename2 = str(request.user) + "_" + day_time + "_" +'myung.png'
+        filename3 = str(request.user) + "_" + day_time + "_" +'yeo.png'
+        filename4 = str(request.user) + "_" + day_time + "_" +'dae.png'
+        filename5 = str(request.user) + "_" + day_time + "_" +'web.png'
+        filename6 = str(request.user) + "_" + day_time + "_" +'gi.png'
+        filename7 = str(request.user) + "_" + day_time + "_" +'cho.png'
+        filename8 = str(request.user) + "_" + day_time + "_" +'ip.png'
+        filename9 = str(request.user) + "_" + day_time + "_" +'moon.png'
+
+        #'wb'로 파일 open
+        image1 = open(path+filename1, "wb")
+        image2 = open(path+filename2, "wb")
+        image3 = open(path+filename3, "wb")
+        image4 = open(path+filename4, "wb")
+        image5 = open(path+filename5, "wb")
+        image6 = open(path+filename6, "wb")
+        image7 = open(path+filename7, "wb")
+        image8 = open(path+filename8, "wb")
+        image9 = open(path+filename9, "wb")
+        
+
+        #디코딩 + 파일에 쓰기
+        image1.write(base64.b64decode(data1))
+        image2.write(base64.b64decode(data2))
+        image3.write(base64.b64decode(data3))
+        image4.write(base64.b64decode(data4))
+        image5.write(base64.b64decode(data5))
+        image6.write(base64.b64decode(data6))
+        image7.write(base64.b64decode(data7))
+        image8.write(base64.b64decode(data8))
+        image9.write(base64.b64decode(data9))
+        
+        image1.close()
+        image2.close()
+        image3.close()
+        image4.close()
+        image5.close()
+        image6.close()
+        image7.close()
+        image8.close()
+        image9.close()
+
+
+
+        sook = "./crop/"+ str(request.user) + "_" + day_time + "_" +'sook.png' # 숙
+        myung = "./crop/"+ str(request.user) + "_" + day_time + "_" +'myung.png' # 명
+        yeo = "./crop/"+ str(request.user) + "_" + day_time + "_" +'yeo.png' # 명
+        dae = "./crop/"+ str(request.user) + "_" + day_time + "_" +'dae.png'
+        web = "./crop/"+ str(request.user) + "_" + day_time + "_" +'web.png'
+        gi = "./crop/"+ str(request.user) + "_" + day_time + "_" +'gi.png'
+        cho = "./crop/"+ str(request.user) + "_" + day_time + "_" +'cho.png'
+        ip = "./crop/"+ str(request.user) + "_" + day_time + "_" +'ip.png'
+        moon= "./crop/"+ str(request.user) + "_" + day_time + "_" +'moon.png'
+
+
+        font.input_photo1 = sook 
+        font.input_photo2 = myung
+        font.input_photo3 = yeo
+        font.input_photo4 = dae
+        font.input_photo5 = web
+        font.input_photo6 = gi
+        font.input_photo7 = cho
+        font.input_photo8 = ip
+        font.input_photo9 = moon
+
+        
+        font.save(update_fields=['input_photo1', 'input_photo2', 'input_photo3', 'input_photo4', 'input_photo5', 'input_photo6', 'input_photo7', 'input_photo8', 'input_photo9']) # 데베에 저장
+
+
+        return HttpResponse() # 이미지 편집단계로. pk값 유지
+
+    else :
+        font = get_object_or_404(Font, pk=input_id)
+        return render(request, 'write_input.html', {'font':font})
+
+#update
+@login_required
+def input_edit(request, input_id):
+    if request.method=='POST':
+        font = get_object_or_404(Font, pk=input_id) #현재 객체
+
         data1 = request.POST.__getitem__('canvas')
-        data2 = request.POST.__getitem__('canvas2')
-        data3 = request.POST.__getitem__('canvas3')
-        data4 = request.POST.__getitem__('canvas4')
-        data5 = request.POST.__getitem__('canvas5')
-        data6 = request.POST.__getitem__('canvas6')
-        data7 = request.POST.__getitem__('canvas7')
-        data8 = request.POST.__getitem__('canvas8')
-        data9 = request.POST.__getitem__('canvas9')
+        data2 = request.POST.__getitem__('canvas22')
+        data3 = request.POST.__getitem__('canvas33')
+        data4 = request.POST.__getitem__('canvas44')
+        data5 = request.POST.__getitem__('canvas55')
+        data6 = request.POST.__getitem__('canvas66')
+        data7 = request.POST.__getitem__('canvas77')
+        data8 = request.POST.__getitem__('canvas88')
+        data9 = request.POST.__getitem__('canvas99')
         
         data1=data1[22:]
         data2=data2[22:]
@@ -344,44 +481,6 @@ def write_input(request, input_id):
 
         return HttpResponse() # 이미지 편집단계로. pk값 유지
 
-    else :
-        font = get_object_or_404(Font, pk=input_id)
-        return render(request, 'write_input.html', {'font':font})
-
-#update
-@login_required
-def input_edit(request, input_id):
-    if request.method=='POST':
-        font = get_object_or_404(Font, pk=input_id)
-
-        data1 = request.POST.__getitem__('canvas')
-        data1=data1[22:]
-
-        #저장할 경로
-        path = './media/crop/'
-        day = str(font.date)[:10]
-        time = str(font.date)[11:13] + "-" + str(font.date)[14:16]
-        day_time = day + "_" + time
-
-        filename1 = str(request.user) + "_" + day_time + "_" +'sook.png'
-
-        image1 = open(path+filename1, "wb")
-
-
-        #디코딩 + 파일에 쓰기
-        image1.write(base64.b64decode(data1))
-        
-        image1.close()
-
-        sook = "./crop/"+ str(request.user) + "_" + day_time + "_" +'sook.png' # 숙
-
-        font.input_photo1 = sook 
-
-        font.save(update_fields=['input_photo1']) # 데베에 저장
-
-
-        return HttpResponse()
-
     else:
         ## 사진 편집 ##
         #크기. 중앙에 맞추기 등 설정 & 변경사항 저장하기
@@ -412,7 +511,6 @@ def loading(request, input_id):
         ##### 1. 이미지 복사 #####
         phrase_kor = ['문','입','초','기','웹','대','여','명','숙']
         phrase_eng = ['moon','ip','cho','gi','web','dae','yeo','myung','sook'] #dummy는 index맞추기 위함! 나중에 고치기
-        dictionary = {'이':'여', '지':'기', '송':'숙', '졸':'초', '업':'입', '눈':'숙', '는':'문', '을':'문', '꿈':'문', '꾸':'문', ' ':'blank'}
 
         # 파일명
         day = str(font.date)[:10]

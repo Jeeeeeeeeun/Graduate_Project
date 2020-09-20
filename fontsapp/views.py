@@ -108,7 +108,7 @@ def makeFont(letter):
     data = { 'kr': [code] } # make json data
 
     # write json data and save file
-    with open(filename, 'w', encoding='UTF-8-sig') as file:
+    with open(filename, 'w', encoding='UTF-8') as file:
         json.dump(data, file, ensure_ascii=True, indent='\t')
 
 
@@ -129,7 +129,7 @@ def create_later(request, input_id) :
 
     for char in chars :
         makeFont(char)
-        command += "python3 ttf-to-jpg_by_jyjeon-train.py;"
+        command += "python3 makeimg.py;"
 
         try : 
             command += "sh train.sh " + create_list[char] + " " + char + " 5; "
@@ -178,6 +178,15 @@ def unsharp_mask(image, kernel_size=(5, 5), sigma=1.0, amount=1.0, threshold=0):
         low_contrast_mask = np.absolute(image - blurred) < threshold
         np.copyto(sharpened, image, where=low_contrast_mask)
     return sharpened
+
+
+def canvas_image(canvasId, filename, request) :
+    data = request.POST.__getitem__(canvasId)[22:]
+
+    filename = filename + ".png"
+    image = open('./media/crop/'+filename, 'wb')
+    image.write(base64.b64decode(data))
+    image.close()
 
 
 #update
@@ -247,16 +256,18 @@ def scan_input(request, input_id):
             day = str(font.date)[:10]
             time = str(font.date)[11:13] + "-" + str(font.date)[14:16]
             day_time = day + "_" + time
+            userTime = str(request.user) + "_" + day_time + "_"   
 
-            sook = "./crop/"+ str(request.user) + "_" + day_time + "_" +'sook.png' # 숙
-            myung = "./crop/"+ str(request.user) + "_" + day_time + "_" +'myung.png' # 명
-            yeo = "./crop/"+ str(request.user) + "_" + day_time + "_" +'yeo.png' # 여
-            dae = "./crop/"+ str(request.user) + "_" + day_time + "_" +'dae.png' # 대
-            web = "./crop/"+ str(request.user) + "_" + day_time + "_" +'web.png' # 웹
-            gi = "./crop/"+ str(request.user) + "_" + day_time + "_" +'gi.png' # 기
-            cho = "./crop/"+ str(request.user) + "_" + day_time + "_" +'cho.png' # 초
-            ip = "./crop/"+ str(request.user) + "_" + day_time + "_" +'ip.png' # 입
-            moon = "./crop/"+ str(request.user) + "_" + day_time + "_" +'moon.png' # 문
+
+            sook = userTime +'sook.png' # 숙
+            myung = userTime +'myung.png' # 명
+            yeo = userTime +'yeo.png' # 여
+            dae = userTime +'dae.png' # 대
+            web = userTime +'web.png' # 웹
+            gi = userTime +'gi.png' # 기
+            cho = userTime +'cho.png' # 초
+            ip = userTime +'ip.png' # 입
+            moon = userTime +'moon.png' # 문
             
             font.input_photo1 = sook 
             font.input_photo2 = myung
@@ -287,67 +298,25 @@ def write_input(request, input_id):
     if request.method=='POST': # 제출 버튼 눌렀을 떄
         font = get_object_or_404(Font, pk=input_id) #현재 객체
 
-        data1 = request.POST.__getitem__('canvas')[22:]
-        data2 = request.POST.__getitem__('canvas2')[22:]
-        data3 = request.POST.__getitem__('canvas3')[22:]
-        data4 = request.POST.__getitem__('canvas4')[22:]
-        data5 = request.POST.__getitem__('canvas5')[22:]
-        data6 = request.POST.__getitem__('canvas6')[22:]
-        data7 = request.POST.__getitem__('canvas7')[22:]
-        data8 = request.POST.__getitem__('canvas8')[22:]
-        data9 = request.POST.__getitem__('canvas9')[22:]
-    
         #저장할 경로
-        path = './media/crop/'
         day = str(font.date)[:10]
         time = str(font.date)[11:13] + "-" + str(font.date)[14:16]
         day_time = day + "_" + time
+        userTime = str(request.user) + "_" + day_time + "_"   
 
-        filename1 = str(request.user) + "_" + day_time + "_" +'sook.png'
-        filename2 = str(request.user) + "_" + day_time + "_" +'myung.png'
-        filename3 = str(request.user) + "_" + day_time + "_" +'yeo.png'
-        filename4 = str(request.user) + "_" + day_time + "_" +'dae.png'
-        filename5 = str(request.user) + "_" + day_time + "_" +'web.png'
-        filename6 = str(request.user) + "_" + day_time + "_" +'gi.png'
-        filename7 = str(request.user) + "_" + day_time + "_" +'cho.png'
-        filename8 = str(request.user) + "_" + day_time + "_" +'ip.png'
-        filename9 = str(request.user) + "_" + day_time + "_" +'moon.png'
-
-        #'wb'로 파일 open
-        image1 = open(path+filename1, "wb")
-        image2 = open(path+filename2, "wb")
-        image3 = open(path+filename3, "wb")
-        image4 = open(path+filename4, "wb")
-        image5 = open(path+filename5, "wb")
-        image6 = open(path+filename6, "wb")
-        image7 = open(path+filename7, "wb")
-        image8 = open(path+filename8, "wb")
-        image9 = open(path+filename9, "wb")
-        
-
-        #디코딩 + 파일에 쓰기
-        image1.write(base64.b64decode(data1))
-        image2.write(base64.b64decode(data2))
-        image3.write(base64.b64decode(data3))
-        image4.write(base64.b64decode(data4))
-        image5.write(base64.b64decode(data5))
-        image6.write(base64.b64decode(data6))
-        image7.write(base64.b64decode(data7))
-        image8.write(base64.b64decode(data8))
-        image9.write(base64.b64decode(data9))
-        
-        image1.close()
-        image2.close()
-        image3.close()
-        image4.close()
-        image5.close()
-        image6.close()
-        image7.close()
-        image8.close()
-        image9.close()
+        # canvas 이미지 저장
+        canvas_image('canvas', userTime + 'sook', request)
+        canvas_image('canvas2', userTime + 'myung', request)
+        canvas_image('canvas3', userTime + 'yeo', request)
+        canvas_image('canvas4', userTime + 'dae', request)
+        canvas_image('canvas5', userTime + 'web', request)
+        canvas_image('canvas6', userTime + 'gi', request)
+        canvas_image('canvas7', userTime + 'cho', request)
+        canvas_image('canvas8', userTime + 'ip', request)
+        canvas_image('canvas9', userTime + 'moon', request)
 
 
-
+        #DB에 저장
         sook = "./crop/"+ str(request.user) + "_" + day_time + "_" +'sook.png' # 숙
         myung = "./crop/"+ str(request.user) + "_" + day_time + "_" +'myung.png' # 명
         yeo = "./crop/"+ str(request.user) + "_" + day_time + "_" +'yeo.png' # 명
@@ -385,90 +354,33 @@ def input_edit(request, input_id):
     if request.method=='POST':
         font = get_object_or_404(Font, pk=input_id) #현재 객체
 
-        data1 = request.POST.__getitem__('canvas')
-        data2 = request.POST.__getitem__('canvas22')
-        data3 = request.POST.__getitem__('canvas33')
-        data4 = request.POST.__getitem__('canvas44')
-        data5 = request.POST.__getitem__('canvas55')
-        data6 = request.POST.__getitem__('canvas66')
-        data7 = request.POST.__getitem__('canvas77')
-        data8 = request.POST.__getitem__('canvas88')
-        data9 = request.POST.__getitem__('canvas99')
-        
-        data1=data1[22:]
-        data2=data2[22:]
-        data3=data3[22:]
-        data4=data4[22:]
-        data5=data5[22:]
-        data6=data6[22:]
-        data7=data7[22:]
-        data8=data8[22:]
-        data9=data9[22:]
-
-
         #저장할 경로
-        path = './media/crop/'
         day = str(font.date)[:10]
         time = str(font.date)[11:13] + "-" + str(font.date)[14:16]
         day_time = day + "_" + time
+        userTime = str(request.user) + "_" + day_time + "_"   
 
-        filename1 = str(request.user) + "_" + day_time + "_" +'sook.png'
-        filename2 = str(request.user) + "_" + day_time + "_" +'myung.png'
-        filename3 = str(request.user) + "_" + day_time + "_" +'yeo.png'
-        filename4 = str(request.user) + "_" + day_time + "_" +'dae.png'
-        filename5 = str(request.user) + "_" + day_time + "_" +'web.png'
-        filename6 = str(request.user) + "_" + day_time + "_" +'gi.png'
-        filename7 = str(request.user) + "_" + day_time + "_" +'cho.png'
-        filename8 = str(request.user) + "_" + day_time + "_" +'ip.png'
-        filename9 = str(request.user) + "_" + day_time + "_" +'moon.png'
+        # canvas 이미지 저장
+        canvas_image('canvas', userTime + 'sook', request)
+        canvas_image('canvas22', userTime + 'myung', request)
+        canvas_image('canvas33', userTime + 'yeo', request)
+        canvas_image('canvas44', userTime + 'dae', request)
+        canvas_image('canvas55', userTime + 'web', request)
+        canvas_image('canvas66', userTime + 'gi', request)
+        canvas_image('canvas77', userTime + 'cho', request)
+        canvas_image('canvas88', userTime + 'ip', request)
+        canvas_image('canvas99', userTime + 'moon', request)
 
-        #'wb'로 파일 open
-        image1 = open(path+filename1, "wb")
-        image2 = open(path+filename2, "wb")
-        image3 = open(path+filename3, "wb")
-        image4 = open(path+filename4, "wb")
-        image5 = open(path+filename5, "wb")
-        image6 = open(path+filename6, "wb")
-        image7 = open(path+filename7, "wb")
-        image8 = open(path+filename8, "wb")
-        image9 = open(path+filename9, "wb")
-        
-
-        #디코딩 + 파일에 쓰기
-        image1.write(base64.b64decode(data1))
-        image2.write(base64.b64decode(data2))
-        image3.write(base64.b64decode(data3))
-        image4.write(base64.b64decode(data4))
-        image5.write(base64.b64decode(data5))
-        image6.write(base64.b64decode(data6))
-        image7.write(base64.b64decode(data7))
-        image8.write(base64.b64decode(data8))
-        image9.write(base64.b64decode(data9))
-
-
-        
-        image1.close()
-        image2.close()
-        image3.close()
-        image4.close()
-        image5.close()
-        image6.close()
-        image7.close()
-        image8.close()
-        image9.close()
-
-
-
-        sook = "./crop/"+ str(request.user) + "_" + day_time + "_" +'sook.png' # 숙
-        myung = "./crop/"+ str(request.user) + "_" + day_time + "_" +'myung.png' # 명
-        yeo = "./crop/"+ str(request.user) + "_" + day_time + "_" +'yeo.png' # 명
-        dae = "./crop/"+ str(request.user) + "_" + day_time + "_" +'dae.png'
-        web = "./crop/"+ str(request.user) + "_" + day_time + "_" +'web.png'
-        gi = "./crop/"+ str(request.user) + "_" + day_time + "_" +'gi.png'
-        cho = "./crop/"+ str(request.user) + "_" + day_time + "_" +'cho.png'
-        ip = "./crop/"+ str(request.user) + "_" + day_time + "_" +'ip.png'
-        moon= "./crop/"+ str(request.user) + "_" + day_time + "_" +'moon.png'
-
+        #DB에 저장
+        sook = "./crop/"+ userTime +'sook.png' # 숙
+        myung = "./crop/"+ userTime +'myung.png' # 명
+        yeo = "./crop/"+ userTime +'yeo.png' # 명
+        dae = "./crop/"+ userTime +'dae.png'
+        web = "./crop/"+ userTime +'web.png'
+        gi = "./crop/"+ userTime +'gi.png'
+        cho = "./crop/"+ userTime +'cho.png'
+        ip = "./crop/"+ userTime +'ip.png'
+        moon= "./crop/"+ userTime +'moon.png'
 
         font.input_photo1 = sook 
         font.input_photo2 = myung

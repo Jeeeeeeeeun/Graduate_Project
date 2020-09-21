@@ -19,8 +19,8 @@
               <input type="hidden">
           </form>
           {% else %}
-          <li><a href="{% url 'accountsapp:signup'%}">로그인</a></li>
-          <li><a href="{% url 'accountsapp:login' %}">회원가입</a></li>
+          <li><a href="{% url 'accountsapp:login'%}">로그인</a></li>
+          <li><a href="{% url 'accountsapp:signup' %}">회원가입</a></li>
           {% endif %}
           
           <li><a href="{% url 'home' %}">메인페이지</a></li>

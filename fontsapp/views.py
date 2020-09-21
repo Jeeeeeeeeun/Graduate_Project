@@ -452,7 +452,7 @@ def loading(request, input_id):
             
             picname =  userTime + phrase_eng[i] + ".png" # 숙
             cp_command = "cp ~/WebServer/Graduate/media/crop/" + picname +  " ~/ganjyfont/test2/" + str(char) + "/" + str(request.user) + "_" + day_time + "/"
-            os.system(cp_command) #파일 복사
+            os.system(cp_command) #파일 복사x`
         
 
         ##### 2.딥러닝 돌리기 #####
@@ -494,13 +494,11 @@ def loading(request, input_id):
                 result = cv2.imread(result, cv2.IMREAD_GRAYSCALE)
                 result = cleanside(result)
                 result = morph(result)
-                print('눈')
             
             elif s is " " :
                 blank = "./media/blank/blank.png"
                 blank = cv2.imread(blank, cv2.IMREAD_GRAYSCALE)
                 result = cv2.hconcat([result, blank])
-                print('-')
             
             else:    
                 temp = directory + "/" + str(i) +'.png'
